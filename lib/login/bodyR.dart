@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:vetitiliber/login/bodyR.dart';
-
-class LoginPage extends StatefulWidget {
-  LoginPage({Key key, this.title}) : super(key: key);
+import 'package:intl/intl.dart';
+class RegisterPage extends StatefulWidget {
+  RegisterPage({Key key, this.title}) : super(key: key);
   final String title;
-  static String id = 'LoginPage';
+  static String id = 'RegisterPage';
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
+  DateTime _dateTime;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -57,6 +57,19 @@ class _LoginPageState extends State<LoginPage> {
                     const EdgeInsets.only(top: 20.0, right: 30.0, left: 20.0),
                 child: TextField(
                   autofocus: true,
+                  decoration: InputDecoration(
+                    suffixIcon: Icon(Icons.mail),
+                    border: OutlineInputBorder(),
+                    labelText: 'Correo electronico',
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.only(top: 20.0, right: 30.0, left: 20.0),
+                child: TextField(
+                  autofocus: true,
                   obscureText: true,
                   decoration: InputDecoration(
                     suffixIcon: Icon(Icons.lock),
@@ -66,10 +79,38 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               Padding(
+                padding: const EdgeInsets.only(top: 30.0, bottom: 5),
+                child: Text('Fecha de nacimiento',
+                    style: new TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 5.0,
+                        color: Colors.blueAccent)),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 1.0, bottom: 1),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text(_dateTime == null
+                        ? ''
+                        : DateFormat('yyyy-MM-dd').format(_dateTime).toString()),
+                    RaisedButton(
+                        child: Text('Selecciona una fecha'), onPressed: () {
+                          showDatePicker(context: context, initialDate: DateTime.now(), firstDate:DateTime(1900), lastDate:DateTime.now()).then((date) {
+                            setState(() {
+                              _dateTime=date;
+                            });
+                          });
+                        }),
+                  ],
+                ),
+              ),
+              Padding(
                   padding: const EdgeInsets.only(top: 20.0),
                   child: FlatButton(
                     child: Text(
-                      'Ingresar',
+                      'Registrarse',
                       style: new TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -79,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () {
                       Navigator.of(context).pushNamed(RegisterPage.id);
                     },
-                  ))
+                  )),
             ],
           ),
         ),

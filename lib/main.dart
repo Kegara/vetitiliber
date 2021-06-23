@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vetitiliber/login/bodyL.dart';
+import 'package:vetitiliber/login/bodyR.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -22,8 +24,11 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Vetiti liber Home Page'),
+      initialRoute: LoginPage.id,
+      routes: {
+        LoginPage.id: (context) => LoginPage(),
+        RegisterPage.id: (context) => RegisterPage(),
+      },
     );
   }
 }
-
