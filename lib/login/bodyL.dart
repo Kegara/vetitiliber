@@ -67,13 +67,29 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Padding(
                   padding: const EdgeInsets.only(top: 20.0),
-                  child: FlatButton(
+                  child: TextButton(
                     child: Text(
                       'Ingresar',
                       style: new TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           letterSpacing: 5.0,
+                          color: Colors.blueAccent),
+                    ),
+                    onPressed: () {
+                      print("ingreso a la app");
+                      Navigator.of(context).pushNamed(RegisterPage.id);
+                    },
+                  )),
+              Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: TextButton(
+                    child: Text(
+                      '¿Nuevo en MyReview?',
+                      style: new TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.normal,
+                          letterSpacing: 1.0,
                           color: Colors.blueAccent),
                     ),
                     onPressed: () {
