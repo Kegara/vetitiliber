@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vetitiliber/login/bodyR.dart';
+import 'package:vetitiliber/inicio/inicio.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
@@ -78,11 +79,11 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     onPressed: () {
                       print("ingreso a la app");
-                      Navigator.of(context).pushNamed(RegisterPage.id);
+                      Navigator.of(context).pushNamed(StartPage.id);
                     },
                   )),
               Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
+                  padding: const EdgeInsets.only(top: 240.0),
                   child: TextButton(
                     child: Text(
                       '¿Nuevo en MyReview?',
@@ -95,10 +96,12 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () {
                       Navigator.of(context).pushNamed(RegisterPage.id);
                     },
-                  ))
+                  )),
             ],
+            
           ),
         ),
+
       ),
     );
   }

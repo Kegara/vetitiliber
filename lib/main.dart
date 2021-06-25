@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vetitiliber/login/bodyL.dart';
 import 'package:vetitiliber/login/bodyR.dart';
-
+import 'package:vetitiliber/inicio/inicio.dart';
 void main() {
   runApp(MyApp());
 }
@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
       routes: {
         LoginPage.id: (context) => LoginPage(),
         RegisterPage.id: (context) => RegisterPage(),
+        StartPage.id: (context) => StartPage(),
       },
     );
   }
