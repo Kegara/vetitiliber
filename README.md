@@ -7,7 +7,7 @@ A new Flutter project.
 
 This project is a starting point for a Flutter application.
 
-Paulo estuvo aqui :v
+Paulo estuvo aqui :v xd y Alexis
 
 A few resources to get you started if this is your first Flutter project:
 
