@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:vetitiliber/login/bodyL.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -110,62 +109,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         border: OutlineInputBorder(),
                         labelText: 'Contraseña',
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 1.0, bottom: 1),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                            padding: const EdgeInsets.only(
-                                top: 20.0, right: 30.0, left: 20.0),
-                                child:IntrinsicWidth(
-                                  
-                            child: TextFormField (
-                                controller: fechan,
-                                
-                                readOnly: true,
-                                style: new TextStyle(color: _color),
-                                textAlign: TextAlign.center,
-                                validator: (value) {
-                                  if (_dateTime == null || _dateTime.toString() == '') {
-                                    value = "Ingresa una fecha";
-                                    return 'Please enter select a date';
-                                  } else {
-                                    value = DateFormat('yyyy-MM-dd')
-                                        .format(_dateTime)
-                                        .toString();
-                                  }
-
-                                  return null;
-                                },decoration: InputDecoration(
-                        suffixIcon: Icon(Icons.calendar_today),
-                        border: OutlineInputBorder(),
-                        labelText: 'Fecha de nacimiento',
-                      )
-                      ))
-                      ),
-                        ElevatedButton(
-                            child: Text(
-                              'Selecciona una fecha de nacimiento',
-                            ),
-                            onPressed: () {
-                              showDatePicker(
-                                      context: context,
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime(1900),
-                                      lastDate: DateTime.now())
-                                  .then((date) {
-                                setState(() {
-                                  _dateTime = date;
-                                  fechan.text = DateFormat('yyyy-MM-dd')
-                                      .format(_dateTime)
-                                      .toString();
-                                });
-                              });
-                            }),
-                      ],
                     ),
                   ),
                   Padding(

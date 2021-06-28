@@ -11,6 +11,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _formKey = GlobalKey<FormState>();
+  final uController = TextEditingController();
+  final pController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -41,49 +44,72 @@ class _LoginPageState extends State<LoginPage> {
                 'assets/imagenes/login/LOGO2.png',
                 height: size.height * 0.25,
               ),
-              Padding(
-                padding:
-                    const EdgeInsets.only(top: 20.0, right: 30.0, left: 20.0),
-                child: TextField(
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    suffixIcon: Icon(Icons.person),
-                    border: OutlineInputBorder(),
-                    labelText: 'Usuario',
+              Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 20.0, right: 30.0, left: 20.0),
+                        child: TextFormField(
+                          controller: uController,
+                          autofocus: true,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            suffixIcon: Icon(Icons.person),
+                            border: OutlineInputBorder(),
+                            labelText: 'Usuario',
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 20.0, right: 30.0, left: 20.0),
+                        child: TextFormField(
+                          controller: pController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
+                          autofocus: true,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            suffixIcon: Icon(Icons.lock),
+                            border: OutlineInputBorder(),
+                            labelText: 'Contraseña',
+                          ),
+                        ),
+                      ),
+                      Padding(
+                          padding: const EdgeInsets.only(top: 20.0),
+                          child: TextButton(
+                            child: Text(
+                              'Ingresar',
+                              style: new TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 5.0,
+                                  color: Colors.blueAccent),
+                            ),
+                            onPressed: () {
+                              print("ingreso a la app");
+                              _ingreso(
+                                  context, _formKey, uController, pController);
+                            },
+                          )
+                          ),
+                    ],
+                  )
                   ),
-                ),
-              ),
               Padding(
-                padding:
-                    const EdgeInsets.only(top: 20.0, right: 30.0, left: 20.0),
-                child: TextField(
-                  autofocus: true,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    suffixIcon: Icon(Icons.lock),
-                    border: OutlineInputBorder(),
-                    labelText: 'Contraseña',
-                  ),
-                ),
-              ),
-              Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: TextButton(
-                    child: Text(
-                      'Ingresar',
-                      style: new TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 5.0,
-                          color: Colors.blueAccent),
-                    ),
-                    onPressed: () {
-                      print("ingreso a la app");
-                      Navigator.of(context).pushNamed(StartPage.id);
-                    },
-                  )),
-              Padding(
-                  padding: const EdgeInsets.only(top: 240.0),
+                  padding: const EdgeInsets.only(top: 10.0),
                   child: TextButton(
                     child: Text(
                       '¿Nuevo en MyReview?',
@@ -98,11 +124,18 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   )),
             ],
-            
           ),
         ),
-
       ),
     );
+  }
+}
+
+void _ingreso(BuildContext context, GlobalKey<FormState> formKey,
+    TextEditingController uController, TextEditingController tController) {
+  if (formKey.currentState.validate()) {
+    formKey.currentState.save();
+    print("regreso al login" + uController.text + tController.text);
+    Navigator.of(context).pushNamed(StartPage.id);
   }
 }
