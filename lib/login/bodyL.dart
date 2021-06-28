@@ -103,9 +103,11 @@ class _LoginPageState extends State<LoginPage> {
                               _ingreso(
                                   context, _formKey, uController, pController);
                             },
-                          )),
+                          )
+                          ),
                     ],
-                  )),
+                  )
+                  ),
               Padding(
                   padding: const EdgeInsets.only(top: 10.0),
                   child: TextButton(
