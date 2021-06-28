@@ -5,7 +5,7 @@
     // PRUEBAS
     //$usuario = "cheko";
     
-    $sql = "SELECT * FROM usuario";
+    $sql = "SELECT 'nombre','contrasena'FROM usuario";
     $query = $mysqli->query($sql);
     
     
