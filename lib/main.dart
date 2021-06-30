@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:vetitiliber/login/bodyL.dart';
 import 'package:vetitiliber/login/bodyR.dart';
 import 'package:vetitiliber/inicio/inicio.dart';
+import 'package:vetitiliber/perfil/perfil.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -29,6 +31,7 @@ class MyApp extends StatelessWidget {
         LoginPage.id: (context) => LoginPage(),
         RegisterPage.id: (context) => RegisterPage(),
         StartPage.id: (context) => StartPage(),
+        PerfilPage.id: (context) => PerfilPage(),
       },
     );
   }
