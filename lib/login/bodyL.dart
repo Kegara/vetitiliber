@@ -131,11 +131,14 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
+//funcion que se ejecuta en el boton de ingreso que pide como parametro el usuario y la contraseña 
 void _ingreso(BuildContext context, GlobalKey<FormState> formKey,
-    TextEditingController uController, TextEditingController tController) {
+    TextEditingController uController, TextEditingController cController) {
   if (formKey.currentState.validate()) {
+    //valida el formkey y le pone el estado de valido y redirige al login
     formKey.currentState.save();
-    print("regreso al login" + uController.text + tController.text);
+    print("regreso al login" + uController.text + cController.text);
+
     Navigator.of(context).pushNamed(StartPage.id);
   }
 }

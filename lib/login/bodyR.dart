@@ -11,7 +11,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  DateTime _dateTime;
+ 
 
   final cController = TextEditingController();
   final ceController = TextEditingController();
@@ -123,7 +123,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             color: Colors.blueAccent),
                       ),
                       onPressed: () {
-                        _registrarse(context, _formKey, _dateTime, _color);
+                        _registrarse(context, _formKey);
                       },
                     ),
                   )
@@ -151,17 +151,15 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 }
-
-void _registrarse(BuildContext context, GlobalKey<FormState> formKey,
-    DateTime dt, Color _color) {
-  if (formKey.currentState.validate()) {
-    if (dt == null) {
-      _color = Colors.red;
-    } else {
-      _color = Colors.red;
+//funcion que se ejecuta en el boton de registro
+void _registrarse(BuildContext context, GlobalKey<FormState> formKey) {
+      //valida que los textforms tengan el formato correcto
+    if (formKey.currentState.validate()) {
+      //valida el formkey y le pone el stado de valido 
       formKey.currentState.save();
       print("regreso al login");
+      //redirige a la pagna de login
       Navigator.of(context).pushNamed(LoginPage.id);
-    }
+    
   }
 }
