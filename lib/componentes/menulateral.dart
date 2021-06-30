@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vetitiliber/login/bodyL.dart';
+import 'package:vetitiliber/perfil/perfil.dart';
 
 class MenuLateral extends StatelessWidget {
   @override
@@ -25,7 +26,12 @@ class MenuLateral extends StatelessWidget {
           Divider(),
           new ListTile(
             title: Text("Perfil"),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PerfilPage()),
+              );
+            },
           ),
           Divider(),
           new ListTile(

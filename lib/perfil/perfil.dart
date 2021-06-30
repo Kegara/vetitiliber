@@ -37,42 +37,48 @@ class _PerfilPageState extends State<PerfilPage> {
           ],
         ),
         body: Container(
-          child: Column(children: <Widget>[
-            Text("Top libros",
+            child: Column(
+          children: <Widget>[
+            Text("Mi Perfil",
                 style: new TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 5.0,
                     color: Colors.blueAccent)),
+            Image.asset(
+              'assets/imagenes/login/LOGO2.png',
+              fit: BoxFit.cover,
+            ),
             new Expanded(
-                child: GridView.count(crossAxisCount: 2, children: [
-              contenedoresLibros(context),
-              contenedoresLibros(context),
-              contenedoresLibros(context),
-              contenedoresLibros(context),
-              contenedoresLibros(context),
-              contenedoresLibros(context),
-              contenedoresLibros(context),
-              contenedoresLibros(context),
-              contenedoresLibros(context),
-              contenedoresLibros(context),
+                child: ListView(children: <Widget>[
+              Divider(),
+              new ListTile(
+                title: Text("Reviews"),
+                onTap: () {},
+              ),
+              Divider(),
+              new ListTile(
+                title: Text("Favoritos"),
+                onTap: () {},
+              ),
+              Divider(),
+              new ListTile(
+                title: Text("Leidos"),
+                onTap: () {},
+              ),
+              Divider(),
+              new ListTile(
+                title: Text("Leyendo"),
+                onTap: () {},
+              ),
+              Divider(),
+              new ListTile(
+                title: Text("Pendiente"),
+                onTap: () {},
+              ),
+              Divider(),
             ]))
-          ]),
-        ));
+          ],
+        )));
   }
-}
-
-Widget contenedoresLibros(BuildContext context) {
-  return Container(
-    margin: EdgeInsets.all(20),
-    width: MediaQuery.of(context).size.width / 1.5,
-    decoration: BoxDecoration(
-        shape: BoxShape.rectangle,
-        image: DecorationImage(
-            image: AssetImage('assets/imagenes/login/LOGO2.png'),
-            fit: BoxFit.cover),
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-        color: Colors.white,
-        boxShadow: [new BoxShadow(blurRadius: 0.0)]),
-  );
 }
