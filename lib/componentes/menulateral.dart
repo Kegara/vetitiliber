@@ -13,9 +13,7 @@ class MenuLateral extends StatelessWidget {
           ),
           Ink(
             child: new ListTile(
-              title: Text(
-                "Inicio",
-              ),
+              title: Text("Inicio"),
               onTap: () {},
             ),
           ),
