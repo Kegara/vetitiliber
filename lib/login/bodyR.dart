@@ -12,10 +12,10 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
  
-
-  final cController = TextEditingController();
-  final ceController = TextEditingController();
-  final fechan = TextEditingController();
+  //controllers para formulario,user,password y mail
+  final uController = TextEditingController();
+  final pController = TextEditingController();
+  final mController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   var _color = Colors.blueAccent;
@@ -56,6 +56,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     padding: const EdgeInsets.only(
                         top: 20.0, right: 30.0, left: 20.0),
                     child: TextFormField(
+                      controller: uController,
                       autofocus: true,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -81,7 +82,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         }
                         return null;
                       },
-                      controller: ceController,
+                      controller: mController,
                       autofocus: true,
                       decoration: InputDecoration(
                         suffixIcon: Icon(Icons.mail),
@@ -95,7 +96,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     padding: const EdgeInsets.only(
                         top: 20.0, right: 30.0, left: 20.0),
                     child: TextFormField(
-                      controller: cController,
+                      controller: pController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter some text';
@@ -123,7 +124,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             color: Colors.blueAccent),
                       ),
                       onPressed: () {
-                        _registrarse(context, _formKey);
+                        _registrarse(context, _formKey,uController,pController,mController);
                       },
                     ),
                   )
@@ -151,8 +152,9 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 }
-//funcion que se ejecuta en el boton de registro
-void _registrarse(BuildContext context, GlobalKey<FormState> formKey) {
+//funcion que se ejecuta en el boton de registro pide como parametro formulario y campos de user,password,mail
+void _registrarse(BuildContext context, GlobalKey<FormState> formKey,TextEditingController uController,
+TextEditingController pController,TextEditingController mController) {
       //valida que los textforms tengan el formato correcto
     if (formKey.currentState.validate()) {
       //valida el formkey y le pone el stado de valido 
