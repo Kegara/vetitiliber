@@ -72,18 +72,25 @@ class _StartPageState extends State<StartPage> {
         );
   }
 }
-
+// contenedor que tendra la info del libro el cual tiene asociado un onTap que redirige a la informacion del libro
 Widget contenedoresLibros(BuildContext context) {
-  return Container(
+  return InkWell(
+  onTap: () { 
+    print("Container was tapped"); 
+    },
+  child: Container(
     margin: EdgeInsets.all(20),
     width: MediaQuery.of(context).size.width / 1.5,
     decoration: BoxDecoration(
         shape: BoxShape.rectangle,
         image: DecorationImage(
             image: AssetImage('assets/imagenes/login/LOGO2.png'),
-            fit: BoxFit.cover),
+            fit: BoxFit.cover)
+            ,
         borderRadius: BorderRadius.all(Radius.circular(20)),
         color: Colors.white,
-        boxShadow: [new BoxShadow( blurRadius: 0.0)]),
-  );
+        boxShadow: [new BoxShadow( blurRadius: 0.0)]
+        )
+ ),
+);
 }
