@@ -16,15 +16,15 @@ class MenuLateral extends StatelessWidget {
           Ink(
             child: new ListTile(
               title: Text("Inicio"),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pushNamed(StartPage.id);
+              },
             ),
           ),
           Divider(),
           new ListTile(
             title: Text("PDF VIEWER"),
-            onTap: () {
-              Navigator.of(context).pushNamed(StartPage.id);
-            },
+            onTap: () {},
           ),
           Divider(),
           new ListTile(
