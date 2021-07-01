@@ -161,7 +161,6 @@ void _ingreso(BuildContext context, GlobalKey<FormState> formKey,
     //valida el formkey y le pone el estado de valido y redirige al login
     formKey.currentState.save();
     print("regreso al login" + uController.text + cController.text);
-
     Navigator.of(context).pushNamed(StartPage.id);
   }
 }
