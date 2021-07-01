@@ -49,6 +49,12 @@ class _PerfilPageState extends State<PerfilPage> {
               'assets/imagenes/login/LOGO2.png',
               fit: BoxFit.cover,
             ),
+            new Text("\nSeguidores:\n",
+                style: new TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 5.0,
+                    color: Colors.blueAccent)),
             new Expanded(
                 child: ListView(children: <Widget>[
               Divider(),
