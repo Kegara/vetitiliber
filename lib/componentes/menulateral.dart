@@ -31,10 +31,7 @@ class MenuLateral extends StatelessWidget {
           new ListTile(
             title: Text("Perfil"),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => PerfilPage()),
-              );
+              Navigator.of(context).pushNamed(PerfilPage.id);
             },
           ),
           Divider(),
