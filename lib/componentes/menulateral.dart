@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vetitiliber/login/bodyL.dart';
 import 'package:vetitiliber/perfil/perfil.dart';
+import 'package:vetitiliber/inicio/inicio.dart';
 
 class MenuLateral extends StatelessWidget {
   @override
@@ -21,16 +22,15 @@ class MenuLateral extends StatelessWidget {
           Divider(),
           new ListTile(
             title: Text("PDF VIEWER"),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(StartPage.id);
+            },
           ),
           Divider(),
           new ListTile(
             title: Text("Perfil"),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => PerfilPage()),
-              );
+              Navigator.of(context).pushNamed(PerfilPage.id);
             },
           ),
           Divider(),
