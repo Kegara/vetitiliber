@@ -13,6 +13,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final uController = TextEditingController();
+  bool _obscureText = true;
   final pController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -79,9 +80,27 @@ class _LoginPageState extends State<LoginPage> {
                             return null;
                           },
                           autofocus: true,
-                          obscureText: true,
+                          obscureText: _obscureText,
                           decoration: InputDecoration(
-                            suffixIcon: Icon(Icons.lock),
+                            suffixIcon: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                IconButton(
+                                  icon: Icon(_obscureText == true
+                                      ? Icons.visibility
+                                      : Icons.visibility_off),
+                                  onPressed: _toggle,
+                                ),
+                                Padding
+                                (
+                                  padding: EdgeInsets.only(right: 10),
+                                  child: Icon(
+                                  (Icons.lock),
+                                 )
+                                ),
+                              ],
+                            ),
                             border: OutlineInputBorder(),
                             labelText: 'Contraseña',
                           ),
@@ -103,11 +122,9 @@ class _LoginPageState extends State<LoginPage> {
                               _ingreso(
                                   context, _formKey, uController, pController);
                             },
-                          )
-                          ),
+                          )),
                     ],
-                  )
-                  ),
+                  )),
               Padding(
                   padding: const EdgeInsets.only(top: 10.0),
                   child: TextButton(
@@ -129,9 +146,15 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 }
 
-//funcion que se ejecuta en el boton de ingreso que pide como parametro el usuario y la contraseña 
+//funcion que se ejecuta en el boton de ingreso que pide como parametro el usuario y la contraseña
 void _ingreso(BuildContext context, GlobalKey<FormState> formKey,
     TextEditingController uController, TextEditingController cController) {
   if (formKey.currentState.validate()) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vetitiliber/login/bodyL.dart';
 import 'package:vetitiliber/perfil/perfil.dart';
+import 'package:vetitiliber/inicio/inicio.dart';
 
 class MenuLateral extends StatelessWidget {
   @override
@@ -15,7 +16,10 @@ class MenuLateral extends StatelessWidget {
           Ink(
             child: new ListTile(
               title: Text("Inicio"),
-              onTap: () {},
+              onTap: () {
+              Navigator.of(context).pushNamed(StartPage.id);
+
+              },
             ),
           ),
           Divider(),

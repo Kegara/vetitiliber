@@ -1,3 +1,4 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:vetitiliber/login/bodyL.dart';
 
@@ -16,6 +17,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final uController = TextEditingController();
   final pController = TextEditingController();
   final mController = TextEditingController();
+  bool _obscureText = true;
   final _formKey = GlobalKey<FormState>();
 
   var _color = Colors.blueAccent;
@@ -104,12 +106,30 @@ class _RegisterPageState extends State<RegisterPage> {
                         return null;
                       },
                       autofocus: true,
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        suffixIcon: Icon(Icons.lock),
-                        border: OutlineInputBorder(),
-                        labelText: 'Contraseña',
-                      ),
+                      obscureText: _obscureText,
+                     decoration: InputDecoration(
+                            suffixIcon: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                IconButton(
+                                  icon: Icon(_obscureText == true
+                                      ? Icons.visibility
+                                      : Icons.visibility_off),
+                                  onPressed: _toggle,
+                                ),
+                                Padding
+                                (
+                                  padding: EdgeInsets.only(right: 10),
+                                  child: Icon(
+                                  (Icons.lock),
+                                 )
+                                ),
+                              ],
+                            ),
+                            border: OutlineInputBorder(),
+                            labelText: 'Contraseña',
+                          ),
                     ),
                   ),
                   Padding(
@@ -151,6 +171,12 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
+  //funcion que cambia el estado del obscuretext para poder ver la contraseña
+   void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 }
 //funcion que se ejecuta en el boton de registro pide como parametro formulario y campos de user,password,mail
 void _registrarse(BuildContext context, GlobalKey<FormState> formKey,TextEditingController uController,
@@ -159,9 +185,22 @@ TextEditingController pController,TextEditingController mController) {
     if (formKey.currentState.validate()) {
       //valida el formkey y le pone el stado de valido 
       formKey.currentState.save();
-      print("regreso al login");
-      //redirige a la pagna de login
-      Navigator.of(context).pushNamed(LoginPage.id);
+      print("intento de registro");
+      //redirige a la pagna de login.
+      final String text="Registro para el usuario "+uController.text+" exitoso";
+       Fluttertoast.showToast(
+        msg: text,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 4,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
+      print("registro completado");
+     Navigator.of(context).pushNamed(LoginPage.id);
+
     
   }
+    
 }
