@@ -13,12 +13,13 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final sController = TextEditingController();
-  List _genres =["g1 ", "g2", "g3", "g4"];
-  List _populargenres = ["Ciencia ficcion", "fantasia", "Terror", "Constanta"];
-  List _genrescount = [15, 10, 20, 30];
-  List _genresid = [1, 2, 3, 4];
+  //lista de libros en el genero
+  List _books = [] ;
+  //lista de generos
+  List _genres = [] ;
+  //lista de generos populares
   List<DropdownMenuItem<String>> _dropDownMenuItems;
-String _currentSearch;
+  String _currentSearch;
  
   var pwdWidgets = <Widget>[];
 
@@ -52,9 +53,12 @@ String _currentSearch;
                 ),
               ),
               // Comments List will go here
-              Column(
-                children: pwdWidgets,
-              )
+        
+               Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: pwdWidgets,
+                ),
+              
             ],
           )),
         ));
@@ -63,6 +67,7 @@ String _currentSearch;
   //llenamos la lista con los valores
   List<DropdownMenuItem<String>> getDropDownMenuItems() {
     List<DropdownMenuItem<String>> items = [];
+    _genres =llenadoGeneros() ;
     items.add(new DropdownMenuItem(
         value: _currentSearch,
         child: new Text(
@@ -95,21 +100,26 @@ String _currentSearch;
 
   //contenedores
   Widget contenedoresLibros(int nContenedor) {
-    return InkWell(
-      onTap: () {
-        print("Container $nContenedor was tapped");
-      },
-      child: Container(
-          height: 150,
+    return 
+     Container(
+          height: 200,
           decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               image: DecorationImage(
-                  image: AssetImage('assets/imagenes/login/LOGO2.png'),
+                  image: NetworkImage(
+                          "https://th.bing.com/th/id/R.8d9ba5df9a59ec6f73f0a40630247440?rik=QnOZeZ%2btOaCbTw&riu=http%3a%2f%2froc21cdn-roc21.netdna-ssl.com%2fblog%2fwp-content%2fuploads%2f2016%2f10%2fportadas-libros-siencia-ficcion-cuatro.jpg&ehk=Dze1Ot%2fzw99kcOQoVtYx1tnfpIBiYCgSLG%2fo%2fxdwLn0%3d&risl=&pid=ImgRaw"),
                   fit: BoxFit.cover),
               borderRadius: BorderRadius.all(Radius.circular(20)),
               color: Colors.white,
-              boxShadow: [new BoxShadow(blurRadius: 0.0)])),
-    );
+              boxShadow: [new BoxShadow(blurRadius: 0.0)]
+           
+              
+              ),  child: InkWell(
+      onTap: () {
+        print("Container $nContenedor was tapped");
+      },
+              
+    ));
   }
 
   //contenedor de seccion
@@ -132,7 +142,7 @@ String _currentSearch;
                         contenedoresLibros(index),
                         new Expanded(
                             child: Text(
-                          "El Libro con el Titulo mas Largo del Mundo",
+                          "El Libro con el Titulo mas Largo del Mundo   ",
                           overflow: TextOverflow.visible,
                         ))
                       ]),
@@ -147,53 +157,90 @@ String _currentSearch;
           ),
         ]));
   }
-
+  List llenadoGeneros(){
+    return ["g1 ", "g2", "g3", "g4"];
+  }
+  List llenadoLibros(String sectionName){
+       return ["g1 ", "g2", "g3", "g4"];
+  }
   void creadorSecciones() {
     pwdWidgets = <Widget>[];
-    
          print(_currentSearch);
     if (_currentSearch == "5 generos pupulares" || _currentSearch==null) {
       for (String genero in _genres) {
         pwdWidgets.add(newSection(genero, 5));
       }
-    } else {
-       pwdWidgets.add(DetalleSeccion( _currentSearch,  5));
+    } else
+    {
+       pwdWidgets.add(new   SizedBox(
+      height:  (MediaQuery.of(context).size.height * 0.9), 
+       child:detalleSeccion( _currentSearch,  5)));
     }
 
     setState(() {});
   }
 
-  Widget DetalleSeccion(String sectionName, int limit){
-    return Padding(
-        padding: const EdgeInsets.only(top: 5, bottom: 5),
-        child: Column(children: [
-          Text(sectionName),
-          Container(
-              height: 250,
-              width: MediaQuery.of(context).size.width,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: _genres.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      padding: const EdgeInsets.all(10),
-                      width: MediaQuery.of(context).size.width / 3,
-                      child: Column(children: <Widget>[
-                        contenedoresLibros(index),
-                        new Expanded(
-                            child: Text(
-                          "El Libro con el Titulo mas Largo del Mundo",
-                          overflow: TextOverflow.visible,
-                        ))
-                      ]),
-                    );
-                  })),
-       
-        ]
-        )
-        )
-        ;
-  }
+  Widget detalleSeccion(String sectionName, int limit){
+  _books=llenadoLibros(sectionName);
+    setState(() {
+     
+    });
+    return   GridView.count(
+            childAspectRatio: ((MediaQuery.of(context).size.width/2-40) / (MediaQuery.of(context).size.height * 0.4)),
+            crossAxisCount: 2 ,          
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            crossAxisSpacing:10.0,
+          mainAxisSpacing: 10.0,
+            children: List.generate(limit,(index){
+            return Padding(
+              padding:const EdgeInsets.only(right:10.0,left: 10.0),
+              child: Column(
+              children: [
+                contenedoresLibrosD(index),
+               new Expanded(
+                      child: Text(
+                    "El Libro con el Titulo mas Largo del Mundo El Libro con el Titulo mas Largo del Mundo  El Libro con el Titulo mas Largo del Mundo ",
+                    overflow: TextOverflow.ellipsis
+                    ,maxLines: 3,
+                  )
+                  ) ],
+            )
+               
+            )
+              ;
+            }
+  ),
+)
 
+;
+  }
+ Widget contenedoresLibrosD(int nContenedor) {
+    return 
+       Container(
+         height: (MediaQuery.of(context).size.height * 0.4),
+       padding: const EdgeInsets.only(bottom:10.0),
+          decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              image: DecorationImage(
+                  image: NetworkImage(
+                          "https://th.bing.com/th/id/R.8d9ba5df9a59ec6f73f0a40630247440?rik=QnOZeZ%2btOaCbTw&riu=http%3a%2f%2froc21cdn-roc21.netdna-ssl.com%2fblog%2fwp-content%2fuploads%2f2016%2f10%2fportadas-libros-siencia-ficcion-cuatro.jpg&ehk=Dze1Ot%2fzw99kcOQoVtYx1tnfpIBiYCgSLG%2fo%2fxdwLn0%3d&risl=&pid=ImgRaw"),
+                  fit: BoxFit.cover),
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              color: Colors.white,
+              boxShadow: [new BoxShadow(blurRadius: 0.0)]
+              
+              ),
+                      child:InkWell(
+      onTap: () {
+        print("Container $nContenedor was tapped");
+      }
+              )
+      )
+
+      
+    
+       ;
+  }
 
 }
