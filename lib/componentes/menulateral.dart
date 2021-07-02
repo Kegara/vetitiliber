@@ -3,6 +3,7 @@ import 'package:vetitiliber/login/bodyL.dart';
 import 'package:vetitiliber/perfil/perfil.dart';
 import 'package:vetitiliber/inicio/inicio.dart';
 import 'package:vetitiliber/Busquedas/busquedaG.dart';
+import 'package:vetitiliber/perfil/confiperfil.dart';
 
 class MenuLateral extends StatelessWidget {
   @override
@@ -18,8 +19,7 @@ class MenuLateral extends StatelessWidget {
             child: new ListTile(
               title: Text("Inicio"),
               onTap: () {
-              Navigator.of(context).pushNamed(StartPage.id);
-
+                Navigator.of(context).pushNamed(StartPage.id);
               },
             ),
           ),
@@ -38,17 +38,18 @@ class MenuLateral extends StatelessWidget {
           Divider(),
           new ListTile(
             title: Text("Configuración"),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(ConfiperfilPage.id);
+            },
           ),
           Divider(),
           new ListTile(
             title: Text("Busqueda"),
           ),
-             new ListTile(
+          new ListTile(
             title: Text("Genero"),
             onTap: () {
-                 Navigator.of(context).pushNamed(SearchPage.id);
-         
+              Navigator.of(context).pushNamed(SearchPage.id);
             },
             leading: GestureDetector(
               behavior: HitTestBehavior.translucent,
@@ -111,27 +112,26 @@ class MenuLateral extends StatelessWidget {
   }
 }
 
-AppBar1(String x,BuildContext context){
-return new AppBar(
-          title: Text("MY REVIEW"),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.add_alert),
-              tooltip: 'Show Snackbar',
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('This is a snackbar')));
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.search),
-              tooltip: 'Show Snackbar',
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('This is a snackbar')));
-              },
-            )
-          ],
-        
-);
+AppBar1(String x, BuildContext context) {
+  return new AppBar(
+    title: Text("MY REVIEW"),
+    actions: [
+      IconButton(
+        icon: const Icon(Icons.add_alert),
+        tooltip: 'Show Snackbar',
+        onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('This is a snackbar')));
+        },
+      ),
+      IconButton(
+        icon: const Icon(Icons.search),
+        tooltip: 'Show Snackbar',
+        onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('This is a snackbar')));
+        },
+      )
+    ],
+  );
 }
