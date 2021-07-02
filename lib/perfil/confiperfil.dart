@@ -66,16 +66,21 @@ class MyCustomFormState extends State<MyCustomForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-              "Configuración", //Texto inicial de la sección para ver el perfil propio
+          Text("Configuración", //Texto inicial de la sección configuración
               style: new TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 5.0,
                   color: Colors.blueAccent)),
-          Text("Cuenta", //Texto inicial de la sección para ver el perfil propio
+          Text("Cuenta\n", //Nada xd
               style: new TextStyle(
                   fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 5.0,
+                  color: Colors.black)),
+          Text("Nombre actual", //Nada xd
+              style: new TextStyle(
+                  fontSize: 15,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 5.0,
                   color: Colors.black)),
@@ -88,19 +93,20 @@ class MyCustomFormState extends State<MyCustomForm> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: RaisedButton(
+            child: ElevatedButton(
               onPressed: () {
                 // devolverá true si el formulario es válido, o falso si
                 // el formulario no es válido.
                 if (_formKey.currentState.validate()) {
                   // Si el formulario es válido, queremos mostrar un Snackbar
-                  Scaffold.of(context)
-                      .showSnackBar(SnackBar(content: Text('Processing Data')));
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text("Procesing Data")));
                 }
               },
-              child: Text('Submit'),
+              child: Text('Cambiar'),
             ),
           ),
+          //Nuevo campo
         ],
       ),
     );
