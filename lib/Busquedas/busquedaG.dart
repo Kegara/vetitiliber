@@ -14,7 +14,7 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   final sController = TextEditingController();
   //lista de libros en el genero
-  List _books = [] ;
+ 
   //lista de generos
   List _genres = [] ;
   List<DropdownMenuItem<String>> _dropDownMenuItems;
@@ -237,7 +237,7 @@ class _SearchPageState extends State<SearchPage> {
 
   Widget detalleSeccion(String sectionName, int limit){
     //se llenan los libros de la seccion
-    _books=llenadoLibros(sectionName,limit);
+    List   _books=llenadoLibros(sectionName,limit);
     setState(() {
     });
     return   GridView.count(
@@ -247,7 +247,7 @@ class _SearchPageState extends State<SearchPage> {
             shrinkWrap: true,
             crossAxisSpacing:10.0,
           mainAxisSpacing: 10.0,
-            children: List.generate(limit,(index){
+            children: List.generate(_books.length,(index){
             return Padding(
               padding:const EdgeInsets.only(right:10.0,left: 10.0),
               child: Column(
@@ -257,7 +257,7 @@ class _SearchPageState extends State<SearchPage> {
                new Expanded(
                  //titulo del libro
                       child: Text(
-                    "El Libro con el Titulo mas Largo del Mundo El Libro con el Titulo mas Largo del Mundo  El Libro con el Titulo mas Largo del Mundo ",
+                    _books[index],
                     overflow: TextOverflow.ellipsis
                     ,maxLines: 3,
                   )
