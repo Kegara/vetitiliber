@@ -4,6 +4,7 @@ import 'package:vetitiliber/login/bodyR.dart';
 import 'package:vetitiliber/inicio/inicio.dart';
 import 'package:vetitiliber/perfil/perfil.dart';
 import 'package:vetitiliber/Busquedas/busquedaG.dart';
+import 'package:vetitiliber/perfil/confiperfil.dart';
 
 void main() {
   runApp(MyApp());
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         StartPage.id: (context) => StartPage(),
         PerfilPage.id: (context) => PerfilPage(),
         SearchPage.id: (context) => SearchPage(),
+        ConfiperfilPage.id: (context) => ConfiperfilPage(),
       },
     );
   }
