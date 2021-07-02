@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vetitiliber/login/bodyL.dart';
 import 'package:vetitiliber/perfil/perfil.dart';
 import 'package:vetitiliber/inicio/inicio.dart';
+import 'package:vetitiliber/Busquedas/busquedaG.dart';
 
 class MenuLateral extends StatelessWidget {
   @override
@@ -42,6 +43,22 @@ class MenuLateral extends StatelessWidget {
           Divider(),
           new ListTile(
             title: Text("Busqueda"),
+          ),
+             new ListTile(
+            title: Text("Genero"),
+            onTap: () {
+                 Navigator.of(context).pushNamed(SearchPage.id);
+         
+            },
+            leading: GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              child: Container(
+                width: 48,
+                height: 48,
+                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                alignment: Alignment.center,
+              ),
+            ),
           ),
           new ListTile(
             title: Text("Libro"),
@@ -92,4 +109,29 @@ class MenuLateral extends StatelessWidget {
       ),
     );
   }
+}
+
+AppBar1(String x,BuildContext context){
+return new AppBar(
+          title: Text("MY REVIEW"),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.add_alert),
+              tooltip: 'Show Snackbar',
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('This is a snackbar')));
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.search),
+              tooltip: 'Show Snackbar',
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('This is a snackbar')));
+              },
+            )
+          ],
+        
+);
 }
