@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:vetitiliber/login/bodyR.dart';
 import 'package:vetitiliber/inicio/inicio.dart';
 
@@ -10,14 +13,44 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage> {  
 
   //Creamos 2 controladores de texto para usuario y contraseña
   final usuarioController = TextEditingController();
   final passController = TextEditingController();
 
+  //Formkey sirve para revisar que todas las validaciones se cumplan
   final _formKey = GlobalKey<FormState>();
+
+  //Creamos una variable en donde guardaremos la dirección url en donde se encuentra nuestra consulta PHP
+  final url = "https://myreviewvl.000webhostapp.com/BD/Usuario/usuarios.php";
+  var jsonUsuarios = [];
+
   bool _obscureText = true;
+
+  //Función para obtener JSON ya que realizara una solicitud a la red tomara tiempo asi que agregamos async
+  void fetchPosts() async{
+    //Utilizamos un try catch para evitar que la app se crashee en caso de que falle el link
+    try{
+        //Utilizamos Uri.parse para cambiar de string a url y guardamos los resultados en una variable
+        final response = await get(Uri.parse(url));
+        //Utilizamos la propiedad body para obtner toda la información json que recibe
+        final jsonData = jsonDecode(response.body) as List;
+        print("Se ejecuta");
+        setState(() {
+                  //Guardamos toda la información json en una lista
+                  jsonUsuarios = jsonData;
+                });
+    }catch(err){print(err);}
+  }
+
+  @override
+    void initState() {
+      // TODO: implement initState
+      super.initState();
+      fetchPosts();
+    }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -123,8 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             onPressed: () {
                               print("ingreso a la app");
-                              _ingreso(
-                                  context, _formKey);
+                              _ingreso(context, _formKey);
                             },
                           )),
                     ],
@@ -161,13 +193,30 @@ class _LoginPageState extends State<LoginPage> {
 
     String user = usuarioController.text;
     String pass = passController.text;
-
+    
+    //valida el formkey y le pone el estado de valido y redirige al login
     if (formKey.currentState.validate()) {
-      //valida el formkey y le pone el estado de valido y redirige al login
-      formKey.currentState.save();
-      print("regreso al login" + user + pass);
+          print("regreso al login" + user + pass);
 
-      Navigator.of(context).pushNamed(StartPage.id);
+          formKey.currentState.save();
+
+          //Creamos un bucle que se repitira mientras haya información el la lista de usuarios
+          for(var i = 0;i <jsonUsuarios.length; i++){
+            print("Estra al bucle for");
+            //Guardamos la información del usuario (user y pass) en una variable
+            final usuario = jsonUsuarios[i];
+            print(i);
+
+            if(user == usuario["nombre"] && pass == usuario["contrasena"]){
+          
+              print("regreso al login" + user + pass);
+
+              Navigator.of(context).pushNamed(StartPage.id);
+            }else{
+              print("Contraseña/usuario incorrecto");
+            }
+      }
+      
     }
   }
 
