@@ -11,10 +11,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  //Creamos 2 controladores de texto para usuario y contraseña
+  final usuarioController = TextEditingController();
+  final passController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
-  final uController = TextEditingController();
   bool _obscureText = true;
-  final pController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -53,7 +56,8 @@ class _LoginPageState extends State<LoginPage> {
                         padding: const EdgeInsets.only(
                             top: 20.0, right: 30.0, left: 20.0),
                         child: TextFormField(
-                          controller: uController,
+                          //Agregamos al textFormField el TextEditingController que nos servira para obtener el valor escrito
+                          controller: usuarioController,
                           autofocus: true,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -72,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                         padding: const EdgeInsets.only(
                             top: 20.0, right: 30.0, left: 20.0),
                         child: TextFormField(
-                          controller: pController,
+                          controller: passController,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter some text';
@@ -120,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: () {
                               print("ingreso a la app");
                               _ingreso(
-                                  context, _formKey, uController, pController);
+                                  context, _formKey);
                             },
                           )),
                     ],
@@ -152,15 +156,21 @@ class _LoginPageState extends State<LoginPage> {
       _obscureText = !_obscureText;
     });
   }
+  //funcion que se ejecuta en el boton de ingreso que pide como parametro el usuario y la contraseña
+  void _ingreso(BuildContext context, GlobalKey<FormState> formKey) {
+
+    String user = usuarioController.text;
+    String pass = passController.text;
+
+    if (formKey.currentState.validate()) {
+      //valida el formkey y le pone el estado de valido y redirige al login
+      formKey.currentState.save();
+      print("regreso al login" + user + pass);
+
+      Navigator.of(context).pushNamed(StartPage.id);
+    }
+  }
+
 }
 
-//funcion que se ejecuta en el boton de ingreso que pide como parametro el usuario y la contraseña
-void _ingreso(BuildContext context, GlobalKey<FormState> formKey,
-    TextEditingController uController, TextEditingController cController) {
-  if (formKey.currentState.validate()) {
-    //valida el formkey y le pone el estado de valido y redirige al login
-    formKey.currentState.save();
-    print("regreso al login" + uController.text + cController.text);
-    Navigator.of(context).pushNamed(StartPage.id);
-  }
-}
+
