@@ -73,6 +73,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                   fontWeight: FontWeight.bold,
                   letterSpacing: 5.0,
                   color: Colors.blueAccent)),
+          Text("Cuenta", //Texto inicial de la sección para ver el perfil propio
+              style: new TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 5.0,
+                  color: Colors.black)),
           TextFormField(
             validator: (value) {
               if (value.isEmpty) {
