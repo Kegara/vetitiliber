@@ -12,6 +12,31 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
+showAlertDialog(BuildContext context, String mensaje) {
+  // set up the button
+  // Widget okButton = FlatButton(
+  //   child: Text("OK"),
+  //   onPressed: () {},
+  // );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("Error"),
+    content: Text(mensaje),
+    // actions: [
+    //   okButton,
+    // ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
 class _LoginPageState extends State<LoginPage> {
   //Creamos 2 controladores de texto para usuario y contraseña
   final usuarioController = TextEditingController();
@@ -24,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
   final url = "https://myreviewvl.000webhostapp.com/BD/Usuario/usuarios.php";
 
   //Metodo para enviar el usuario y contraseña al servidor
-  void postUserPass(user, pass) async {
+  void postUserPass(user, pass, BuildContext context) async {
     print("entra al post");
     try {
       print("entra al try");
@@ -35,18 +60,26 @@ class _LoginPageState extends State<LoginPage> {
       print(response.body.contains("504 Gateway Time-out"));
 
       if (response.body.isNotEmpty) {
-        Map<String, dynamic> json = jsonDecode(response.body);
-        print('id: ${json['id']}');
-        print('nombre: ${json['nombre']}');
-        print('contrasena: ${json['contrasena']}');
-        // Navigator.of(context).pushNamed(StartPage.id);
-      } else {
         if (response.body.contains("504 Gateway Time-out")) {
           print(
-              'Tiempo de espera excedido, Vuelva a intenar mas tarde o revisar su conexion a internet.');
+              'Tiempo de espera excedido, Vuelva a intenar mas tarde o revise su conexion a internet.');
+          showAlertDialog(context,
+              'Tiempo de espera excedido, Vuelva a intenar mas tarde o revise su conexion a internet.');
         } else {
-          print("Usuario/contraseña incorrecto");
+          if (response.body.contains("Fallo la conexion")) {
+            print('Conexion fallida.');
+            showAlertDialog(context, 'Conexion fallida.');
+          } else {
+            Map<String, dynamic> json = jsonDecode(response.body);
+            print('id: ${json['id']}');
+            print('nombre: ${json['nombre']}');
+            print('contrasena: ${json['contrasena']}');
+            Navigator.of(context).pushNamed(StartPage.id);
+          }
         }
+      } else {
+        showAlertDialog(context, 'Usuario o contraseña incorrecto');
+        print("Usuario o contraseña incorrecto");
       }
     } catch (err) {
       print("err: $err");
@@ -217,7 +250,7 @@ class _LoginPageState extends State<LoginPage> {
       formKey.currentState.save();
 
       //Envia el usuario y contraseña capturados al servidor
-      postUserPass(user, pass);
+      postUserPass(user, pass, context);
       //Revisa si la consulta encontro coincidencias y si es asi accede
       // getUserPass();
 
