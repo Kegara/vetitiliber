@@ -10,7 +10,6 @@
         die("Fallo la conexion");
     } else {
         //echo "Conexion exitosa";
-        return $conexion;
     }
     
     
