@@ -23,8 +23,6 @@ class _LoginPageState extends State<LoginPage> {
   //Creamos una variable en donde guardaremos la dirección url en donde se encuentra nuestra consulta PHP
   final url = "https://myreviewvl.000webhostapp.com/BD/Usuario/usuarios.php";
 
-  var _postsJson = [];
-
   //Metodo para enviar el usuario y contraseña al servidor
   void postUserPass(user, pass) async {
     print("entra al post");
@@ -59,7 +57,8 @@ class _LoginPageState extends State<LoginPage> {
     print("entra al get");
     try {
       final respuesta = await get(Uri.parse(url));
-      if (respuesta != null) {
+      if (respuesta.body != null) {
+        print("Login correcto");
         Navigator.of(context).pushNamed(StartPage.id);
       } else {
         print("Usuario/contraseña incorrecto");
@@ -214,12 +213,12 @@ class _LoginPageState extends State<LoginPage> {
     if (formKey.currentState.validate()) {
       print("regreso al login user: $user pass: $pass");
 
+      formKey.currentState.save();
+
       //Envia el usuario y contraseña capturados al servidor
       postUserPass(user, pass);
       //Revisa si la consulta encontro coincidencias y si es asi accede
       // getUserPass();
-
-      formKey.currentState.save();
 
       //Navigator.of(context).pushNamed(StartPage.id);
 

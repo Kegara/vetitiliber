@@ -1,6 +1,8 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:vetitiliber/login/bodyL.dart';
+import 'package:http/http.dart';
+
 
 class RegisterPage extends StatefulWidget {
   RegisterPage({Key key, this.title}) : super(key: key);
@@ -14,13 +16,27 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
  
   //controllers para formulario,user,password y mail
-  final uController = TextEditingController();
-  final pController = TextEditingController();
-  final mController = TextEditingController();
+  final userController = TextEditingController();
+  final passController = TextEditingController();
+  final emailController = TextEditingController();
+  //Creamos una variable en donde guardaremos la dirección url en donde se encuentra nuestra consulta PHP
+  final url = "https://myreviewvl.000webhostapp.com/BD/Usuario/usuarios.php";
   bool _obscureText = true;
   final _formKey = GlobalKey<FormState>();
 
   var _color = Colors.blueAccent;
+
+  //Metodo para enviar el usuario y contraseña al servidor
+  void postEnviarRegistro(user, pass,email) async{
+    try{
+      final response = await post(Uri.parse(url), body: {
+        "nombre": user,
+        "contrasena": pass
+      });
+      print(response.body);
+    }catch(err){}
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -58,7 +74,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     padding: const EdgeInsets.only(
                         top: 20.0, right: 30.0, left: 20.0),
                     child: TextFormField(
-                      controller: uController,
+                      controller: userController,
                       autofocus: true,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -84,7 +100,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         }
                         return null;
                       },
-                      controller: mController,
+                      controller: emailController,
                       autofocus: true,
                       decoration: InputDecoration(
                         suffixIcon: Icon(Icons.mail),
@@ -98,7 +114,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     padding: const EdgeInsets.only(
                         top: 20.0, right: 30.0, left: 20.0),
                     child: TextFormField(
-                      controller: pController,
+                      controller: passController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter some text';
@@ -144,7 +160,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             color: Colors.blueAccent),
                       ),
                       onPressed: () {
-                        _registrarse(context, _formKey,uController,pController,mController);
+                        _registrarse(context, _formKey,userController,passController,emailController);
                       },
                     ),
                   )
@@ -179,15 +195,15 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 }
 //funcion que se ejecuta en el boton de registro pide como parametro formulario y campos de user,password,mail
-void _registrarse(BuildContext context, GlobalKey<FormState> formKey,TextEditingController uController,
-TextEditingController pController,TextEditingController mController) {
+void _registrarse(BuildContext context, GlobalKey<FormState> formKey,TextEditingController userController,
+TextEditingController passController,TextEditingController emailController) {
       //valida que los textforms tengan el formato correcto
     if (formKey.currentState.validate()) {
       //valida el formkey y le pone el stado de valido 
       formKey.currentState.save();
       print("intento de registro");
       //redirige a la pagna de login.
-      final String text="Registro para el usuario "+uController.text+" exitoso";
+      final String text="Registro para el usuario "+userController.text+" exitoso";
        Fluttertoast.showToast(
         msg: text,
         toastLength: Toast.LENGTH_LONG,
