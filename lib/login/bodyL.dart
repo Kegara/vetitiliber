@@ -33,6 +33,18 @@ class _LoginPageState extends State<LoginPage> {
       });
     }catch(err){}
   }
+
+  //Metodo para obtener usuario y contraseña de la bd
+  void getUserPass() async{
+    try{
+      final respuesta = await get(Uri.parse(url));
+      if(respuesta != null){
+        Navigator.of(context).pushNamed(StartPage.id);
+      }else{
+        print("Usuario/contraseña incorrecto");
+      }
+    }catch(err){}
+  }
   bool _obscureText = true;
 
 
@@ -184,13 +196,15 @@ class _LoginPageState extends State<LoginPage> {
         
       print("regreso al login" + user + pass);
 
-          //Envia el usuario y contraseña capturados al servidor
+      //Envia el usuario y contraseña capturados al servidor
       postUserPass(user, pass);
+      //Revisa si la consulta encontro coincidencias y si es asi accede
+      getUserPass();
 
       formKey.currentState.save();
 
 
-      Navigator.of(context).pushNamed(StartPage.id);
+      //Navigator.of(context).pushNamed(StartPage.id);
 
     }
   }
