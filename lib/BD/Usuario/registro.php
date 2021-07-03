@@ -1,6 +1,6 @@
 <?php
     if($_POST){
-        require "/conexion.php";
+        require "../conexion.php";
 
 
         $usuario = $_POST["nombre"];
