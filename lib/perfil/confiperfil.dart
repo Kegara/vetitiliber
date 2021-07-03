@@ -61,54 +61,207 @@ class MyCustomFormState extends State<MyCustomForm> {
   @override
   Widget build(BuildContext context) {
     // Crea un widget Form usando el _formKey que creamos anteriormente
+    bool isSwitched = false;
     return Form(
-      key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text("Configuración", //Texto inicial de la sección configuración
-              style: new TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 5.0,
-                  color: Colors.blueAccent)),
-          Text("Cuenta\n", //Nada xd
-              style: new TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 5.0,
-                  color: Colors.black)),
-          Text("Nombre actual", //Nada xd
-              style: new TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 5.0,
-                  color: Colors.black)),
-          TextFormField(
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Please enter some text';
-              }
-            },
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: ElevatedButton(
-              onPressed: () {
-                // devolverá true si el formulario es válido, o falso si
-                // el formulario no es válido.
-                if (_formKey.currentState.validate()) {
-                  // Si el formulario es válido, queremos mostrar un Snackbar
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text("Procesing Data")));
-                }
-              },
-              child: Text('Cambiar'),
-            ),
-          ),
-          //Nuevo campo
-        ],
-      ),
-    );
+        key: _formKey,
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text("Configuración", //Texto inicial de la sección configuración
+                  style: new TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 5.0,
+                      color: Colors.blueAccent)),
+              new Expanded(
+                //Aquí empieza el listado de acciones
+                child: ListView(
+                  children: <Widget>[
+                    Text("\n",
+                        style: new TextStyle(
+                            fontSize: 5,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 5.0,
+                            color: Colors.black)),
+                    Text("Cuenta\n",
+                        style: new TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 5.0,
+                            color: Colors.black)),
+                    //Nuevo Campo----------------------------------------------------------------------
+                    Text("Cambiar nombre\n",
+                        style: new TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 5.0,
+                            color: Colors.black)),
+                    Text("Nombre actual", //Inicia el campo a cambiar
+                        style: new TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 5.0,
+                            color: Colors.black)),
+                    TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                    ),
+                    Row(children: <Widget>[
+                      Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 16.0),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                // devolverá true si el formulario es válido, o falso si
+                                // el formulario no es válido.
+                                if (_formKey.currentState.validate()) {
+                                  // Si el formulario es válido, queremos mostrar un Snackbar
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text("Procesing Data"),
+                                    behavior: SnackBarBehavior.floating,
+                                  ));
+                                }
+                              },
+                              child: Text('Cambiar'),
+                            ),
+                          ),
+                          flex: 3),
+                      Expanded(child: Text(''), flex: 7)
+                    ]),
+                    //Nuevo campo-------------------------------------------------------------------
+                    Text("\nCambiar contraseña\n",
+                        style: new TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 5.0,
+                            color: Colors.black)),
+                    Text("Contraseña actual", //Inicia el campo a cambiar
+                        style: new TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 5.0,
+                            color: Colors.black)),
+                    TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                    ),
+                    Row(children: <Widget>[
+                      Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 16.0),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                // devolverá true si el formulario es válido, o falso si
+                                // el formulario no es válido.
+                                if (_formKey.currentState.validate()) {
+                                  // Si el formulario es válido, queremos mostrar un Snackbar
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text("Procesing Data"),
+                                    behavior: SnackBarBehavior.floating,
+                                  ));
+                                }
+                              },
+                              child: Text('Cambiar'),
+                            ),
+                          ),
+                          flex: 3),
+                      Expanded(child: Text(''), flex: 7)
+                    ]),
+                    //Nuevo campo-------------------------------------------------------------------
+                    Text("\nCambiar correo\n",
+                        style: new TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 5.0,
+                            color: Colors.black)),
+                    Text("Correo actual", //Inicia el campo a cambiar
+                        style: new TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 5.0,
+                            color: Colors.black)),
+                    TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                    ),
+                    Row(children: <Widget>[
+                      Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 16.0),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                // devolverá true si el formulario es válido, o falso si
+                                // el formulario no es válido.
+                                if (_formKey.currentState.validate()) {
+                                  // Si el formulario es válido, queremos mostrar un Snackbar
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text("Procesing Data"),
+                                    behavior: SnackBarBehavior.floating,
+                                  ));
+                                }
+                              },
+                              child: Text('Cambiar'),
+                            ),
+                          ),
+                          flex: 3),
+                      Expanded(child: Text(''), flex: 7)
+                    ]),
+                    //Campos de verdadero o falso
+                    Divider(),
+                    Text("\nNotificaciones\n",
+                        style: new TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 5.0,
+                            color: Colors.black)),
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                            child: Text('Recibir Notificaciones',
+                                textAlign: TextAlign.left,
+                                style: new TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 5.0,
+                                    color: Colors.grey)),
+                            flex: 8),
+                        Expanded(
+                            child: Switch(
+                              value: isSwitched,
+                              onChanged: (value) {
+                                setState(() {
+                                  isSwitched = value;
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text("Procesing Data"),
+                                    behavior: SnackBarBehavior.floating,
+                                  ));
+                                });
+                              },
+                              activeTrackColor: Colors.cyan,
+                              activeColor: Colors.blueAccent,
+                            ),
+                            flex: 2),
+                      ],
+                    )
+                  ],
+                ),
+              )
+            ]));
   }
 }
