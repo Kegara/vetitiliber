@@ -12,8 +12,7 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {  
-
+class _LoginPageState extends State<LoginPage> {
   //Creamos 2 controladores de texto para usuario y contraseña
   final usuarioController = TextEditingController();
   final passController = TextEditingController();
@@ -24,29 +23,51 @@ class _LoginPageState extends State<LoginPage> {
   //Creamos una variable en donde guardaremos la dirección url en donde se encuentra nuestra consulta PHP
   final url = "https://myreviewvl.000webhostapp.com/BD/Usuario/usuarios.php";
 
+  var _postsJson = [];
+
   //Metodo para enviar el usuario y contraseña al servidor
-  void postUserPass(user, pass) async{
-    try{
-      final response = await post(Uri.parse(url), body: {
-        "nombre": user,
-        "contrasena": pass
-      });
-    }catch(err){}
+  void postUserPass(user, pass) async {
+    print("entra al post");
+    try {
+      print("entra al try");
+      final response = await post(Uri.parse(url),
+          body: {"nombre": user, "contrasena": pass});
+      print(response.body);
+      print(response.body.isNotEmpty);
+      print(response.body.contains("504 Gateway Time-out"));
+
+      if (response.body.isNotEmpty) {
+        Map<String, dynamic> json = jsonDecode(response.body);
+        print('id: ${json['id']}');
+        print('nombre: ${json['nombre']}');
+        print('contrasena: ${json['contrasena']}');
+      } else {
+        if (response.body.contains("504 Gateway Time-out")) {
+          print(
+              'Tiempo de espera excedido, Vuelva a intenar mas tarde o revisar su conexion a internet.');
+        } else {
+          print("Usuario/contraseña incorrecto");
+        }
+      }
+    } catch (err) {
+      print("err: $err");
+    }
   }
 
   //Metodo para obtener usuario y contraseña de la bd
-  void getUserPass() async{
-    try{
+  void getUserPass() async {
+    print("entra al get");
+    try {
       final respuesta = await get(Uri.parse(url));
-      if(respuesta != null){
+      if (respuesta != null) {
         Navigator.of(context).pushNamed(StartPage.id);
-      }else{
+      } else {
         print("Usuario/contraseña incorrecto");
       }
-    }catch(err){}
+    } catch (err) {}
   }
-  bool _obscureText = true;
 
+  bool _obscureText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -126,13 +147,11 @@ class _LoginPageState extends State<LoginPage> {
                                       : Icons.visibility_off),
                                   onPressed: _toggle,
                                 ),
-                                Padding
-                                (
-                                  padding: EdgeInsets.only(right: 10),
-                                  child: Icon(
-                                  (Icons.lock),
-                                 )
-                                ),
+                                Padding(
+                                    padding: EdgeInsets.only(right: 10),
+                                    child: Icon(
+                                      (Icons.lock),
+                                    )),
                               ],
                             ),
                             border: OutlineInputBorder(),
@@ -185,28 +204,25 @@ class _LoginPageState extends State<LoginPage> {
       _obscureText = !_obscureText;
     });
   }
+
   //funcion que se ejecuta en el boton de ingreso que pide como parametro el usuario y la contraseña
   void _ingreso(BuildContext context, GlobalKey<FormState> formKey) {
-
     String user = usuarioController.text;
     String pass = passController.text;
-    
+
     //valida el formkey y le pone el estado de valido y redirige al login
     if (formKey.currentState.validate()) {
-        
-      print("regreso al login" + user + pass);
+      print("regreso al login user: $user pass: $pass");
 
       //Envia el usuario y contraseña capturados al servidor
       postUserPass(user, pass);
       //Revisa si la consulta encontro coincidencias y si es asi accede
-      getUserPass();
+      // getUserPass();
 
       formKey.currentState.save();
-
 
       //Navigator.of(context).pushNamed(StartPage.id);
 
     }
   }
-
 }
