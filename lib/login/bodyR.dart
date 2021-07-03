@@ -20,7 +20,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final passController = TextEditingController();
   final emailController = TextEditingController();
   //Creamos una variable en donde guardaremos la dirección url en donde se encuentra nuestra consulta PHP
-  final url = "https://myreviewvl.000webhostapp.com/BD/Usuario/usuarios.php";
+  final url = "https://myreviewvl.000webhostapp.com/BD/Usuario/registro.php";
   bool _obscureText = true;
   final _formKey = GlobalKey<FormState>();
 
@@ -31,9 +31,24 @@ class _RegisterPageState extends State<RegisterPage> {
     try{
       final response = await post(Uri.parse(url), body: {
         "nombre": user,
-        "contrasena": pass
+        "contrasena": pass,
+        "correoElectronico": email
       });
       print(response.body);
+      print("intento de registro");
+      //redirige a la pagna de login.
+      final String text="Registro para el usuario "+user+" exitoso";
+        Fluttertoast.showToast(
+        msg: text,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 4,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0
+      );
+      print("registro completado");
+      Navigator.of(context).pushNamed(LoginPage.id);
     }catch(err){}
   }
 
@@ -193,30 +208,20 @@ class _RegisterPageState extends State<RegisterPage> {
       _obscureText = !_obscureText;
     });
   }
-}
-//funcion que se ejecuta en el boton de registro pide como parametro formulario y campos de user,password,mail
+  //funcion que se ejecuta en el boton de registro pide como parametro formulario y campos de user,password,mail
 void _registrarse(BuildContext context, GlobalKey<FormState> formKey,TextEditingController userController,
 TextEditingController passController,TextEditingController emailController) {
       //valida que los textforms tengan el formato correcto
     if (formKey.currentState.validate()) {
       //valida el formkey y le pone el stado de valido 
       formKey.currentState.save();
-      print("intento de registro");
-      //redirige a la pagna de login.
-      final String text="Registro para el usuario "+userController.text+" exitoso";
-       Fluttertoast.showToast(
-        msg: text,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 4,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0
-    );
-      print("registro completado");
-     Navigator.of(context).pushNamed(LoginPage.id);
+      String user = userController.text;
+      String pass = passController.text;
+      String email = emailController.text;
 
-    
+      postEnviarRegistro(user, pass, email);
   }
     
 }
+}
+

@@ -5,13 +5,14 @@
 
         $usuario = $_POST["nombre"];
         $contraseña = $_POST["contrasena"];
-        $email = $_POST["email"];
+        $email = $_POST["correoElectronico"];
 
 
-        $sql = "INSERT INTO usuario (nombre, contrasena) VALUES ('$usuario','$contraseña')";
+        $sql = "INSERT INTO usuario (nombre, contrasena, correoElectronico) VALUES ('$usuario','$contraseña','$email')";
         
-        $query = $mysqli->query($sql);
-        
-        
+        mysqli_query($conexion,$sql);
+
+        mysqli_close($conexion);
+
     }
 ?>
