@@ -31,6 +31,7 @@ class _LoginPageState extends State<LoginPage> {
         "nombre": user,
         "contrasena": pass
       });
+      print(response.body);
     }catch(err){}
   }
 
@@ -38,7 +39,8 @@ class _LoginPageState extends State<LoginPage> {
   void getUserPass() async{
     try{
       final respuesta = await get(Uri.parse(url));
-      if(respuesta != null){
+      if(respuesta.body != null){
+        print("Login correcto");
         Navigator.of(context).pushNamed(StartPage.id);
       }else{
         print("Usuario/contraseña incorrecto");
@@ -196,12 +198,13 @@ class _LoginPageState extends State<LoginPage> {
         
       print("regreso al login" + user + pass);
 
+      formKey.currentState.save();
+
       //Envia el usuario y contraseña capturados al servidor
       postUserPass(user, pass);
       //Revisa si la consulta encontro coincidencias y si es asi accede
       getUserPass();
 
-      formKey.currentState.save();
 
 
       //Navigator.of(context).pushNamed(StartPage.id);
