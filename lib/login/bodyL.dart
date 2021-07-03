@@ -1,6 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:vetitiliber/login/bodyR.dart';
 import 'package:vetitiliber/inicio/inicio.dart';
@@ -24,32 +23,30 @@ class _LoginPageState extends State<LoginPage> {
 
   //Creamos una variable en donde guardaremos la dirección url en donde se encuentra nuestra consulta PHP
   final url = "https://myreviewvl.000webhostapp.com/BD/Usuario/usuarios.php";
-  var jsonUsuarios = [];
 
-  bool _obscureText = true;
-
-  //Función para obtener JSON ya que realizara una solicitud a la red tomara tiempo asi que agregamos async
-  void fetchPosts() async{
-    //Utilizamos un try catch para evitar que la app se crashee en caso de que falle el link
+  //Metodo para enviar el usuario y contraseña al servidor
+  void postUserPass(user, pass) async{
     try{
-        //Utilizamos Uri.parse para cambiar de string a url y guardamos los resultados en una variable
-        final response = await get(Uri.parse(url));
-        //Utilizamos la propiedad body para obtner toda la información json que recibe
-        final jsonData = jsonDecode(response.body) as List;
-        print("Se ejecuta");
-        setState(() {
-                  //Guardamos toda la información json en una lista
-                  jsonUsuarios = jsonData;
-                });
-    }catch(err){print(err);}
+      final response = await post(Uri.parse(url), body: {
+        "nombre": user,
+        "contrasena": pass
+      });
+    }catch(err){}
   }
 
-  @override
-    void initState() {
-      // TODO: implement initState
-      super.initState();
-      fetchPosts();
-    }
+  //Metodo para obtener usuario y contraseña de la bd
+  void getUserPass() async{
+    try{
+      final respuesta = await get(Uri.parse(url));
+      if(respuesta != null){
+        Navigator.of(context).pushNamed(StartPage.id);
+      }else{
+        print("Usuario/contraseña incorrecto");
+      }
+    }catch(err){}
+  }
+  bool _obscureText = true;
+
 
   @override
   Widget build(BuildContext context) {
@@ -196,30 +193,20 @@ class _LoginPageState extends State<LoginPage> {
     
     //valida el formkey y le pone el estado de valido y redirige al login
     if (formKey.currentState.validate()) {
-          print("regreso al login" + user + pass);
+        
+      print("regreso al login" + user + pass);
 
-          formKey.currentState.save();
+      //Envia el usuario y contraseña capturados al servidor
+      postUserPass(user, pass);
+      //Revisa si la consulta encontro coincidencias y si es asi accede
+      getUserPass();
 
-          //Creamos un bucle que se repitira mientras haya información el la lista de usuarios
-          for(var i = 0;i <jsonUsuarios.length; i++){
-            print("Estra al bucle for");
-            //Guardamos la información del usuario (user y pass) en una variable
-            final usuario = jsonUsuarios[i];
-            print(i);
+      formKey.currentState.save();
 
-            if(user == usuario["nombre"] && pass == usuario["contrasena"]){
-          
-              print("regreso al login" + user + pass);
 
-              Navigator.of(context).pushNamed(StartPage.id);
-            }else{
-              print("Contraseña/usuario incorrecto");
-            }
-      }
-      
+      //Navigator.of(context).pushNamed(StartPage.id);
+
     }
   }
 
 }
-
-
