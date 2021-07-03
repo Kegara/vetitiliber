@@ -39,6 +39,7 @@ class _LoginPageState extends State<LoginPage> {
         print('id: ${json['id']}');
         print('nombre: ${json['nombre']}');
         print('contrasena: ${json['contrasena']}');
+        // Navigator.of(context).pushNamed(StartPage.id);
       } else {
         if (response.body.contains("504 Gateway Time-out")) {
           print(
