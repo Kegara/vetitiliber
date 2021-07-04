@@ -258,7 +258,134 @@ class MyCustomFormState extends State<MyCustomForm> {
                             ),
                             flex: 2),
                       ],
-                    )
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                            child: Text('Recibir Notificaciones',
+                                textAlign: TextAlign.left,
+                                style: new TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 5.0,
+                                    color: Colors.grey)),
+                            flex: 8),
+                        Expanded(
+                            child: Switch(
+                              value: isSwitched,
+                              onChanged: (value) {
+                                setState(() {
+                                  isSwitched = value;
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text("Procesing Data"),
+                                    behavior: SnackBarBehavior.floating,
+                                  ));
+                                });
+                              },
+                              activeTrackColor: Colors.cyan,
+                              activeColor: Colors.blueAccent,
+                            ),
+                            flex: 2),
+                      ],
+                    ),
+                    Text("\nPrivacidad\n",
+                        style: new TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 5.0,
+                            color: Colors.black)),
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                            child: Text(
+                                'Otros usuarios pueden ver los libros que has leído o no',
+                                textAlign: TextAlign.left,
+                                style: new TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 5.0,
+                                    color: Colors.grey)),
+                            flex: 8),
+                        Expanded(
+                            child: Switch(
+                              value: isSwitched,
+                              onChanged: (value) {
+                                setState(() {
+                                  isSwitched = value;
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text("Procesing Data"),
+                                    behavior: SnackBarBehavior.floating,
+                                  ));
+                                });
+                              },
+                              activeTrackColor: Colors.cyan,
+                              activeColor: Colors.blueAccent,
+                            ),
+                            flex: 2),
+                      ],
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                            child: Text('Otros usuarios pueden ver tus reseñas',
+                                textAlign: TextAlign.left,
+                                style: new TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 5.0,
+                                    color: Colors.grey)),
+                            flex: 8),
+                        Expanded(
+                            child: Switch(
+                              value: isSwitched,
+                              onChanged: (value) {
+                                setState(() {
+                                  isSwitched = value;
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text("Procesing Data"),
+                                    behavior: SnackBarBehavior.floating,
+                                  ));
+                                });
+                              },
+                              activeTrackColor: Colors.cyan,
+                              activeColor: Colors.blueAccent,
+                            ),
+                            flex: 2),
+                      ],
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                            child: Text('Establecer su perfil como privado',
+                                textAlign: TextAlign.left,
+                                style: new TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 5.0,
+                                    color: Colors.grey)),
+                            flex: 8),
+                        Expanded(
+                            child: Switch(
+                              value: isSwitched,
+                              onChanged: (value) {
+                                setState(() {
+                                  isSwitched = value;
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text("Procesing Data"),
+                                    behavior: SnackBarBehavior.floating,
+                                  ));
+                                });
+                              },
+                              activeTrackColor: Colors.cyan,
+                              activeColor: Colors.blueAccent,
+                            ),
+                            flex: 2),
+                      ],
+                    ),
                   ],
                 ),
               )
