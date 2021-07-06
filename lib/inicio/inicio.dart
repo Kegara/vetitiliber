@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vetitiliber/componentes/menulateral.dart';
 
 class StartPage extends StatefulWidget {
@@ -19,6 +20,7 @@ class _StartPageState extends State<StartPage> {
     "https://static.javatpoint.com/tutorial/flutter/images/flutter-logo.png",
     "https://static.javatpoint.com/tutorial/flutter/images/flutter-logo.png"
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,6 +77,10 @@ class _StartPageState extends State<StartPage> {
   Widget newSection(String sectionName) {
     //se obtienen los libros
     _topBooks = obtenerTopBooks();
+    // printUsuarioId();
+    getUsuarioId().then((value) {
+      print(value);
+    });
 
     return GridView.count(
       childAspectRatio: ((MediaQuery.of(context).size.width / 2 - 40) /
@@ -111,5 +117,15 @@ class _StartPageState extends State<StartPage> {
 
   List obtenerTopBooks() {
     return ["g1 ", "g2", "g3", "g4", "g4"];
+  }
+
+  void printUsuarioId() async {
+    final prefs = await SharedPreferences.getInstance();
+    print("(Print) idUsuario: " + prefs.getInt('idUsuario').toString());
+  }
+
+  Future<String> getUsuarioId() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('idUsuario').toString();
   }
 }
