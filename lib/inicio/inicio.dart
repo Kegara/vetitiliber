@@ -47,20 +47,29 @@ class _StartPageState extends State<StartPage> {
   // contenedor que tendra la info del libro el cual tiene asociado un onTap que redirige a la informacion del libro
   Widget contenedoresLibros(int nContenedor) {
     return Container(
-        height: (MediaQuery.of(context).size.height * 0.4),
-        padding: const EdgeInsets.only(bottom: 10.0),
-        decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            image: DecorationImage(
-                image: NetworkImage(
-                    "https://th.bing.com/th/id/R.8d9ba5df9a59ec6f73f0a40630247440?rik=QnOZeZ%2btOaCbTw&riu=http%3a%2f%2froc21cdn-roc21.netdna-ssl.com%2fblog%2fwp-content%2fuploads%2f2016%2f10%2fportadas-libros-siencia-ficcion-cuatro.jpg&ehk=Dze1Ot%2fzw99kcOQoVtYx1tnfpIBiYCgSLG%2fo%2fxdwLn0%3d&risl=&pid=ImgRaw"),
-                fit: BoxFit.cover),
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-            color: Colors.white,
-            boxShadow: [new BoxShadow(blurRadius: 0.0)]),
-        child: InkWell(onTap: () {
+      height: (MediaQuery.of(context).size.height * 0.4),
+      padding: const EdgeInsets.only(bottom: 10.0),
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        image: DecorationImage(
+          image: NetworkImage(
+              "https://th.bing.com/th/id/R.8d9ba5df9a59ec6f73f0a40630247440?rik=QnOZeZ%2btOaCbTw&riu=http%3a%2f%2froc21cdn-roc21.netdna-ssl.com%2fblog%2fwp-content%2fuploads%2f2016%2f10%2fportadas-libros-siencia-ficcion-cuatro.jpg&ehk=Dze1Ot%2fzw99kcOQoVtYx1tnfpIBiYCgSLG%2fo%2fxdwLn0%3d&risl=&pid=ImgRaw"),
+          fit: BoxFit.cover,
+        ),
+        borderRadius: BorderRadius.all(
+          Radius.circular(20),
+        ),
+        color: Colors.white,
+        boxShadow: [
+          new BoxShadow(blurRadius: 0.0),
+        ],
+      ),
+      child: InkWell(
+        onTap: () {
           print("Container $nContenedor was tapped");
-        }));
+        },
+      ),
+    );
   }
 
   Widget newSection(String sectionName) {
