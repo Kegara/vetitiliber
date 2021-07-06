@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vetitiliber/login/bodyR.dart';
 import 'package:vetitiliber/inicio/inicio.dart';
 
@@ -74,6 +75,10 @@ class _LoginPageState extends State<LoginPage> {
             print('id: ${json['id']}');
             print('nombre: ${json['nombre']}');
             print('contrasena: ${json['contrasena']}');
+
+            final prefs = await SharedPreferences.getInstance();
+            prefs.setInt('idUsuario', int.parse(json['contrasena']));
+
             Navigator.of(context).pushNamed(StartPage.id);
           }
         }
