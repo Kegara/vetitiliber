@@ -74,24 +74,29 @@ class _StartPageState extends State<StartPage> {
       crossAxisSpacing: 0.0,
       mainAxisSpacing: 0.0,
       //generacion de libros en base a el tamaño de _topBooks contenedor de los libros
-      children: List.generate(_topBooks.length, (index) {
-        //generacion de libros
-        return Padding(
+      children: List.generate(
+        _topBooks.length,
+        (index) {
+          //generacion de libros
+          return Padding(
             padding: const EdgeInsets.only(right: 10.0, left: 10.0),
             child: Column(
               children: [
                 //generacion de portadas
                 contenedoresLibros(index),
                 new Expanded(
-                    //generacion de titulo de libros
-                    child: Text(
-                  "El Libro con el Titulo mas Largo del Mundo El Libro con el Titulo mas Largo del Mundo  El Libro con el Titulo mas Largo del Mundo ",
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 3,
-                ))
+                  //generacion de titulo de libros
+                  child: Text(
+                    "El Libro con el Titulo mas Largo del Mundo El Libro con el Titulo mas Largo del Mundo  El Libro con el Titulo mas Largo del Mundo ",
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 3,
+                  ),
+                ),
               ],
-            ));
-      }),
+            ),
+          );
+        },
+      ),
     );
   }
 
