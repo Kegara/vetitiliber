@@ -22,11 +22,11 @@ class _StartPageState extends State<StartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: MenuLateral(),
-        appBar: AppBar1("MY REVIEW", context),
-        body: SafeArea(
-          child: Center(
-              child: Column(
+      drawer: MenuLateral(),
+      appBar: AppBar1("MY REVIEW", context),
+      body: SafeArea(
+        child: Center(
+          child: Column(
             children: <Widget>[
               //titulo de seccion
               Padding(
@@ -34,10 +34,14 @@ class _StartPageState extends State<StartPage> {
                 child: Text("Top libros"),
               ),
               //seccion donde se mostraran los 10 libros
-              Expanded(child: newSection("Top libros")),
+              Expanded(
+                child: newSection("Top libros"),
+              ),
             ],
-          )),
-        ));
+          ),
+        ),
+      ),
+    );
   }
 
   // contenedor que tendra la info del libro el cual tiene asociado un onTap que redirige a la informacion del libro
