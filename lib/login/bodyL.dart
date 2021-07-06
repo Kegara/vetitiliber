@@ -77,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
             print('contrasena: ${json['contrasena']}');
 
             final prefs = await SharedPreferences.getInstance();
-            prefs.setInt('idUsuario', int.parse(json['contrasena']));
+            prefs.setInt('idUsuario', int.parse(json['id']));
 
             Navigator.of(context).pushNamed(StartPage.id);
           }
