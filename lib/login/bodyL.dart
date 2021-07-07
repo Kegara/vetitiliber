@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vetitiliber/login/bodyR.dart';
 import 'package:vetitiliber/inicio/inicio.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key key, this.title}) : super(key: key);
+  LoginPage({
+    Key key,
+    this.title,
+  }) : super(key: key);
   final String title;
   static String id = 'LoginPage';
   @override
@@ -53,8 +57,13 @@ class _LoginPageState extends State<LoginPage> {
     print("entra al post");
     try {
       print("entra al try");
-      final response = await post(Uri.parse(url),
-          body: {"nombre": user, "contrasena": pass});
+      final response = await post(
+        Uri.parse(url),
+        body: {
+          "nombre": user,
+          "contrasena": pass,
+        },
+      );
       print(response.body);
       print(response.body.isNotEmpty);
       print(response.body.contains("504 Gateway Time-out"));
@@ -74,6 +83,10 @@ class _LoginPageState extends State<LoginPage> {
             print('id: ${json['id']}');
             print('nombre: ${json['nombre']}');
             print('contrasena: ${json['contrasena']}');
+
+            final prefs = await SharedPreferences.getInstance();
+            prefs.setInt('idUsuario', int.parse(json['id']));
+
             Navigator.of(context).pushNamed(StartPage.id);
           }
         }
@@ -121,110 +134,125 @@ class _LoginPageState extends State<LoginPage> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(top: 50.0, bottom: 20),
-                child: Text('My Review',
-                    style: new TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 5.0,
-                        color: Colors.blueAccent)),
+                child: Text(
+                  'My Review',
+                  style: new TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 5.0,
+                    color: Colors.blueAccent,
+                  ),
+                ),
               ),
               Image.asset(
                 'assets/imagenes/login/LOGO2.png',
                 height: size.height * 0.25,
               ),
               Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 20.0, right: 30.0, left: 20.0),
-                        child: TextFormField(
-                          //Agregamos al textFormField el TextEditingController que nos servira para obtener el valor escrito
-                          controller: usuarioController,
-                          autofocus: true,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                            suffixIcon: Icon(Icons.person),
-                            border: OutlineInputBorder(),
-                            labelText: 'Usuario',
-                          ),
+                key: _formKey,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 20.0,
+                        right: 30.0,
+                        left: 20.0,
+                      ),
+                      child: TextFormField(
+                        //Agregamos al textFormField el TextEditingController que nos servira para obtener el valor escrito
+                        controller: usuarioController,
+                        autofocus: true,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          suffixIcon: Icon(Icons.person),
+                          border: OutlineInputBorder(),
+                          labelText: 'Usuario',
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 20.0, right: 30.0, left: 20.0),
-                        child: TextFormField(
-                          controller: passController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
-                            }
-                            return null;
-                          },
-                          autofocus: true,
-                          obscureText: _obscureText,
-                          decoration: InputDecoration(
-                            suffixIcon: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                IconButton(
-                                  icon: Icon(_obscureText == true
-                                      ? Icons.visibility
-                                      : Icons.visibility_off),
-                                  onPressed: _toggle,
-                                ),
-                                Padding(
-                                    padding: EdgeInsets.only(right: 10),
-                                    child: Icon(
-                                      (Icons.lock),
-                                    )),
-                              ],
-                            ),
-                            border: OutlineInputBorder(),
-                            labelText: 'Contraseña',
-                          ),
-                        ),
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.only(top: 20.0),
-                          child: TextButton(
-                            child: Text(
-                              'Ingresar',
-                              style: new TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 5.0,
-                                  color: Colors.blueAccent),
-                            ),
-                            onPressed: () {
-                              print("ingreso a la app");
-                              _ingreso(context, _formKey);
-                            },
-                          )),
-                    ],
-                  )),
-              Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: TextButton(
-                    child: Text(
-                      '¿Nuevo en MyReview?',
-                      style: new TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.normal,
-                          letterSpacing: 1.0,
-                          color: Colors.blueAccent),
                     ),
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(RegisterPage.id);
-                    },
-                  )),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 20.0,
+                        right: 30.0,
+                        left: 20.0,
+                      ),
+                      child: TextFormField(
+                        controller: passController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
+                        autofocus: true,
+                        obscureText: _obscureText,
+                        decoration: InputDecoration(
+                          suffixIcon: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              IconButton(
+                                icon: Icon(_obscureText == true
+                                    ? Icons.visibility
+                                    : Icons.visibility_off),
+                                onPressed: _toggle,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(right: 10),
+                                child: Icon(
+                                  (Icons.lock),
+                                ),
+                              ),
+                            ],
+                          ),
+                          border: OutlineInputBorder(),
+                          labelText: 'Contraseña',
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: TextButton(
+                        child: Text(
+                          'Ingresar',
+                          style: new TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 5.0,
+                            color: Colors.blueAccent,
+                          ),
+                        ),
+                        onPressed: () {
+                          print("ingreso a la app");
+                          _ingreso(context, _formKey);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: TextButton(
+                  child: Text(
+                    '¿Nuevo en MyReview?',
+                    style: new TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.normal,
+                      letterSpacing: 1.0,
+                      color: Colors.blueAccent,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(RegisterPage.id);
+                  },
+                ),
+              ),
             ],
           ),
         ),
@@ -254,7 +282,7 @@ class _LoginPageState extends State<LoginPage> {
       //Revisa si la consulta encontro coincidencias y si es asi accede
       // getUserPass();
 
-      //Navigator.of(context).pushNamed(StartPage.id);
+      // Navigator.of(context).pushNamed(StartPage.id);
 
     }
   }
