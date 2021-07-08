@@ -27,39 +27,41 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     creadorSecciones();
     return Scaffold(
-
-        //llamada al menu lateral y appbar
-        drawer: MenuLateral(),
-        appBar: AppBar1("MY REVIEW", context),
-        resizeToAvoidBottomInset: false,
-        body: SafeArea(
-          child: Column(
-            children: <Widget>[
-              //Texto de titulo
-              Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
-                child: Text("Busqueda por generos"),
+      //llamada al menu lateral y appbar
+      drawer: MenuLateral(),
+      appBar: AppBar1("MY REVIEW", context),
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            //Texto de titulo
+            Padding(
+              padding: const EdgeInsets.only(top: 10, bottom: 10),
+              child: Text("Busqueda por generos"),
+            ),
+            //Contenedor con el dropdownmenu
+            Container(
+              child: new DropdownButton(
+                icon: const Icon(Icons.filter_list_alt),
+                value: _currentSearch,
+                items: _dropDownMenuItems,
+                onChanged: changedDropDownItem,
               ),
-              //Contenedor con el dropdownmenu
-              Container(
-                child: new DropdownButton(
-                  icon: const Icon(Icons.filter_list_alt),
-                  value: _currentSearch,
-                  items: _dropDownMenuItems,
-                  onChanged: changedDropDownItem,
+            ),
+            // Columna que contiene los widgets
+
+            Flexible(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: pwdWidgets,
                 ),
               ),
-              // Columna que contiene los widgets
-
-              Flexible(
-                  child: SingleChildScrollView(
-                      child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: pwdWidgets,
-              ))),
-            ],
-          ),
-        ));
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   //llenamos la lista con los valores de los generos existentes
@@ -67,16 +69,31 @@ class _SearchPageState extends State<SearchPage> {
     List<DropdownMenuItem<String>> items = [];
     //se llena la lista de los generos
     _genres = llenadoGeneros();
+    // llenadoGeneros().then((value) {
+    //   _genres = value;
+    //  print("values es");
+    //   print(value);
+    // });
+    print("_genres es");
+    print(_genres);
     //llenamos la lista con los valores de los generos existentes
     //agregamos un item defaul de los 5 generos populares
-    items.add(new DropdownMenuItem(
+    items.add(
+      new DropdownMenuItem(
         value: _currentSearch,
         child: new Text(
-          "5 generos pupulares",
-        )));
+          "Elija un Genero",
+        ),
+      ),
+    );
     //se itera el array y por cada item se agrega un genero
     for (String genero in _genres) {
-      items.add(new DropdownMenuItem(value: genero, child: new Text(genero)));
+      items.add(
+        new DropdownMenuItem(
+          value: genero,
+          child: new Text(genero),
+        ),
+      );
     }
     return items;
   }
@@ -102,57 +119,73 @@ class _SearchPageState extends State<SearchPage> {
   //formato del libro para generos populares
   Widget contenedoresLibros(int nContenedor) {
     return Container(
-        height: 200,
-        decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            image: DecorationImage(
-                image: NetworkImage(
-                    "https://th.bing.com/th/id/R.8d9ba5df9a59ec6f73f0a40630247440?rik=QnOZeZ%2btOaCbTw&riu=http%3a%2f%2froc21cdn-roc21.netdna-ssl.com%2fblog%2fwp-content%2fuploads%2f2016%2f10%2fportadas-libros-siencia-ficcion-cuatro.jpg&ehk=Dze1Ot%2fzw99kcOQoVtYx1tnfpIBiYCgSLG%2fo%2fxdwLn0%3d&risl=&pid=ImgRaw"),
-                fit: BoxFit.cover),
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-            color: Colors.white,
-            boxShadow: [new BoxShadow(blurRadius: 0.0)]),
-        child: InkWell(
-          onTap: () {
-            print("Container $nContenedor was tapped");
-          },
-        ));
+      height: 200,
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        image: DecorationImage(
+          image: NetworkImage(
+            "https://th.bing.com/th/id/R.8d9ba5df9a59ec6f73f0a40630247440?rik=QnOZeZ%2btOaCbTw&riu=http%3a%2f%2froc21cdn-roc21.netdna-ssl.com%2fblog%2fwp-content%2fuploads%2f2016%2f10%2fportadas-libros-siencia-ficcion-cuatro.jpg&ehk=Dze1Ot%2fzw99kcOQoVtYx1tnfpIBiYCgSLG%2fo%2fxdwLn0%3d&risl=&pid=ImgRaw",
+          ),
+          fit: BoxFit.cover,
+        ),
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        color: Colors.white,
+        boxShadow: [new BoxShadow(blurRadius: 0.0)],
+      ),
+      child: InkWell(
+        onTap: () {
+          print("Container $nContenedor was tapped");
+        },
+      ),
+    );
   }
 
   //contenedor de seccion de generos populares
   Widget newSection(String sectionName, int limit) {
     //se genera una lista con los libros de la seccion
-    List _books2 = llenadoLibros(sectionName, 5);
+    List _books2 = llenadoLibros(sectionName, limit);
     return Padding(
-        padding: const EdgeInsets.only(top: 5, bottom: 5),
-        child: Column(children: [
+      padding: const EdgeInsets.only(
+        top: 5,
+        bottom: 5,
+      ),
+      child: Column(
+        children: [
           //titulo de seccion
           Text(sectionName),
           //contenedor de libros de seccion
           Container(
-              height: 250,
-              width: MediaQuery.of(context).size.width,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  //se cuenta cuanos items se tienen en la seccion
-                  itemCount: _books2.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    //contenedor con imagen de libro
-                    return Container(
-                      padding: const EdgeInsets.all(10),
-                      width: MediaQuery.of(context).size.width / 3,
-                      child: Column(children: <Widget>[
-                        //se crea el objeto portada libro
-                        contenedoresLibros(index),
-                        new Expanded(
-                            //titulo del libro
-                            child: Text(
+            height: 250,
+            width: MediaQuery.of(context).size.width,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              //se cuenta cuanos items se tienen en la seccion
+              itemCount: _books2.length,
+              itemBuilder: (
+                BuildContext context,
+                int index,
+              ) {
+                //contenedor con imagen de libro
+                return Container(
+                  padding: const EdgeInsets.all(10),
+                  width: MediaQuery.of(context).size.width / 3,
+                  child: Column(
+                    children: <Widget>[
+                      //se crea el objeto portada libro
+                      contenedoresLibros(index),
+                      new Expanded(
+                        //titulo del libro
+                        child: Text(
                           _books2[index],
                           overflow: TextOverflow.visible,
-                        ))
-                      ]),
-                    );
-                  })),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
           //Boton para ver mas titulos en el genero
           TextButton(
             child: Text(
@@ -164,12 +197,21 @@ class _SearchPageState extends State<SearchPage> {
               changedDropDownItem(sectionName);
             },
           ),
-        ]));
+        ],
+      ),
+    );
   }
 
   //funcion que llenara la lista de los generos disponibles
+  // Future<List> llenadoGeneros() async {
   List llenadoGeneros() {
-    return ["Romance ", "Comedia", "Terror", "Historia"];
+    return [
+      "Romance ",
+      "Comedia",
+      "Terror",
+      "Historia",
+      "Suspenso",
+    ];
   }
 
   //funcion que llenara la lista de los libros en un genero
@@ -193,22 +235,76 @@ class _SearchPageState extends State<SearchPage> {
         ];
         break;
       case 2:
-        return ["El Libro con el Titulo mas Largo del Mundo ", "g6", "g7", "g8", "g5 ", "g6", "g7", "g8"];
+        return [
+          "El Libro con el Titulo mas Largo del Mundo ",
+          "g6",
+          "g7",
+          "g8",
+          "g5 ",
+          "g6",
+          "g7",
+          "g8"
+        ];
         break;
       case 3:
-        return ["El Libro con el Titulo mas Largo del Mundo ", "g10", "g11", "g12", "g5 ", "g6", "g7", "g8"];
+        return [
+          "El Libro con el Titulo mas Largo del Mundo ",
+          "g10",
+          "g11",
+          "g12",
+          "g5 ",
+          "g6",
+          "g7",
+          "g8"
+        ];
         break;
       case 4:
-        return ["El Libro con el Titulo mas Largo del Mundo ", "g14", "g15", "g16", "g13 ", "g14", "g15", "g16"];
+        return [
+          "El Libro con el Titulo mas Largo del Mundo ",
+          "g14",
+          "g15",
+          "g16",
+          "g13 ",
+          "g14",
+          "g15",
+          "g16"
+        ];
         break;
       case 5:
-        return ["El Libro con el Titulo mas Largo del Mundo ", "g18", "g19", "g20", "g17 ", "g18", "g19", "g20"];
+        return [
+          "El Libro con el Titulo mas Largo del Mundo ",
+          "g18",
+          "g19",
+          "g20",
+          "g17 ",
+          "g18",
+          "g19",
+          "g20"
+        ];
         break;
       case 6:
-        return ["El Libro con el Titulo mas Largo del Mundo ", "g22", "g23", "g24", "g21 ", "g22", "g23", "g24"];
+        return [
+          "El Libro con el Titulo mas Largo del Mundo ",
+          "g22",
+          "g23",
+          "g24",
+          "g21 ",
+          "g22",
+          "g23",
+          "g24"
+        ];
         break;
       default:
-        return ["El Libro con el Titulo mas Largo del Mundo ", "g26", "g27", "g28", "g25 ", "g26", "g27", "g28"];
+        return [
+          "El Libro con el Titulo mas Largo del Mundo ",
+          "g26",
+          "g27",
+          "g28",
+          "g25 ",
+          "g26",
+          "g27",
+          "g28"
+        ];
         break;
     }
   }
@@ -221,25 +317,33 @@ class _SearchPageState extends State<SearchPage> {
 
     //si la opciones "5 generos pupulares" o es null
     //pone el formato generos populares sino pone el otro formato de un solo genero
-    if (_currentSearch == "5 generos pupulares" || _currentSearch == null) {
+    if (_currentSearch == "Elija un Genero" || _currentSearch == null) {
       for (String genero in _genres) {
         //se itera cada genero en la lista de genros se le pasa
         //se pasa por parametro el genero que se pondra y el limite de libros
-        pwdWidgets.add(newSection(genero, 5));
+        pwdWidgets.add(
+          newSection(genero, 5),
+        );
       }
     } else {
-      pwdWidgets.add(new SizedBox(
+      pwdWidgets.add(
+        new SizedBox(
           height: (MediaQuery.of(context).size.height * 0.8),
           child: Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: detalleSeccion(_currentSearch, 5))));
+            padding: const EdgeInsets.only(bottom: 10),
+            child: detalleSeccion(_currentSearch, 5),
+          ),
+        ),
+      );
     }
-    pwdWidgets.add(new Container(
-      margin: const EdgeInsets.all(10.0),
-      color: Colors.amber[600],
-      width: 48.0,
-      height: 48.0,
-    ));
+    pwdWidgets.add(
+      new Container(
+        margin: const EdgeInsets.all(10.0),
+        color: Colors.amber[600],
+        width: 48.0,
+        height: 48.0,
+      ),
+    );
     setState(() {});
   }
 
@@ -255,43 +359,55 @@ class _SearchPageState extends State<SearchPage> {
       shrinkWrap: true,
       crossAxisSpacing: 10.0,
       mainAxisSpacing: 10.0,
-      children: List.generate(_books.length, (index) {
-        return Padding(
+      children: List.generate(
+        _books.length,
+        (index) {
+          return Padding(
             padding: const EdgeInsets.only(right: 10.0, left: 10.0),
             child: Column(
               children: [
                 //se genera un contenedor
                 contenedoresLibrosD(index),
                 new Expanded(
-                    //titulo del libro
-                    child: Container(
-                        child: Text(
-                  _books[index],
-                  overflow: TextOverflow.visible,
-                  maxLines: 2,
-                )))
+                  //titulo del libro
+                  child: Container(
+                    child: Text(
+                      _books[index],
+                      overflow: TextOverflow.visible,
+                      maxLines: 2,
+                    ),
+                  ),
+                )
               ],
-            ));
-      }),
+            ),
+          );
+        },
+      ),
     );
   }
 
   Widget contenedoresLibrosD(int nContenedor) {
     return Container(
-        height: (MediaQuery.of(context).size.height * 0.4),
-        decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            image: DecorationImage(
-                //Ruta de la imagen
-                image: NetworkImage(
-                    "https://th.bing.com/th/id/R.8d9ba5df9a59ec6f73f0a40630247440?rik=QnOZeZ%2btOaCbTw&riu=http%3a%2f%2froc21cdn-roc21.netdna-ssl.com%2fblog%2fwp-content%2fuploads%2f2016%2f10%2fportadas-libros-siencia-ficcion-cuatro.jpg&ehk=Dze1Ot%2fzw99kcOQoVtYx1tnfpIBiYCgSLG%2fo%2fxdwLn0%3d&risl=&pid=ImgRaw"),
-                fit: BoxFit.cover),
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-            color: Colors.white,
-            boxShadow: [new BoxShadow(blurRadius: 0.0)]),
-        //widget que genera el evento de onTap
-        child: InkWell(onTap: () {
+      height: (MediaQuery.of(context).size.height * 0.4),
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        image: DecorationImage(
+          //Ruta de la imagen
+          image: NetworkImage(
+            "https://th.bing.com/th/id/R.8d9ba5df9a59ec6f73f0a40630247440?rik=QnOZeZ%2btOaCbTw&riu=http%3a%2f%2froc21cdn-roc21.netdna-ssl.com%2fblog%2fwp-content%2fuploads%2f2016%2f10%2fportadas-libros-siencia-ficcion-cuatro.jpg&ehk=Dze1Ot%2fzw99kcOQoVtYx1tnfpIBiYCgSLG%2fo%2fxdwLn0%3d&risl=&pid=ImgRaw",
+          ),
+          fit: BoxFit.cover,
+        ),
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        color: Colors.white,
+        boxShadow: [new BoxShadow(blurRadius: 0.0)],
+      ),
+      //widget que genera el evento de onTap
+      child: InkWell(
+        onTap: () {
           print("Container $nContenedor was tapped");
-        }));
+        },
+      ),
+    );
   }
 }
