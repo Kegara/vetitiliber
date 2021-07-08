@@ -1,7 +1,8 @@
 <?php
 include "../conexion.php";
 
-$sql = "SELECT
+$sql = 
+"SELECT
     lbgn.genero_id,
     COUNT(lbgn.genero_id) AS NumLibros
 FROM
