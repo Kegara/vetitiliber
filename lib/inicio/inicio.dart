@@ -69,6 +69,7 @@ class _StartPageState extends State<StartPage> {
       child: InkWell(
         onTap: () {
           print("Container $nContenedor was tapped");
+          Navigator.of(context).pushNamed(StartPage.id);
         },
       ),
     );
