@@ -69,20 +69,13 @@ class _SearchPageState extends State<SearchPage> {
     List<DropdownMenuItem<String>> items = [];
     //se llena la lista de los generos
     _genres = llenadoGeneros();
-    // llenadoGeneros().then((value) {
-    //   _genres = value;
-    //  print("values es");
-    //   print(value);
-    // });
-    print("_genres es");
-    print(_genres);
     //llenamos la lista con los valores de los generos existentes
     //agregamos un item defaul de los 5 generos populares
     items.add(
       new DropdownMenuItem(
         value: _currentSearch,
         child: new Text(
-          "Elija un Genero",
+          "Los 5 Generos mas Populares",
         ),
       ),
     );
@@ -203,7 +196,6 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   //funcion que llenara la lista de los generos disponibles
-  // Future<List> llenadoGeneros() async {
   List llenadoGeneros() {
     return [
       "Romance ",
@@ -317,7 +309,8 @@ class _SearchPageState extends State<SearchPage> {
 
     //si la opciones "5 generos pupulares" o es null
     //pone el formato generos populares sino pone el otro formato de un solo genero
-    if (_currentSearch == "Elija un Genero" || _currentSearch == null) {
+    if (_currentSearch == "Los 5 Generos mas Populares" ||
+        _currentSearch == null) {
       for (String genero in _genres) {
         //se itera cada genero en la lista de genros se le pasa
         //se pasa por parametro el genero que se pondra y el limite de libros
