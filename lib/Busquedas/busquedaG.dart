@@ -18,7 +18,7 @@ class _SearchPageState extends State<SearchPage> {
   //lista de libros en el genero
 
   //lista de generos
-  List _genres = [];
+  List<Map<String, dynamic>> _genres = [{}];
   List<DropdownMenuItem<String>> _dropDownMenuItems;
   String _currentSearch;
   //array que contrendra todos los widgets
@@ -26,7 +26,7 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    creadorSecciones();
+    // creadorSecciones();
     return Scaffold(
       //llamada al menu lateral y appbar
       drawer: MenuLateral(),
@@ -66,10 +66,10 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   //llenamos la lista con los valores de los generos existentes
-  List<DropdownMenuItem<String>> getDropDownMenuItems() {
+  Future<List<DropdownMenuItem<String>>> getDropDownMenuItems() async {
     List<DropdownMenuItem<String>> items = [];
     //se llena la lista de los generos
-    _genres = llenadoGeneros();
+    _genres = await llenadoGeneros();
     //llenamos la lista con los valores de los generos existentes
     //agregamos un item defaul de los 5 generos populares
     items.add(
@@ -81,11 +81,11 @@ class _SearchPageState extends State<SearchPage> {
       ),
     );
     //se itera el array y por cada item se agrega un genero
-    for (String genero in _genres) {
+    for (Map<String, dynamic> mapa in _genres) {
       items.add(
         new DropdownMenuItem(
-          value: genero,
-          child: new Text(genero),
+          value: (mapa['id']).toString(),
+          child: new Text(mapa['nombre']),
         ),
       );
     }
@@ -95,8 +95,14 @@ class _SearchPageState extends State<SearchPage> {
   //funcion que llama a la funcion de llenado de lista y
   //pone el primer valor de la lista en la busqueda actual
   void initState() {
-    _dropDownMenuItems = getDropDownMenuItems();
-    _currentSearch = _dropDownMenuItems[0].value;
+    // _dropDownMenuItems = getDropDownMenuItems();
+    getDropDownMenuItems().then((value) {
+      setState(() {
+        _dropDownMenuItems = value;
+        _currentSearch = _dropDownMenuItems[0].value;
+        print("yataaa");
+      });
+    });
     super.initState();
   }
 
@@ -135,9 +141,9 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   //contenedor de seccion de generos populares
-  Widget newSection(String sectionName, int limit) {
+  Widget newSection(String sectionName, int limit, int idGen) {
     //se genera una lista con los libros de la seccion
-    List _books2 = llenadoLibros(sectionName, limit);
+    List _books2 = llenadoLibros(idGen, limit);
     return Padding(
       padding: const EdgeInsets.only(
         top: 5,
@@ -197,21 +203,36 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   //funcion que llenara la lista de los generos disponibles
-  List llenadoGeneros() {
+  Future<List<Map<String, dynamic>>> llenadoGeneros() async {
     final _urlGen =
         "https://myreviewvl.000webhostapp.com/BD/Usuario/generos.php";
-    // final response = await get(Uri.parse(_urlGen));
+    final response = await get(Uri.parse(_urlGen));
     return [
-      "Romance ",
-      "Comedia",
-      "Terror",
-      "Historia",
-      "Suspenso",
+      {
+        "id": 1,
+        "nombre": "Romance",
+      },
+      {
+        "id": 2,
+        "nombre": "Comedia",
+      },
+      {
+        "id": 3,
+        "nombre": "Terror",
+      },
+      {
+        "id": 4,
+        "nombre": "Historia",
+      },
+      {
+        "id": 5,
+        "nombre": "Suspenso",
+      },
     ];
   }
 
   //funcion que llenara la lista de los libros en un genero
-  List llenadoLibros(String sectionName, limit) {
+  List llenadoLibros(idGen, limit) {
     var random = new Random();
     switch (random.nextInt(3)) {
       case 1:
@@ -315,11 +336,12 @@ class _SearchPageState extends State<SearchPage> {
     //pone el formato generos populares sino pone el otro formato de un solo genero
     if (_currentSearch == "Los 5 Generos mas Populares" ||
         _currentSearch == null) {
-      for (String genero in _genres) {
+      print("(1)_genres: $_genres");
+      for (Map<String, dynamic> mapa in _genres) {
         //se itera cada genero en la lista de genros se le pasa
         //se pasa por parametro el genero que se pondra y el limite de libros
         pwdWidgets.add(
-          newSection(genero, 5),
+          newSection(mapa['nombre'], 5, mapa['id']),
         );
       }
     } else {
