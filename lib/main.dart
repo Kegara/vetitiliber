@@ -4,6 +4,8 @@ import 'package:vetitiliber/login/bodyR.dart';
 import 'package:vetitiliber/inicio/inicio.dart';
 import 'package:vetitiliber/perfil/perfil.dart';
 import 'package:vetitiliber/Busquedas/busquedaG.dart';
+import 'package:vetitiliber/Busquedas/busquedaU.dart';
+import 'package:vetitiliber/Busquedas/busquedaL.dart';
 import 'package:vetitiliber/perfil/confiperfil.dart';
 
 void main() {
@@ -28,13 +30,15 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      initialRoute: LoginPage.id,
+      initialRoute: StartPage.id,
       routes: {
         LoginPage.id: (context) => LoginPage(),
         RegisterPage.id: (context) => RegisterPage(),
         StartPage.id: (context) => StartPage(),
         PerfilPage.id: (context) => PerfilPage(),
         SearchPage.id: (context) => SearchPage(),
+        SearchPageL.id: (context) => SearchPageL(),
+        SearchPageU.id: (context) => SearchPageU(),
         ConfiperfilPage.id: (context) => ConfiperfilPage(),
       },
     );
