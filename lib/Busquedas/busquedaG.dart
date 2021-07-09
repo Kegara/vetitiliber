@@ -398,7 +398,7 @@ class _SearchPageState extends State<SearchPage> {
     //pone el formato generos populares sino pone el otro formato de un solo genero
     if (_currentSearch == "Los 5 Generos mas Populares" ||
         _currentSearch == null) {
-      print("(1)_genres.generos: $_genres.generos");
+      print("(1)_genres.generos: ${_genres.generos}");
       int _counter = 1;
       for (genero gen in _genres.generos) {
         //se itera cada genero en la lista de genros se le pasa
