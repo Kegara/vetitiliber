@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:http/http.dart';
@@ -13,12 +15,48 @@ class SearchPage extends StatefulWidget {
   _SearchPageState createState() => _SearchPageState();
 }
 
+class genero {
+  final String id;
+  final String nombre;
+
+  genero({
+    this.id,
+    this.nombre,
+  });
+
+  factory genero.fromJson(Map<String, dynamic> json) {
+    print("genero.fromJson json: $json");
+    return new genero(
+      id: (json['id']).toString(),
+      nombre: json['nombre'],
+    );
+  }
+}
+
+class generosList {
+  final List<genero> generos;
+
+  generosList({
+    this.generos,
+  });
+
+  factory generosList.fromJson(List<dynamic> parsedJson) {
+    List<genero> generos = new List<genero>();
+    generos = parsedJson.map((e) => genero.fromJson(e)).toList();
+    print("generos[1].id: ${generos[1].id}");
+    print("generos[1].nombre: ${generos[1].nombre}");
+    return new generosList(
+      generos: generos,
+    );
+  }
+}
+
 class _SearchPageState extends State<SearchPage> {
   final sController = TextEditingController();
   //lista de libros en el genero
 
   //lista de generos
-  List<Map<String, dynamic>> _genres = [{}];
+  generosList _genres;
   List<DropdownMenuItem<String>> _dropDownMenuItems;
   String _currentSearch;
   //array que contrendra todos los widgets
@@ -26,7 +64,6 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    // creadorSecciones();
     return Scaffold(
       //llamada al menu lateral y appbar
       drawer: MenuLateral(),
@@ -81,11 +118,11 @@ class _SearchPageState extends State<SearchPage> {
       ),
     );
     //se itera el array y por cada item se agrega un genero
-    for (Map<String, dynamic> mapa in _genres) {
+    for (genero gen in _genres.generos) {
       items.add(
         new DropdownMenuItem(
-          value: (mapa['id']).toString(),
-          child: new Text(mapa['nombre']),
+          value: (gen.id).toString(),
+          child: new Text(gen.nombre),
         ),
       );
     }
@@ -100,6 +137,7 @@ class _SearchPageState extends State<SearchPage> {
       setState(() {
         _dropDownMenuItems = value;
         _currentSearch = _dropDownMenuItems[0].value;
+        creadorSecciones();
         print("yataaa");
       });
     });
@@ -203,32 +241,56 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   //funcion que llenara la lista de los generos disponibles
-  Future<List<Map<String, dynamic>>> llenadoGeneros() async {
+  Future<generosList> llenadoGeneros() async {
     final _urlGen =
         "https://myreviewvl.000webhostapp.com/BD/Usuario/generos.php";
-    final response = await get(Uri.parse(_urlGen));
-    return [
-      {
-        "id": 1,
-        "nombre": "Romance",
-      },
-      {
-        "id": 2,
-        "nombre": "Comedia",
-      },
-      {
-        "id": 3,
-        "nombre": "Terror",
-      },
-      {
-        "id": 4,
-        "nombre": "Historia",
-      },
-      {
-        "id": 5,
-        "nombre": "Suspenso",
-      },
-    ];
+    generosList genList;
+    try {
+      print("print: llenadoGeneros()");
+      final response = await get(Uri.parse(_urlGen));
+      if (response.body.contains("Fallo la conexion")) {
+        print('Conexion fallida.');
+        // showAlertDialog(context, 'Conexion fallida.');
+      } else {
+        print("response.body: ${response.body}");
+        final json = jsonDecode(response.body);
+        print("json.runtimeType: ${json.runtimeType}");
+        print("json: $json");
+        genList = new generosList.fromJson(json);
+        print("genList.generos: ${genList.generos}");
+        for (var gen in genList.generos) {
+          print("for in gen.id: ${gen.id}");
+          print("for in gen.nombre: ${gen.nombre}");
+        }
+        print("genList.generos[0].id: ${genList.generos[0].id}");
+        print("genList.generos[0].nombre: ${genList.generos[0].nombre}");
+      }
+    } catch (err) {
+      print("err: $err");
+    }
+    return genList;
+    // return [
+    //   {
+    //     "id": 1,
+    //     "nombre": "Romance",
+    //   },
+    //   {
+    //     "id": 2,
+    //     "nombre": "Comedia",
+    //   },
+    //   {
+    //     "id": 3,
+    //     "nombre": "Terror",
+    //   },
+    //   {
+    //     "id": 4,
+    //     "nombre": "Historia",
+    //   },
+    //   {
+    //     "id": 5,
+    //     "nombre": "Suspenso",
+    //   },
+    // ];
   }
 
   //funcion que llenara la lista de los libros en un genero
@@ -336,12 +398,12 @@ class _SearchPageState extends State<SearchPage> {
     //pone el formato generos populares sino pone el otro formato de un solo genero
     if (_currentSearch == "Los 5 Generos mas Populares" ||
         _currentSearch == null) {
-      print("(1)_genres: $_genres");
-      for (Map<String, dynamic> mapa in _genres) {
+      print("(1)_genres.generos: $_genres.generos");
+      for (genero gen in _genres.generos) {
         //se itera cada genero en la lista de genros se le pasa
         //se pasa por parametro el genero que se pondra y el limite de libros
         pwdWidgets.add(
-          newSection(mapa['nombre'], 5, mapa['id']),
+          newSection(gen.nombre, 5, int.parse(gen.id)),
         );
       }
     } else {
