@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:http/http.dart';
 import 'package:vetitiliber/componentes/menulateral.dart';
 import 'dart:math';
 
@@ -197,6 +198,9 @@ class _SearchPageState extends State<SearchPage> {
 
   //funcion que llenara la lista de los generos disponibles
   List llenadoGeneros() {
+    final _urlGen =
+        "https://myreviewvl.000webhostapp.com/BD/Usuario/generos.php";
+    // final response = await get(Uri.parse(_urlGen));
     return [
       "Romance ",
       "Comedia",
