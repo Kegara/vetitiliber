@@ -4,6 +4,8 @@ import 'package:vetitiliber/login/bodyR.dart';
 import 'package:vetitiliber/inicio/inicio.dart';
 import 'package:vetitiliber/perfil/perfil.dart';
 import 'package:vetitiliber/Busquedas/busquedaG.dart';
+import 'package:vetitiliber/Busquedas/busquedaU.dart';
+import 'package:vetitiliber/Busquedas/busquedaL.dart';
 import 'package:vetitiliber/perfil/confiperfil.dart';
 import 'package:vetitiliber/libro/detallelibro.dart';
 
@@ -36,6 +38,8 @@ class MyApp extends StatelessWidget {
         StartPage.id: (context) => StartPage(),
         PerfilPage.id: (context) => PerfilPage(),
         SearchPage.id: (context) => SearchPage(),
+        SearchPageL.id: (context) => SearchPageL(),
+        SearchPageU.id: (context) => SearchPageU(),
         ConfiperfilPage.id: (context) => ConfiperfilPage(),
         DetalibroPage.id: (context) => DetalibroPage(),
       },

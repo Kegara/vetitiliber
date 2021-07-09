@@ -4,6 +4,8 @@ import 'package:vetitiliber/perfil/perfil.dart';
 import 'package:vetitiliber/inicio/inicio.dart';
 import 'package:vetitiliber/Busquedas/busquedaG.dart';
 import 'package:vetitiliber/perfil/confiperfil.dart';
+import 'package:vetitiliber/Busquedas/busquedaU.dart';
+import 'package:vetitiliber/Busquedas/busquedaL.dart';
 import 'package:vetitiliber/libro/detallelibro.dart';
 
 class MenuLateral extends StatelessWidget {
@@ -64,7 +66,9 @@ class MenuLateral extends StatelessWidget {
           ),
           new ListTile(
             title: Text("Libro"),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(SearchPageL.id);
+              },
             leading: GestureDetector(
               behavior: HitTestBehavior.translucent,
               child: Container(
@@ -78,7 +82,9 @@ class MenuLateral extends StatelessWidget {
           new ListTile(
             title: Text("Usuario"),
             enableFeedback: true,
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(SearchPageU.id);
+            },
             leading: GestureDetector(
               behavior: HitTestBehavior.translucent,
               child: Container(
