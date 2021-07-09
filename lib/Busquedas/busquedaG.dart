@@ -399,12 +399,18 @@ class _SearchPageState extends State<SearchPage> {
     if (_currentSearch == "Los 5 Generos mas Populares" ||
         _currentSearch == null) {
       print("(1)_genres.generos: $_genres.generos");
+      int _counter = 1;
       for (genero gen in _genres.generos) {
         //se itera cada genero en la lista de genros se le pasa
         //se pasa por parametro el genero que se pondra y el limite de libros
         pwdWidgets.add(
           newSection(gen.nombre, 5, int.parse(gen.id)),
         );
+        if (_counter != 5) {
+          _counter++;
+        } else {
+          break;
+        }
       }
     } else {
       pwdWidgets.add(
