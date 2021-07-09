@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vetitiliber/componentes/menulateral.dart';
+import 'package:vetitiliber/libro/detallelibro.dart';
 
 class StartPage extends StatefulWidget {
   StartPage({Key key, this.title}) : super(key: key);
@@ -69,6 +70,7 @@ class _StartPageState extends State<StartPage> {
       child: InkWell(
         onTap: () {
           print("Container $nContenedor was tapped");
+          Navigator.of(context).pushNamed(DetalibroPage.id);
         },
       ),
     );
