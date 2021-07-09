@@ -17,9 +17,9 @@ class _SearchPageLState extends State<SearchPageL> {
   final txtBusquedaController = TextEditingController();
   //Formkey sirve para revisar que todas las validaciones se cumplan
   final _formKeySU = GlobalKey<FormState>();
-  //lista de libros en el genero
+  //busqueda actual
   String _currentSearch;
-  //lista de generos
+  //lista de libros
   Widget listaLibros;
   //array que contrendra todos los widgets
   var pwdWidgets = <Widget>[];
@@ -87,7 +87,6 @@ class _SearchPageLState extends State<SearchPageL> {
     listaLibros = Text("Busca a un libro por su nombre!");
     super.initState();
   }
-
    //llenamos erray que llenara la lista de los usuarios
    List llenadoLibros(String txtabuscar) {
     var random = new Random();
