@@ -4,12 +4,9 @@ import 'package:vetitiliber/perfil/perfil.dart';
 import 'package:vetitiliber/inicio/inicio.dart';
 import 'package:vetitiliber/Busquedas/busquedaG.dart';
 import 'package:vetitiliber/perfil/confiperfil.dart';
-<<<<<<< HEAD
 import 'package:vetitiliber/Busquedas/busquedaU.dart';
 import 'package:vetitiliber/Busquedas/busquedaL.dart';
-=======
 import 'package:vetitiliber/libro/detallelibro.dart';
->>>>>>> bd68180b30838e0d13a8ad86c6a61938e3cd819d
 
 class MenuLateral extends StatelessWidget {
   @override
