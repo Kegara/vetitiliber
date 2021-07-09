@@ -163,12 +163,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                             fontWeight: FontWeight.bold,
                             letterSpacing: 5.0,
                             color: Colors.black)),
-                    Text("Escribe tu reseña", //Inicia el campo a cambiar
-                        style: new TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 5.0,
-                            color: Colors.black)),
+                    Expanded(child: MyStatefulWidget()),
                     TextFormField(
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -176,6 +171,11 @@ class MyCustomFormState extends State<MyCustomForm> {
                         }
                         return null;
                       },
+                      maxLines: null,
+                      maxLength: 200,
+                      decoration: InputDecoration(
+                        hintText: 'Escriba su reseña, por favor.',
+                      ),
                     ),
                     Row(children: <Widget>[
                       Expanded(
@@ -236,28 +236,93 @@ class MyCustomFormState extends State<MyCustomForm> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: const <Widget>[
-                        Icon(
-                          Icons.favorite,
-                          color: Colors.pink,
-                          size: 24.0,
-                          semanticLabel:
-                              'Text to announce in accessibility modes',
-                        ),
-                        Icon(
-                          Icons.audiotrack,
-                          color: Colors.green,
-                          size: 30.0,
-                        ),
-                        Icon(
-                          Icons.beach_access,
-                          color: Colors.blue,
-                          size: 36.0,
-                        ),
+                        Expanded(
+                            child: Icon(
+                              Icons.thumb_up_alt_outlined,
+                              color: Colors.lightBlue,
+                              size: 24.0,
+                              semanticLabel:
+                                  'Text to announce in accessibility modes',
+                            ),
+                            flex: 3),
+                        Expanded(
+                            child: Text("80",
+                                style: TextStyle(
+                                    fontSize: 10,
+                                    letterSpacing: 2.0,
+                                    color: Colors.black)),
+                            flex: 1),
+                        Expanded(
+                            child: Icon(
+                              Icons.thumb_down_outlined,
+                              color: Colors.red,
+                              size: 30.0,
+                            ),
+                            flex: 3),
+                        Expanded(
+                            child: IconButton(
+                              icon: const Icon(
+                                Icons.insert_comment_outlined,
+                                color: Colors.black,
+                                size: 30.0,
+                              ),
+                            ),
+                            flex: 3),
                       ],
                     )
                   ],
                 ),
               )
             ]));
+  }
+}
+
+class MyStatefulWidget extends StatefulWidget {
+  const MyStatefulWidget({Key key}) : super(key: key);
+
+  @override
+  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+}
+
+/// This is the private State class that goes with MyStatefulWidget.
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  String dropdownValue = '0';
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton<String>(
+      value: dropdownValue,
+      icon: const Icon(Icons.arrow_downward),
+      iconSize: 24,
+      elevation: 16,
+      style: const TextStyle(color: Colors.deepPurple),
+      underline: Container(
+        height: 2,
+        color: Colors.deepPurpleAccent,
+      ),
+      onChanged: (String newValue) {
+        setState(() {
+          dropdownValue = newValue;
+        });
+      },
+      items: <String>[
+        '0',
+        '0.5',
+        '1',
+        '1.5',
+        '2',
+        '2.5',
+        '3',
+        '3.5',
+        '4',
+        '4.5',
+        '5'
+      ].map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+    );
   }
 }
