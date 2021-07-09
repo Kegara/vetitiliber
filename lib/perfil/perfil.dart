@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vetitiliber/componentes/menulateral.dart';
+import 'package:vetitiliber/libro/librore.dart';
 
 class PerfilPage extends StatefulWidget {
   PerfilPage({Key key, this.title}) : super(key: key);
@@ -64,6 +65,7 @@ class _PerfilPageState extends State<PerfilPage> {
                 title: Text("Reviews"), //Agregar la cantidad de reviews aquí
                 onTap: () {
                   //Aquí ira la función que lleve a ver sus reviews
+                  Navigator.of(context).pushNamed(ListadolibroPage.id);
                 },
               ),
               Divider(),
