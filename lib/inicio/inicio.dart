@@ -26,7 +26,7 @@ class _StartPageState extends State<StartPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: MenuLateral(),
-      appBar: AppBar1("MY REVIEW", context),
+      appBar: appBar1("MY REVIEW", context),
       body: SafeArea(
         child: Center(
           child: Column(

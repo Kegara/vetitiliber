@@ -28,7 +28,7 @@ class _SearchPageUState extends State<SearchPageU> {
     return Scaffold(
         //llamada al menu lateral y appbar
         drawer: MenuLateral(),
-        appBar: AppBar1("MY REVIEW", context),
+        appBar: appBar1("Busqueda de usuarios", context),
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: Column(

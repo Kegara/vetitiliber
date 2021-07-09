@@ -29,7 +29,7 @@ class _SearchPageLState extends State<SearchPageL> {
      return Scaffold(
         //llamada al menu lateral y appbar
         drawer: MenuLateral(),
-        appBar: AppBar1("Busqueda de libros", context),
+        appBar: appBar1("Busqueda de libros", context),
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: Column(

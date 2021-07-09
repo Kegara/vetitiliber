@@ -30,7 +30,7 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       //llamada al menu lateral y appbar
       drawer: MenuLateral(),
-      appBar: AppBar1("MY REVIEW", context),
+      appBar: appBar1("Busqueda por genero", context),
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(

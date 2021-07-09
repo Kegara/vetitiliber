@@ -119,9 +119,9 @@ class MenuLateral extends StatelessWidget {
   }
 }
 
-AppBar1(String x, BuildContext context) {
+appBar1(String x, BuildContext context) {
   return new AppBar(
-    title: Text("MY REVIEW"),
+    title: Text(x),
     actions: [
       IconButton(
         icon: const Icon(Icons.add_alert),
