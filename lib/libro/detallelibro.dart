@@ -73,14 +73,14 @@ class MyCustomFormState extends State<MyCustomForm> {
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 5.0,
-                      color: Colors.blueAccent)),
+                      color: Colors.black)),
               Text(
-                  "☆☆☆☆☆", //Texto inicial de la sección debe ir el titulo del libro
+                  "☆☆☆☆☆(80)", //Texto inicial de la sección debe ir la clificación y pot cuantos
                   style: new TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 5.0,
-                      color: Colors.blueAccent)),
+                      color: Colors.black)),
               new Expanded(
                 //Aquí empieza el listado de acciones
                 child: ListView(
@@ -91,38 +91,79 @@ class MyCustomFormState extends State<MyCustomForm> {
                             fontWeight: FontWeight.bold,
                             letterSpacing: 5.0,
                             color: Colors.black)),
-                    //Nuevo Campo----------------------------------------------------------------------
-                    Text("Cambiar nombre\n",
+                    //Imagen del libro--------------------------------
+                    Image.asset(
+                      'assets/imagenes/login/LOGO2.png', //Imagen de portada
+                      fit: BoxFit.cover,
+                    ),
+                    Text("Detalles\n",
                         style: new TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                             letterSpacing: 5.0,
                             color: Colors.black)),
-                    Text("Detalles", //Inicia el campo a cambiar
-                        style: new TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 5.0,
-                            color: Colors.black)),
+                    //Inicia el campo de sipnosis--------------------------------------------------
                     Row(children: <Widget>[
                       Expanded(
-                          child: Text("Cambiar nombre\n",
+                          child: Text("Sipnosis\n",
                               style: new TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.bold,
                                   letterSpacing: 5.0,
                                   color: Colors.black)),
                           flex: 3),
-                      Expanded(child: Text(''), flex: 7)
+                      Expanded(
+                          child: Text("Sipnosis\n",
+                              style: new TextStyle(
+                                  fontSize: 15,
+                                  letterSpacing: 2.0,
+                                  color: Colors.black)),
+                          flex: 7)
+                    ]),
+                    //Inicia el campo del autor--------------------------------------------------
+                    Row(children: <Widget>[
+                      Expanded(
+                          child: Text("Autor\n",
+                              style: new TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 5.0,
+                                  color: Colors.black)),
+                          flex: 3),
+                      Expanded(
+                          child: Text("Nombre del autor\n",
+                              style: new TextStyle(
+                                  fontSize: 15,
+                                  letterSpacing: 2.0,
+                                  color: Colors.black)),
+                          flex: 7)
+                    ]),
+                    //Inicia el campo de genero--------------------------------------------------
+                    Row(children: <Widget>[
+                      Expanded(
+                          child: Text("Genero\n",
+                              style: new TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 5.0,
+                                  color: Colors.black)),
+                          flex: 3),
+                      Expanded(
+                          child: Text("Van los generos\n",
+                              style: new TextStyle(
+                                  fontSize: 15,
+                                  letterSpacing: 2.0,
+                                  color: Colors.black)),
+                          flex: 7)
                     ]),
                     //Nuevo campo-------------------------------------------------------------------
-                    Text("\nCambiar contraseña\n",
+                    Text("\nReseñas\n",
                         style: new TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                             letterSpacing: 5.0,
                             color: Colors.black)),
-                    Text("Contraseña actual", //Inicia el campo a cambiar
+                    Text("Escribe tu reseña", //Inicia el campo a cambiar
                         style: new TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -153,221 +194,67 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   ));
                                 }
                               },
-                              child: Text('Cambiar'),
+                              child: Text('Publicar'),
                             ),
                           ),
                           flex: 3),
                       Expanded(child: Text(''), flex: 7)
                     ]),
-                    //Nuevo campo-------------------------------------------------------------------
-                    Text("\nCambiar correo\n",
-                        style: new TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 5.0,
-                            color: Colors.black)),
-                    Text("Correo actual", //Inicia el campo a cambiar
-                        style: new TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 5.0,
-                            color: Colors.black)),
-                    TextFormField(
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
-                    ),
-                    Row(children: <Widget>[
-                      Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 16.0),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                // devolverá true si el formulario es válido, o falso si
-                                // el formulario no es válido.
-                                if (_formKey.currentState.validate()) {
-                                  // Si el formulario es válido, queremos mostrar un Snackbar
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    content: Text("Procesing Data"),
-                                    behavior: SnackBarBehavior.floating,
-                                  ));
-                                }
-                              },
-                              child: Text('Cambiar'),
-                            ),
-                          ),
-                          flex: 3),
-                      Expanded(child: Text(''), flex: 7)
-                    ]),
-                    //Campos de verdadero o falso
                     Divider(),
-                    Text("\nNotificaciones\n",
-                        style: new TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 5.0,
-                            color: Colors.black)),
+                    //Visualización de las reseñas-------------------------------------------------------------------
+                    Row(children: <Widget>[
+                      Expanded(
+                          child: Image.asset(
+                            'assets/imagenes/login/LOGO2.png', //Imagen de portada
+                            fit: BoxFit.cover,
+                          ),
+                          flex: 3),
+                      Expanded(
+                          child: Text("Name del usuario\n☆☆☆☆☆",
+                              style: new TextStyle(
+                                  fontSize: 15,
+                                  letterSpacing: 2.0,
+                                  color: Colors.black)),
+                          flex: 7)
+                    ]),
+                    Row(children: <Widget>[
+                      Expanded(
+                          child: Text("Va toda la reseña",
+                              style: new TextStyle(
+                                  fontSize: 15,
+                                  letterSpacing: 2.0,
+                                  color: Colors.black)),
+                          flex: 9),
+                      Expanded(
+                          child: Text("",
+                              style: new TextStyle(
+                                  fontSize: 15,
+                                  letterSpacing: 2.0,
+                                  color: Colors.black)),
+                          flex: 1)
+                    ]),
                     Row(
-                      children: <Widget>[
-                        Expanded(
-                            child: Text('Recibir Notificaciones',
-                                textAlign: TextAlign.left,
-                                style: new TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 5.0,
-                                    color: Colors.grey)),
-                            flex: 8),
-                        Expanded(
-                            child: Switch(
-                              value: isSwitched,
-                              onChanged: (value) {
-                                setState(() {
-                                  isSwitched = value;
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    content: Text("Procesing Data"),
-                                    behavior: SnackBarBehavior.floating,
-                                  ));
-                                });
-                              },
-                              activeTrackColor: Colors.cyan,
-                              activeColor: Colors.blueAccent,
-                            ),
-                            flex: 2),
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: const <Widget>[
+                        Icon(
+                          Icons.favorite,
+                          color: Colors.pink,
+                          size: 24.0,
+                          semanticLabel:
+                              'Text to announce in accessibility modes',
+                        ),
+                        Icon(
+                          Icons.audiotrack,
+                          color: Colors.green,
+                          size: 30.0,
+                        ),
+                        Icon(
+                          Icons.beach_access,
+                          color: Colors.blue,
+                          size: 36.0,
+                        ),
                       ],
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                            child: Text('Recibir Notificaciones',
-                                textAlign: TextAlign.left,
-                                style: new TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 5.0,
-                                    color: Colors.grey)),
-                            flex: 8),
-                        Expanded(
-                            child: Switch(
-                              value: isSwitched,
-                              onChanged: (value) {
-                                setState(() {
-                                  isSwitched = value;
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    content: Text("Procesing Data"),
-                                    behavior: SnackBarBehavior.floating,
-                                  ));
-                                });
-                              },
-                              activeTrackColor: Colors.cyan,
-                              activeColor: Colors.blueAccent,
-                            ),
-                            flex: 2),
-                      ],
-                    ),
-                    Text("\nPrivacidad\n",
-                        style: new TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 5.0,
-                            color: Colors.black)),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                            child: Text(
-                                'Otros usuarios pueden ver los libros que has leído o no',
-                                textAlign: TextAlign.left,
-                                style: new TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 5.0,
-                                    color: Colors.grey)),
-                            flex: 8),
-                        Expanded(
-                            child: Switch(
-                              value: isSwitched,
-                              onChanged: (value) {
-                                setState(() {
-                                  isSwitched = value;
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    content: Text("Procesing Data"),
-                                    behavior: SnackBarBehavior.floating,
-                                  ));
-                                });
-                              },
-                              activeTrackColor: Colors.cyan,
-                              activeColor: Colors.blueAccent,
-                            ),
-                            flex: 2),
-                      ],
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                            child: Text('Otros usuarios pueden ver tus reseñas',
-                                textAlign: TextAlign.left,
-                                style: new TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 5.0,
-                                    color: Colors.grey)),
-                            flex: 8),
-                        Expanded(
-                            child: Switch(
-                              value: isSwitched,
-                              onChanged: (value) {
-                                setState(() {
-                                  isSwitched = value;
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    content: Text("Procesing Data"),
-                                    behavior: SnackBarBehavior.floating,
-                                  ));
-                                });
-                              },
-                              activeTrackColor: Colors.cyan,
-                              activeColor: Colors.blueAccent,
-                            ),
-                            flex: 2),
-                      ],
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                            child: Text('Establecer su perfil como privado',
-                                textAlign: TextAlign.left,
-                                style: new TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 5.0,
-                                    color: Colors.grey)),
-                            flex: 8),
-                        Expanded(
-                            child: Switch(
-                              value: isSwitched,
-                              onChanged: (value) {
-                                setState(() {
-                                  isSwitched = value;
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    content: Text("Procesing Data"),
-                                    behavior: SnackBarBehavior.floating,
-                                  ));
-                                });
-                              },
-                              activeTrackColor: Colors.cyan,
-                              activeColor: Colors.blueAccent,
-                            ),
-                            flex: 2),
-                      ],
-                    ),
+                    )
                   ],
                 ),
               )
