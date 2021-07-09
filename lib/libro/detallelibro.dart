@@ -5,7 +5,7 @@ class DetalibroPage extends StatefulWidget {
   DetalibroPage({Key key, this.title}) : super(key: key);
   final String title;
 
-  static String id = 'ConfiperfilPage';
+  static String id = 'DetalibroPage';
   @override
   _DetalibroPageState createState() => _DetalibroPageState();
 }
