@@ -20,8 +20,7 @@ class _SearchPageLState extends State<SearchPageL> {
   //lista de libros en el genero
   String _currentSearch;
   //lista de generos
-  List _usuarios = [];
-  Widget listaUsuarios;
+  Widget listaLibros;
   //array que contrendra todos los widgets
   var pwdWidgets = <Widget>[];
 
@@ -36,11 +35,11 @@ class _SearchPageLState extends State<SearchPageL> {
           child: Column(
             children: <Widget>[
               //Texto de titulo
-
               Padding(
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
                 child: Text("Busqueda de libros"),
               ),
+              //Form con busqueda
               Form(
                   key: _formKeySU,
                   child: TextFormField(
@@ -68,7 +67,15 @@ class _SearchPageLState extends State<SearchPageL> {
                     ),
                   )),
               // Columna que contiene los widgets
-              Expanded(child: listaUsuarios),
+              Expanded(child:  
+        new SizedBox(
+          height: (MediaQuery.of(context).size.height * 0.8),
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: listaLibros,
+          ),
+        ),
+      ),
             ],
           ),
         ));
@@ -77,59 +84,187 @@ class _SearchPageLState extends State<SearchPageL> {
   
  void initState() {
     //ponemos en el widget lista usuarios el texto de inicio
-    listaUsuarios = Text("Busca a un libro por su nombre!");
+    listaLibros = Text("Busca a un libro por su nombre!");
     super.initState();
   }
 
-  //llenamos erray que llenara la lista de los usuarios
-  List llenadoarrayusuarios() {
-    return ["kevin", "paulos", "isra", "alexis"];
+   //llenamos erray que llenara la lista de los usuarios
+   List llenadoLibros(String txtabuscar) {
+    var random = new Random();
+    switch (random.nextInt(3)) {
+      case 1:
+        return [
+          "El Libro con el Titulo mas Largo del Mundo ",
+          "g2",
+          "g3",
+          "g4",
+          "g1 ",
+          "g2",
+          "g3",
+          "g4",
+          "g1 ",
+          "g2",
+          "g3",
+          "g4"
+        ];
+        break; 
+         case 1:
+        return [
+          "El Libro con el Titulo mas Largo del Mundo ",
+          "g2",
+          "g3",
+          "g4",
+          "g1 ",
+          "g2",
+          "g3",
+          "g4",
+          "g1 ",
+          "g2",
+          "g3",
+          "g4"
+        ];
+        break;
+      case 2:
+        return [
+          "El Libro con el Titulo mas Largo del Mundo ",
+          "g6",
+          "g7",
+          "g8",
+          "g5 ",
+          "g6",
+          "g7",
+          "g8"
+        ];
+        break;
+      case 3:
+        return [
+          "El Libro con el Titulo mas Largo del Mundo ",
+          "g10",
+          "g11",
+          "g12",
+          "g5 ",
+          "g6",
+          "g7",
+          "g8"
+        ];
+        break;
+      case 4:
+        return [
+          "El Libro con el Titulo mas Largo del Mundo ",
+          "g14",
+          "g15",
+          "g16",
+          "g13 ",
+          "g14",
+          "g15",
+          "g16"
+        ];
+        break;
+      case 5:
+        return [
+          "El Libro con el Titulo mas Largo del Mundo ",
+          "g18",
+          "g19",
+          "g20",
+          "g17 ",
+          "g18",
+          "g19",
+          "g20"
+        ];
+        break;
+      case 6:
+        return [
+          "El Libro con el Titulo mas Largo del Mundo ",
+          "g22",
+          "g23",
+          "g24",
+          "g21 ",
+          "g22",
+          "g23",
+          "g24"
+        ];
+        break;
+      default:
+        return [
+          "El Libro con el Titulo mas Largo del Mundo ",
+          "g26",
+          "g27",
+          "g28",
+          "g25 ",
+          "g26",
+          "g27",
+          "g28"
+        ];
+        break;
+    }
   }
-  
-  void llenadolistaUsuarios() {
-    //llenamos el array de los usuarios
-    _usuarios = llenadoarrayusuarios();
-    listaUsuarios = ListView.builder(
-      itemCount: _usuarios.length,
-      itemBuilder: (context, position) {
-        return Card(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: InkWell(
-                onTap: () {
-                  //funcion que se ejecuta en al interactuar con el cuadro
-                  print('Console Message Using Print $position');
-                },
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                        child: Container(
-                      height: 100,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          image: DecorationImage(
-                              image: NetworkImage(
-                                  //url de la imagen de perfil
-                                  "https://www.svgrepo.com/show/46001/user.svg"),
-                              fit: BoxFit.fill),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(50),
-                          ),
-                          boxShadow: [new BoxShadow(blurRadius: 0.0)]),
-                    )),
-                    Expanded(
-                        flex: 2,
-                        child: Padding(
-                            padding: const EdgeInsets.all(16.0), child: Text(
-                                //nombre del usuario
-                                _usuarios[position]))),
-                  ],
-                )),
-          ),
-        );
-      },
+
+   void gridlibros(String busquedaS) {
+    //se llenan los libros de la seccion
+    List _books = llenadoLibros(busquedaS);
+    setState(() {
+    });
+    //grid que contendra la busqueda de los libros
+    listaLibros = GridView.count(
+      childAspectRatio: ((MediaQuery.of(context).size.width / 2 - 40) /
+          (MediaQuery.of(context).size.height * 0.4)),
+      crossAxisCount: 2,
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      crossAxisSpacing: 10.0,
+      mainAxisSpacing: 10.0,
+      children: List.generate(
+        _books.length,
+        (index) {
+          return Padding(
+            padding: const EdgeInsets.only(right: 10.0, left: 10.0),
+            child: Column(
+              children: [  Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+              ),
+                //se genera un contenedor
+                contenedoresLibrosD(index),
+                new Expanded(
+                  //titulo del libro
+                  child: Container(
+                    child: Text(
+                      _books[index],
+                      overflow: TextOverflow.visible,
+                      maxLines: 2,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
+   Widget contenedoresLibrosD(int nContenedor) {
+      return Container(
+        height: (MediaQuery.of(context).size.height * 0.4),
+        decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          image: DecorationImage(
+            //Ruta de la imagen
+            image: NetworkImage(
+              "https://th.bing.com/th/id/R.8d9ba5df9a59ec6f73f0a40630247440?rik=QnOZeZ%2btOaCbTw&riu=http%3a%2f%2froc21cdn-roc21.netdna-ssl.com%2fblog%2fwp-content%2fuploads%2f2016%2f10%2fportadas-libros-siencia-ficcion-cuatro.jpg&ehk=Dze1Ot%2fzw99kcOQoVtYx1tnfpIBiYCgSLG%2fo%2fxdwLn0%3d&risl=&pid=ImgRaw",
+            ),
+            fit: BoxFit.cover,
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          color: Colors.white,
+          boxShadow: [new BoxShadow(blurRadius: 0.0)],
+        ),
+        //widget que genera el evento de onTap
+        child: InkWell(
+          onTap: () {
+            print("Container $nContenedor was tapped");
+          },
+        ),
+      );
+    }
 
   void busqueda() {
     //validamos el cuadro de texto
@@ -138,9 +273,10 @@ class _SearchPageLState extends State<SearchPageL> {
       if (txtBusquedaController.text != _currentSearch) {
         setState(() {
           _currentSearch = txtBusquedaController.text;
-          llenadolistaUsuarios();
+          gridlibros(_currentSearch);
         });
       }
     }
   }
+
  }
