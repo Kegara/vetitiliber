@@ -33,11 +33,16 @@ class _ListadolibroPage extends State<ListadolibroPage> {
               //titulo de seccion
               Padding(
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
-                child: Text("Top libros"),
+                child: Text("Mis Reviews",
+                    style: new TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 5.0,
+                        color: Colors.black)),
               ),
               //seccion donde se mostraran los 10 libros
               Expanded(
-                child: newSection("Top libros"),
+                child: newSection("Mis Reviews"),
               ),
             ],
           ),
