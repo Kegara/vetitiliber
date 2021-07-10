@@ -8,6 +8,12 @@ import 'package:vetitiliber/Busquedas/busquedaU.dart';
 import 'package:vetitiliber/Busquedas/busquedaL.dart';
 import 'package:vetitiliber/perfil/confiperfil.dart';
 import 'package:vetitiliber/libro/detallelibro.dart';
+import 'package:vetitiliber/libro/leerPdf.dart';
+import 'package:vetitiliber/libro/librore.dart';
+import 'package:vetitiliber/libro/librofav.dart';
+import 'package:vetitiliber/libro/librolei.dart';
+import 'package:vetitiliber/libro/libroley.dart';
+import 'package:vetitiliber/libro/libropen.dart';
 
 void main() {
   runApp(MyApp());
@@ -31,7 +37,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      initialRoute: LoginPage.id,
+      initialRoute: StartPage.id,
       routes: {
         LoginPage.id: (context) => LoginPage(),
         RegisterPage.id: (context) => RegisterPage(),
@@ -42,6 +48,12 @@ class MyApp extends StatelessWidget {
         SearchPageU.id: (context) => SearchPageU(),
         ConfiperfilPage.id: (context) => ConfiperfilPage(),
         DetalibroPage.id: (context) => DetalibroPage(),
+        LeerPDF.id:  (context) => LeerPDF(),
+        ListadolibroPage.id: (context) => ListadolibroPage(),
+        ListadofavPage.id: (context) => ListadofavPage(),
+        ListadoleiPage.id: (context) => ListadoleiPage(),
+        ListadoleyPage.id: (context) => ListadoleyPage(),
+        ListadopenPage.id: (context) => ListadopenPage(),
       },
     );
   }
