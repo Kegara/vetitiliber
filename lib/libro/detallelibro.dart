@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vetitiliber/componentes/menulateral.dart';
+import 'package:vetitiliber/libro/answer.dart';
 
 class DetalibroPage extends StatefulWidget {
   DetalibroPage({Key key, this.title}) : super(key: key);
@@ -61,7 +62,6 @@ class MyCustomFormState extends State<MyCustomForm> {
   @override
   Widget build(BuildContext context) {
     // Crea un widget Form usando el _formKey que creamos anteriormente
-    bool isSwitched = false;
     return Form(
         key: _formKey,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
@@ -249,7 +249,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                 ]),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: const <Widget>[
+                  children: <Widget>[
                     Expanded(
                         child: Padding(
                           padding: const EdgeInsets.only(top: 10, bottom: 10),
@@ -291,6 +291,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                               color: Colors.black,
                               size: 30.0,
                             ),
+                            onPressed: () {
+                              Navigator.of(context).pushNamed(AnswerPage.id);
+                            },
                           ),
                         ),
                         flex: 3),
