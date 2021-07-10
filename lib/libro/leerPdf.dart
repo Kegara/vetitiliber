@@ -22,7 +22,12 @@ class _leerPDF extends State<LeerPDF> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('por que solo hay videos en indio???'),
+        child: TextButton(
+          child:Text('Selecciona un PDF'),
+          onPressed: (){
+            
+          } ,
+          ),
       ),
     );
   }
