@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:vetitiliber/componentes/menulateral.dart';
+import 'package:vetitiliber/libro/librore.dart';
+import 'package:vetitiliber/libro/librofav.dart';
+import 'package:vetitiliber/libro/librolei.dart';
+import 'package:vetitiliber/libro/libroley.dart';
+import 'package:vetitiliber/libro/libropen.dart';
 
 class PerfilPage extends StatefulWidget {
   PerfilPage({Key key, this.title}) : super(key: key);
@@ -64,6 +69,7 @@ class _PerfilPageState extends State<PerfilPage> {
                 title: Text("Reviews"), //Agregar la cantidad de reviews aquí
                 onTap: () {
                   //Aquí ira la función que lleve a ver sus reviews
+                  Navigator.of(context).pushNamed(ListadolibroPage.id);
                 },
               ),
               Divider(),
@@ -72,6 +78,7 @@ class _PerfilPageState extends State<PerfilPage> {
                     Text("Favoritos"), //Agregar la cantidad de favoritos aquí
                 onTap: () {
                   //Aquí ira la función que lleve a ver sus Favoritos
+                  Navigator.of(context).pushNamed(ListadofavPage.id);
                 },
               ),
               Divider(),
@@ -79,6 +86,7 @@ class _PerfilPageState extends State<PerfilPage> {
                 title: Text("Leídos"), //Agregar la cantidad de leidos aquí
                 onTap: () {
                   //Aquí ira la función que lleve a ver sus Leídos
+                  Navigator.of(context).pushNamed(ListadoleiPage.id);
                 },
               ),
               Divider(),
@@ -86,6 +94,7 @@ class _PerfilPageState extends State<PerfilPage> {
                 title: Text("Leyendo"), //Agregar la cantidad de leyendo aquí
                 onTap: () {
                   //Aquí ira la función que lleve a ver sus Leyendo
+                  Navigator.of(context).pushNamed(ListadoleyPage.id);
                 },
               ),
               Divider(),
@@ -94,6 +103,7 @@ class _PerfilPageState extends State<PerfilPage> {
                     Text("Pendientes"), //Agregar la cantidad de pendiente aquí
                 onTap: () {
                   //Aquí ira la función que lleve a ver sus Pndientes
+                  Navigator.of(context).pushNamed(ListadopenPage.id);
                 },
               ),
               Divider(),
