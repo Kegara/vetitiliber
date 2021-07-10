@@ -9,6 +9,10 @@ import 'package:vetitiliber/Busquedas/busquedaL.dart';
 import 'package:vetitiliber/perfil/confiperfil.dart';
 import 'package:vetitiliber/libro/detallelibro.dart';
 import 'package:vetitiliber/libro/librore.dart';
+import 'package:vetitiliber/libro/librofav.dart';
+import 'package:vetitiliber/libro/librolei.dart';
+import 'package:vetitiliber/libro/libroley.dart';
+import 'package:vetitiliber/libro/libropen.dart';
 
 void main() {
   runApp(MyApp());
@@ -44,6 +48,10 @@ class MyApp extends StatelessWidget {
         ConfiperfilPage.id: (context) => ConfiperfilPage(),
         DetalibroPage.id: (context) => DetalibroPage(),
         ListadolibroPage.id: (context) => ListadolibroPage(),
+        ListadofavPage.id: (context) => ListadofavPage(),
+        ListadoleiPage.id: (context) => ListadoleiPage(),
+        ListadoleyPage.id: (context) => ListadoleyPage(),
+        ListadopenPage.id: (context) => ListadopenPage(),
       },
     );
   }
