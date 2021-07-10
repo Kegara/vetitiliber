@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      initialRoute: StartPage.id,
+      initialRoute: LeerPDF.id,
       routes: {
         LoginPage.id: (context) => LoginPage(),
         RegisterPage.id: (context) => RegisterPage(),
