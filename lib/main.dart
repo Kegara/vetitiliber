@@ -15,6 +15,7 @@ import 'package:vetitiliber/libro/librolei.dart';
 import 'package:vetitiliber/libro/libroley.dart';
 import 'package:vetitiliber/libro/libropen.dart';
 import 'package:vetitiliber/libro/answer.dart';
+import 'package:vetitiliber/elementos/aboutus.dart';
 
 void main() {
   runApp(MyApp());
@@ -56,6 +57,7 @@ class MyApp extends StatelessWidget {
         ListadoleyPage.id: (context) => ListadoleyPage(),
         ListadopenPage.id: (context) => ListadopenPage(),
         AnswerPage.id: (context) => AnswerPage(),
+        AboutusPage.id: (context) => AboutusPage(),
       },
     );
   }
