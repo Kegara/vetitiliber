@@ -7,6 +7,7 @@ import 'package:vetitiliber/perfil/confiperfil.dart';
 import 'package:vetitiliber/Busquedas/busquedaU.dart';
 import 'package:vetitiliber/Busquedas/busquedaL.dart';
 import 'package:vetitiliber/libro/detallelibro.dart';
+import 'package:vetitiliber/elementos/aboutus.dart';
 
 class MenuLateral extends StatelessWidget {
   @override
@@ -68,7 +69,7 @@ class MenuLateral extends StatelessWidget {
             title: Text("Libro"),
             onTap: () {
               Navigator.of(context).pushNamed(SearchPageL.id);
-              },
+            },
             leading: GestureDetector(
               behavior: HitTestBehavior.translucent,
               child: Container(
@@ -103,7 +104,9 @@ class MenuLateral extends StatelessWidget {
           Divider(),
           new ListTile(
             title: Text("About us"),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(AboutusPage.id);
+            },
           ),
           Divider(),
           new ListTile(

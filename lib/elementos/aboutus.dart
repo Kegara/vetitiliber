@@ -70,8 +70,58 @@ class MyCustomFormState extends State<MyCustomForm> {
                 //Aquí empieza el listado de acciones
                 child: ListView(
                   children: <Widget>[
+                    Text("Desarrolladores",
+                        style: new TextStyle(
+                            fontSize: 30,
+                            letterSpacing: 5.0,
+                            color: Colors.black)),
                     Divider(),
                     //Visualización de las reseñas-------------------------------------------------------------------
+                    Row(children: <Widget>[
+                      Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 5, bottom: 10),
+                            child: Image.asset(
+                              'assets/imagenes/login/LOGO2.png', //Imagen de portada
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          flex: 3),
+                      Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 5, bottom: 10),
+                            child: Text("Kevin García Ramírez\nDeveloper",
+                                style: new TextStyle(
+                                    fontSize: 15,
+                                    letterSpacing: 2.0,
+                                    color: Colors.black)),
+                          ),
+                          flex: 7)
+                    ]),
+                    Row(children: <Widget>[
+                      Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10, bottom: 10),
+                            child: Text("Va toda la reseña",
+                                style: new TextStyle(
+                                    fontSize: 15,
+                                    letterSpacing: 2.0,
+                                    color: Colors.black)),
+                          ),
+                          flex: 9),
+                      Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10, bottom: 10),
+                            child: Text("",
+                                style: new TextStyle(
+                                    fontSize: 15,
+                                    letterSpacing: 2.0,
+                                    color: Colors.black)),
+                          ),
+                          flex: 1)
+                    ]),
+                    Divider(),
+                    Divider(),
                     Row(children: <Widget>[
                       Expanded(
                           child: Padding(
@@ -117,6 +167,97 @@ class MyCustomFormState extends State<MyCustomForm> {
                           flex: 1)
                     ]),
                     Divider(),
+                    Divider(),
+                    Row(children: <Widget>[
+                      Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 5, bottom: 10),
+                            child: Image.asset(
+                              'assets/imagenes/login/LOGO2.png', //Imagen de portada
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          flex: 3),
+                      Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 5, bottom: 10),
+                            child: Text(
+                                "Alexis Rafael Aparicio Hernández\nDeveloper",
+                                style: new TextStyle(
+                                    fontSize: 15,
+                                    letterSpacing: 2.0,
+                                    color: Colors.black)),
+                          ),
+                          flex: 7)
+                    ]),
+                    Row(children: <Widget>[
+                      Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10, bottom: 10),
+                            child: Text("Va toda la reseña",
+                                style: new TextStyle(
+                                    fontSize: 15,
+                                    letterSpacing: 2.0,
+                                    color: Colors.black)),
+                          ),
+                          flex: 9),
+                      Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10, bottom: 10),
+                            child: Text("",
+                                style: new TextStyle(
+                                    fontSize: 15,
+                                    letterSpacing: 2.0,
+                                    color: Colors.black)),
+                          ),
+                          flex: 1)
+                    ]),
+                    Divider(),
+                    Divider(),
+                    Row(children: <Widget>[
+                      Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 5, bottom: 10),
+                            child: Image.asset(
+                              'assets/imagenes/login/LOGO2.png', //Imagen de portada
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          flex: 3),
+                      Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 5, bottom: 10),
+                            child: Text(
+                                "Alexis Rafael Aparicio Hernández\nDeveloper",
+                                style: new TextStyle(
+                                    fontSize: 15,
+                                    letterSpacing: 2.0,
+                                    color: Colors.black)),
+                          ),
+                          flex: 7)
+                    ]),
+                    Row(children: <Widget>[
+                      Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10, bottom: 10),
+                            child: Text("Va toda la reseña",
+                                style: new TextStyle(
+                                    fontSize: 15,
+                                    letterSpacing: 2.0,
+                                    color: Colors.black)),
+                          ),
+                          flex: 9),
+                      Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10, bottom: 10),
+                            child: Text("",
+                                style: new TextStyle(
+                                    fontSize: 15,
+                                    letterSpacing: 2.0,
+                                    color: Colors.black)),
+                          ),
+                          flex: 1)
+                    ]),
                     Divider(),
                   ],
                 ),
