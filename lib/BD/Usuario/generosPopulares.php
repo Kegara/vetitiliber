@@ -3,7 +3,7 @@ include "../conexion.php";
 
 $sql = 
 "SELECT
-    lbgn.genero_id,
+    lbgn.genero_id AS id,
     gn.nombre,
     COUNT(lbgn.genero_id) AS NumLibros
 FROM
