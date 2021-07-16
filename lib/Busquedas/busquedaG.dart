@@ -15,37 +15,70 @@ class SearchPage extends StatefulWidget {
   _SearchPageState createState() => _SearchPageState();
 }
 
-class genero {
-  final String id;
+class Libro {
+  final int id;
+  final String titulo;
+
+  Libro({
+    this.id,
+    this.titulo,
+  });
+
+  factory Libro.fromJson(Map<String, dynamic> json) {
+    return new Libro(
+      id: json['id'],
+      titulo: json['titulo'],
+    );
+  }
+}
+
+class LibrosList {
+  final List<Libro> libros;
+
+  LibrosList({
+    this.libros,
+  });
+
+  factory LibrosList.fromJson(List<dynamic> parsedJson) {
+    List<Libro> libros = new List<Libro>();
+    libros = parsedJson.map((e) => Libro.fromJson(e)).toList();
+    return LibrosList(
+      libros: libros,
+    );
+  }
+}
+
+class Genero {
+  final int id;
   final String nombre;
 
-  genero({
+  Genero({
     this.id,
     this.nombre,
   });
 
-  factory genero.fromJson(Map<String, dynamic> json) {
-    print("genero.fromJson json: $json");
-    return new genero(
-      id: (json['id']).toString(),
+  factory Genero.fromJson(Map<String, dynamic> json) {
+    print("Genero.fromJson json: $json");
+    return new Genero(
+      id: json['id'],
       nombre: json['nombre'],
     );
   }
 }
 
-class generosList {
-  final List<genero> generos;
+class GenerosList {
+  final List<Genero> generos;
 
-  generosList({
+  GenerosList({
     this.generos,
   });
 
-  factory generosList.fromJson(List<dynamic> parsedJson) {
-    List<genero> generos = new List<genero>();
-    generos = parsedJson.map((e) => genero.fromJson(e)).toList();
+  factory GenerosList.fromJson(List<dynamic> parsedJson) {
+    List<Genero> generos = new List<Genero>();
+    generos = parsedJson.map((e) => Genero.fromJson(e)).toList();
     print("generos[1].id: ${generos[1].id}");
     print("generos[1].nombre: ${generos[1].nombre}");
-    return new generosList(
+    return new GenerosList(
       generos: generos,
     );
   }
@@ -53,10 +86,10 @@ class generosList {
 
 class _SearchPageState extends State<SearchPage> {
   final sController = TextEditingController();
-  //lista de libros en el genero
+  //lista de libros en el Genero
 
   //lista de generos
-  generosList _genres;
+  GenerosList _genres;
   List<DropdownMenuItem<String>> _dropDownMenuItems;
   String _currentSearch;
   //array que contrendra todos los widgets
@@ -67,7 +100,7 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       //llamada al menu lateral y appbar
       drawer: MenuLateral(),
-      appBar: appBar1("Busqueda por genero", context),
+      appBar: appBar1("Busqueda por Genero", context),
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
@@ -117,8 +150,8 @@ class _SearchPageState extends State<SearchPage> {
         ),
       ),
     );
-    //se itera el array y por cada item se agrega un genero
-    for (genero gen in _genres.generos) {
+    //se itera el array y por cada item se agrega un Genero
+    for (Genero gen in _genres.generos) {
       items.add(
         new DropdownMenuItem(
           value: (gen.id).toString(),
@@ -144,9 +177,9 @@ class _SearchPageState extends State<SearchPage> {
     super.initState();
   }
 
-  //funcion que se activa al cambiar el genero
+  //funcion que se activa al cambiar el Genero
   void changedDropDownItem(String selectedGenre) {
-    //actualiza el estado y pone en la variable _currentSearch el genero seleccionado
+    //actualiza el estado y pone en la variable _currentSearch el Genero seleccionado
     print("Selected genre $selectedGenre, we are going to refresh the UI");
     setState(() {
       _currentSearch = selectedGenre;
@@ -155,7 +188,7 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   //formato del libro para generos populares
-  Widget contenedoresLibros(int nContenedor) {
+  Widget contenedoresLibros(int idLibro) {
     return Container(
       height: 200,
       decoration: BoxDecoration(
@@ -172,16 +205,17 @@ class _SearchPageState extends State<SearchPage> {
       ),
       child: InkWell(
         onTap: () {
-          print("Container $nContenedor was tapped");
+          print("Container $idLibro was tapped");
         },
       ),
     );
   }
 
   //contenedor de seccion de generos populares
-  Widget newSection(String sectionName, int limit, int idGen) {
+  Future<Widget> newSection(String sectionName, int limit, int idGen) async {
     //se genera una lista con los libros de la seccion
-    List _books2 = llenadoLibros(idGen, limit);
+    LibrosList _books2 = await llenadoLibros(idGen, limit);
+    print("_books2: $_books2");
     return Padding(
       padding: const EdgeInsets.only(
         top: 5,
@@ -198,11 +232,8 @@ class _SearchPageState extends State<SearchPage> {
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               //se cuenta cuanos items se tienen en la seccion
-              itemCount: _books2.length,
-              itemBuilder: (
-                BuildContext context,
-                int index,
-              ) {
+              itemCount: _books2.libros.length,
+              itemBuilder: (BuildContext context, int index) {
                 //contenedor con imagen de libro
                 return Container(
                   padding: const EdgeInsets.all(10),
@@ -210,11 +241,11 @@ class _SearchPageState extends State<SearchPage> {
                   child: Column(
                     children: <Widget>[
                       //se crea el objeto portada libro
-                      contenedoresLibros(index),
+                      contenedoresLibros(_books2.libros[index].id),
                       new Expanded(
                         //titulo del libro
                         child: Text(
-                          _books2[index],
+                          _books2.libros[index].titulo,
                           overflow: TextOverflow.visible,
                         ),
                       ),
@@ -224,7 +255,7 @@ class _SearchPageState extends State<SearchPage> {
               },
             ),
           ),
-          //Boton para ver mas titulos en el genero
+          //Boton para ver mas titulos en el Genero
           TextButton(
             child: Text(
               'Ver mas',
@@ -232,7 +263,7 @@ class _SearchPageState extends State<SearchPage> {
             ),
             onPressed: () {
               //se cambia la seccion actual
-              changedDropDownItem(sectionName);
+              changedDropDownItem(idGen.toString());
             },
           ),
         ],
@@ -241,12 +272,12 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   //funcion que llenara la lista de los generos disponibles
-  Future<generosList> llenadoGeneros() async {
+  Future<GenerosList> llenadoGeneros() async {
     final _urlGen =
         "https://myreviewvl.000webhostapp.com/BD/Usuario/generos.php";
-    generosList genList;
+    GenerosList genList;
     try {
-      print("print: llenadoGeneros()");
+      print("llenadoGeneros()");
       final response = await get(Uri.parse(_urlGen));
       if (response.body.contains("Fallo la conexion")) {
         print('Conexion fallida.');
@@ -256,7 +287,7 @@ class _SearchPageState extends State<SearchPage> {
         final json = jsonDecode(response.body);
         print("json.runtimeType: ${json.runtimeType}");
         print("json: $json");
-        genList = new generosList.fromJson(json);
+        genList = new GenerosList.fromJson(json);
         print("genList.generos: ${genList.generos}");
         for (var gen in genList.generos) {
           print("for in gen.id: ${gen.id}");
@@ -293,118 +324,158 @@ class _SearchPageState extends State<SearchPage> {
     // ];
   }
 
-  //funcion que llenara la lista de los libros en un genero
-  List llenadoLibros(idGen, limit) {
-    var random = new Random();
-    switch (random.nextInt(3)) {
-      case 1:
-        return [
-          "El Libro con el Titulo mas Largo del Mundo ",
-          "g2",
-          "g3",
-          "g4",
-          "g1 ",
-          "g2",
-          "g3",
-          "g4",
-          "g1 ",
-          "g2",
-          "g3",
-          "g4"
-        ];
-        break;
-      case 2:
-        return [
-          "El Libro con el Titulo mas Largo del Mundo ",
-          "g6",
-          "g7",
-          "g8",
-          "g5 ",
-          "g6",
-          "g7",
-          "g8"
-        ];
-        break;
-      case 3:
-        return [
-          "El Libro con el Titulo mas Largo del Mundo ",
-          "g10",
-          "g11",
-          "g12",
-          "g5 ",
-          "g6",
-          "g7",
-          "g8"
-        ];
-        break;
-      case 4:
-        return [
-          "El Libro con el Titulo mas Largo del Mundo ",
-          "g14",
-          "g15",
-          "g16",
-          "g13 ",
-          "g14",
-          "g15",
-          "g16"
-        ];
-        break;
-      case 5:
-        return [
-          "El Libro con el Titulo mas Largo del Mundo ",
-          "g18",
-          "g19",
-          "g20",
-          "g17 ",
-          "g18",
-          "g19",
-          "g20"
-        ];
-        break;
-      case 6:
-        return [
-          "El Libro con el Titulo mas Largo del Mundo ",
-          "g22",
-          "g23",
-          "g24",
-          "g21 ",
-          "g22",
-          "g23",
-          "g24"
-        ];
-        break;
-      default:
-        return [
-          "El Libro con el Titulo mas Largo del Mundo ",
-          "g26",
-          "g27",
-          "g28",
-          "g25 ",
-          "g26",
-          "g27",
-          "g28"
-        ];
-        break;
+  //funcion que llenara la lista de los libros en un Genero
+  Future<LibrosList> llenadoLibros(idGen, limit) async {
+    final _urlLibros =
+        "https://myreviewvl.000webhostapp.com/BD/Usuario/librosGenero.php";
+    LibrosList _auxLibro;
+    try {
+      print("(llenadoLibros) entra al try");
+      final response = await post(
+        Uri.parse(_urlLibros),
+        body: {
+          "idGenero": idGen.toString(),
+          "limite": limit.toString(),
+        },
+      );
+      print("(llenadoLibros) response.body: ${response.body}");
+      final json = jsonDecode(response.body);
+      print("json: $json");
+      _auxLibro = new LibrosList.fromJson(json);
+      print("(1)_auxLibro: $_auxLibro");
+    } catch (err) {
+      print("(llenadoLibros) err: $err");
     }
+    print("(2)_auxLibro: $_auxLibro");
+    return _auxLibro;
+    // var random = new Random();
+    // switch (random.nextInt(3)) {
+    //   case 1:
+    //     return [
+    //       "El Libro con el Titulo mas Largo del Mundo ",
+    //       "g2",
+    //       "g3",
+    //       "g4",
+    //       "g1 ",
+    //       "g2",
+    //       "g3",
+    //       "g4",
+    //       "g1 ",
+    //       "g2",
+    //       "g3",
+    //       "g4"
+    //     ];
+    //     break;
+    //   case 2:
+    //     return [
+    //       "El Libro con el Titulo mas Largo del Mundo ",
+    //       "g6",
+    //       "g7",
+    //       "g8",
+    //       "g5 ",
+    //       "g6",
+    //       "g7",
+    //       "g8"
+    //     ];
+    //     break;
+    //   case 3:
+    //     return [
+    //       "El Libro con el Titulo mas Largo del Mundo ",
+    //       "g10",
+    //       "g11",
+    //       "g12",
+    //       "g5 ",
+    //       "g6",
+    //       "g7",
+    //       "g8"
+    //     ];
+    //     break;
+    //   case 4:
+    //     return [
+    //       "El Libro con el Titulo mas Largo del Mundo ",
+    //       "g14",
+    //       "g15",
+    //       "g16",
+    //       "g13 ",
+    //       "g14",
+    //       "g15",
+    //       "g16"
+    //     ];
+    //     break;
+    //   case 5:
+    //     return [
+    //       "El Libro con el Titulo mas Largo del Mundo ",
+    //       "g18",
+    //       "g19",
+    //       "g20",
+    //       "g17 ",
+    //       "g18",
+    //       "g19",
+    //       "g20"
+    //     ];
+    //     break;
+    //   case 6:
+    //     return [
+    //       "El Libro con el Titulo mas Largo del Mundo ",
+    //       "g22",
+    //       "g23",
+    //       "g24",
+    //       "g21 ",
+    //       "g22",
+    //       "g23",
+    //       "g24"
+    //     ];
+    //     break;
+    //   default:
+    //     return [
+    //       "El Libro con el Titulo mas Largo del Mundo ",
+    //       "g26",
+    //       "g27",
+    //       "g28",
+    //       "g25 ",
+    //       "g26",
+    //       "g27",
+    //       "g28"
+    //     ];
+    //     break;
+    // }
+  }
+
+  Future<GenerosList> getPopularGenres() async {
+    final _urlPopGens =
+        "https://myreviewvl.000webhostapp.com/BD/Usuario/generosPopulares.php";
+    GenerosList _genList;
+    try {
+      print("getPopularGenres()");
+      final response = await get(Uri.parse(_urlPopGens));
+      print("response.body: ${response.body}");
+      final json = jsonDecode(response.body);
+      print("json: $json");
+      _genList = new GenerosList.fromJson(json);
+    } catch (err) {
+      print("getPopularGenres() err: $err");
+    }
+    return _genList;
   }
 
   //funcion que actualiza la busqueda actual de generos
-  void creadorSecciones() {
+  void creadorSecciones() async {
     //inicializamos el array de widgets
+    GenerosList _popularGenres = await getPopularGenres();
     pwdWidgets = <Widget>[];
-    print(_currentSearch);
+    print("(creadorSecciones) _currentSearch: $_currentSearch");
 
     //si la opciones "5 generos pupulares" o es null
-    //pone el formato generos populares sino pone el otro formato de un solo genero
+    //pone el formato generos populares sino pone el otro formato de un solo Genero
     if (_currentSearch == "Los 5 Generos mas Populares" ||
         _currentSearch == null) {
-      print("(1)_genres.generos: ${_genres.generos}");
+      print("(1)_popularGenres.generos: ${_popularGenres.generos}");
       int _counter = 1;
-      for (genero gen in _genres.generos) {
-        //se itera cada genero en la lista de genros se le pasa
-        //se pasa por parametro el genero que se pondra y el limite de libros
+      for (Genero gen in _popularGenres.generos) {
+        //se itera cada Genero en la lista de genros se le pasa
+        //se pasa por parametro el Genero que se pondra y el limite de libros
         pwdWidgets.add(
-          newSection(gen.nombre, 5, int.parse(gen.id)),
+          await newSection(gen.nombre, 5, gen.id),
         );
         if (_counter != 5) {
           _counter++;
@@ -418,7 +489,7 @@ class _SearchPageState extends State<SearchPage> {
           height: (MediaQuery.of(context).size.height * 0.8),
           child: Padding(
             padding: const EdgeInsets.only(bottom: 10),
-            child: detalleSeccion(_currentSearch, 5),
+            child: await detalleSeccion(_currentSearch, 0),
           ),
         ),
       );
@@ -434,9 +505,9 @@ class _SearchPageState extends State<SearchPage> {
     setState(() {});
   }
 
-  Widget detalleSeccion(String sectionName, int limit) {
+  Future<Widget> detalleSeccion(String sectionName, int limit) async {
     //se llenan los libros de la seccion
-    List _books = llenadoLibros(sectionName, limit);
+    LibrosList _books = await llenadoLibros(sectionName, limit);
     setState(() {});
     return GridView.count(
       childAspectRatio: ((MediaQuery.of(context).size.width / 2 - 40) /
@@ -447,7 +518,7 @@ class _SearchPageState extends State<SearchPage> {
       crossAxisSpacing: 10.0,
       mainAxisSpacing: 10.0,
       children: List.generate(
-        _books.length,
+        _books.libros.length,
         (index) {
           return Padding(
             padding: const EdgeInsets.only(right: 10.0, left: 10.0),
@@ -459,7 +530,7 @@ class _SearchPageState extends State<SearchPage> {
                   //titulo del libro
                   child: Container(
                     child: Text(
-                      _books[index],
+                      _books.libros[index].titulo,
                       overflow: TextOverflow.visible,
                       maxLines: 2,
                     ),
