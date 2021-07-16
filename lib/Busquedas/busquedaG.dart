@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:http/http.dart';
@@ -120,7 +119,6 @@ class _SearchPageState extends State<SearchPage> {
               ),
             ),
             // Columna que contiene los widgets
-
             Flexible(
               child: SingleChildScrollView(
                 child: Column(
