@@ -17,16 +17,19 @@ class SearchPage extends StatefulWidget {
 class Libro {
   final int id;
   final String titulo;
+  final String portada;
 
   Libro({
     this.id,
     this.titulo,
+    this.portada,
   });
 
   factory Libro.fromJson(Map<String, dynamic> json) {
     return new Libro(
       id: json['id'],
       titulo: json['titulo'],
+      portada: json['portada'],
     );
   }
 }
@@ -186,14 +189,14 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   //formato del libro para generos populares
-  Widget contenedoresLibros(int idLibro) {
+  Widget contenedoresLibros(int idLibro, String portada) {
     return Container(
       height: 200,
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
         image: DecorationImage(
           image: NetworkImage(
-            "https://th.bing.com/th/id/R.8d9ba5df9a59ec6f73f0a40630247440?rik=QnOZeZ%2btOaCbTw&riu=http%3a%2f%2froc21cdn-roc21.netdna-ssl.com%2fblog%2fwp-content%2fuploads%2f2016%2f10%2fportadas-libros-siencia-ficcion-cuatro.jpg&ehk=Dze1Ot%2fzw99kcOQoVtYx1tnfpIBiYCgSLG%2fo%2fxdwLn0%3d&risl=&pid=ImgRaw",
+            portada,
           ),
           fit: BoxFit.cover,
         ),
@@ -239,7 +242,8 @@ class _SearchPageState extends State<SearchPage> {
                   child: Column(
                     children: <Widget>[
                       //se crea el objeto portada libro
-                      contenedoresLibros(_books2.libros[index].id),
+                      contenedoresLibros(_books2.libros[index].id,
+                          _books2.libros[index].portada),
                       new Expanded(
                         //titulo del libro
                         child: Text(
@@ -523,7 +527,8 @@ class _SearchPageState extends State<SearchPage> {
             child: Column(
               children: [
                 //se genera un contenedor
-                contenedoresLibrosD(index),
+                contenedoresLibrosD(
+                    _books.libros[index].id, _books.libros[index].portada),
                 new Expanded(
                   //titulo del libro
                   child: Container(
@@ -542,7 +547,7 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  Widget contenedoresLibrosD(int nContenedor) {
+  Widget contenedoresLibrosD(int nContenedor, String portada) {
     return Container(
       height: (MediaQuery.of(context).size.height * 0.4),
       decoration: BoxDecoration(
@@ -550,7 +555,7 @@ class _SearchPageState extends State<SearchPage> {
         image: DecorationImage(
           //Ruta de la imagen
           image: NetworkImage(
-            "https://th.bing.com/th/id/R.8d9ba5df9a59ec6f73f0a40630247440?rik=QnOZeZ%2btOaCbTw&riu=http%3a%2f%2froc21cdn-roc21.netdna-ssl.com%2fblog%2fwp-content%2fuploads%2f2016%2f10%2fportadas-libros-siencia-ficcion-cuatro.jpg&ehk=Dze1Ot%2fzw99kcOQoVtYx1tnfpIBiYCgSLG%2fo%2fxdwLn0%3d&risl=&pid=ImgRaw",
+            portada,
           ),
           fit: BoxFit.cover,
         ),
