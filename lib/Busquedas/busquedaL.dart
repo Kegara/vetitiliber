@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:http/http.dart';
 import 'package:vetitiliber/componentes/menulateral.dart';
 import 'dart:math';
 
@@ -10,6 +13,42 @@ class SearchPageL extends StatefulWidget {
   static String id = 'BookSPage';
   @override
   _SearchPageLState createState() => _SearchPageLState();
+}
+
+class Libro {
+  final int id;
+  final String titulo;
+  final String portada;
+
+  Libro({
+    this.id,
+    this.titulo,
+    this.portada,
+  });
+
+  factory Libro.fromJson(Map<String, dynamic> json) {
+    return new Libro(
+      id: json['id'],
+      titulo: json['titulo'],
+      portada: json['portada'],
+    );
+  }
+}
+
+class LibrosList {
+  final List<Libro> libros;
+
+  LibrosList({
+    this.libros,
+  });
+
+  factory LibrosList.fromJson(List<dynamic> parsedJson) {
+    List<Libro> libros = new List<Libro>();
+    libros = parsedJson.map((e) => Libro.fromJson(e)).toList();
+    return LibrosList(
+      libros: libros,
+    );
+  }
 }
 
 class _SearchPageLState extends State<SearchPageL> {
@@ -90,119 +129,28 @@ class _SearchPageLState extends State<SearchPageL> {
   }
 
   //llenamos erray que llenara la lista de los usuarios
-  List llenadoLibros(String txtabuscar) {
-    var random = new Random();
-    switch (random.nextInt(3)) {
-      case 1:
-        return [
-          "El Libro con el Titulo mas Largo del Mundo ",
-          "g2",
-          "g3",
-          "g4",
-          "g1 ",
-          "g2",
-          "g3",
-          "g4",
-          "g1 ",
-          "g2",
-          "g3",
-          "g4"
-        ];
-        break;
-      case 1:
-        return [
-          "El Libro con el Titulo mas Largo del Mundo ",
-          "g2",
-          "g3",
-          "g4",
-          "g1 ",
-          "g2",
-          "g3",
-          "g4",
-          "g1 ",
-          "g2",
-          "g3",
-          "g4"
-        ];
-        break;
-      case 2:
-        return [
-          "El Libro con el Titulo mas Largo del Mundo ",
-          "g6",
-          "g7",
-          "g8",
-          "g5 ",
-          "g6",
-          "g7",
-          "g8"
-        ];
-        break;
-      case 3:
-        return [
-          "El Libro con el Titulo mas Largo del Mundo ",
-          "g10",
-          "g11",
-          "g12",
-          "g5 ",
-          "g6",
-          "g7",
-          "g8"
-        ];
-        break;
-      case 4:
-        return [
-          "El Libro con el Titulo mas Largo del Mundo ",
-          "g14",
-          "g15",
-          "g16",
-          "g13 ",
-          "g14",
-          "g15",
-          "g16"
-        ];
-        break;
-      case 5:
-        return [
-          "El Libro con el Titulo mas Largo del Mundo ",
-          "g18",
-          "g19",
-          "g20",
-          "g17 ",
-          "g18",
-          "g19",
-          "g20"
-        ];
-        break;
-      case 6:
-        return [
-          "El Libro con el Titulo mas Largo del Mundo ",
-          "g22",
-          "g23",
-          "g24",
-          "g21 ",
-          "g22",
-          "g23",
-          "g24"
-        ];
-        break;
-      default:
-        return [
-          "El Libro con el Titulo mas Largo del Mundo ",
-          "g26",
-          "g27",
-          "g28",
-          "g25 ",
-          "g26",
-          "g27",
-          "g28"
-        ];
-        break;
+  Future<LibrosList> llenadoLibros(String txtabuscar) async {
+    final _urlLibros =
+        "https://myreviewvl.000webhostapp.com/BD/Usuario/buquedaLibro.php";
+    LibrosList _auxLibro;
+    try {
+      final response = await post(
+        Uri.parse(_urlLibros),
+        body: {
+          "termino": txtabuscar,
+        },
+      );
+      final json = jsonDecode(response.body);
+      _auxLibro = new LibrosList.fromJson(json);
+    } catch (err) {
+      print("(llenadoLibros) err: $err");
     }
+    return _auxLibro;
   }
 
-  void gridlibros(String busquedaS) {
+  void gridlibros(String busquedaS) async {
     //se llenan los libros de la seccion
-    List _books = llenadoLibros(busquedaS);
+    LibrosList _books = await llenadoLibros(busquedaS);
     setState(() {});
     //grid que contendra la busqueda de los libros
     listaLibros = GridView.count(
@@ -214,7 +162,7 @@ class _SearchPageLState extends State<SearchPageL> {
       crossAxisSpacing: 10.0,
       mainAxisSpacing: 10.0,
       children: List.generate(
-        _books.length,
+        _books.libros.length,
         (index) {
           return Padding(
             padding: const EdgeInsets.only(right: 10.0, left: 10.0),
@@ -224,12 +172,15 @@ class _SearchPageLState extends State<SearchPageL> {
                   padding: const EdgeInsets.only(top: 10, bottom: 10),
                 ),
                 //se genera un contenedor
-                contenedoresLibrosD(index),
+                contenedoresLibrosD(
+                  _books.libros[index].id,
+                  _books.libros[index].portada,
+                ),
                 new Expanded(
                   //titulo del libro
                   child: Container(
                     child: Text(
-                      _books[index],
+                      _books.libros[index].titulo,
                       overflow: TextOverflow.visible,
                       maxLines: 2,
                     ),
@@ -243,7 +194,7 @@ class _SearchPageLState extends State<SearchPageL> {
     );
   }
 
-  Widget contenedoresLibrosD(int nContenedor) {
+  Widget contenedoresLibrosD(int nContenedor, String portada) {
     return Container(
       height: (MediaQuery.of(context).size.height * 0.4),
       decoration: BoxDecoration(
@@ -251,7 +202,7 @@ class _SearchPageLState extends State<SearchPageL> {
         image: DecorationImage(
           //Ruta de la imagen
           image: NetworkImage(
-            "https://th.bing.com/th/id/R.8d9ba5df9a59ec6f73f0a40630247440?rik=QnOZeZ%2btOaCbTw&riu=http%3a%2f%2froc21cdn-roc21.netdna-ssl.com%2fblog%2fwp-content%2fuploads%2f2016%2f10%2fportadas-libros-siencia-ficcion-cuatro.jpg&ehk=Dze1Ot%2fzw99kcOQoVtYx1tnfpIBiYCgSLG%2fo%2fxdwLn0%3d&risl=&pid=ImgRaw",
+            portada,
           ),
           fit: BoxFit.cover,
         ),
