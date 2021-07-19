@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS `myReview`.`libro` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `titulo` VARCHAR(45) NOT NULL,
   `sinopsis` VARCHAR(1500) NOT NULL,
+  `portada` VARCHAR(350) NOT NULL,
   `autor_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_libro_autor1_idx` (`autor_id` ASC),
