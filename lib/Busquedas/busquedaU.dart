@@ -44,7 +44,7 @@ class _SearchPageUState extends State<SearchPageU> {
                 controller: txtBusquedaController,
                 validator: (value) {
                   if (value.isEmpty) {
-                    return 'Please enter some text';
+                    return 'Por favor introduzca el nombre del usuario que quiere buscar';
                   }
                   return null;
                 },
