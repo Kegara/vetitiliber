@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:http/http.dart';
+import 'package:vetitiliber/Busquedas/busquedaG.dart';
 import 'package:vetitiliber/componentes/menulateral.dart';
 
 class SearchPageU extends StatefulWidget {
@@ -118,13 +122,33 @@ class _SearchPageUState extends State<SearchPageU> {
   }
 
   //llenamos erray que llenara la lista de los usuarios
-  List llenadoarrayusuarios() {
-    return ["kevin", "paulos", "isra", "alexis"];
+  Future<UsuariosList> llenadoarrayusuarios(termino) async {
+    final _url =
+        "https://myreviewvl.000webhostapp.com/BD/Usuario/busquedaUsuario.php";
+    UsuariosList _aux;
+    try {
+      final response = await post(
+        Uri.parse(_url),
+        body: {
+          "termino": termino,
+        },
+      );
+      if (response.body == "[]") {
+        // Este es el caso en el que no encuentra ningun usuario con ese nombre
+        print("no se encontro ningun usuario con un nombre parecido");
+      }
+      final json = jsonDecode(response.body);
+      _aux = new UsuariosList.fromJson(json);
+    } catch (err) {
+      print("(llenadoarrayusuarios) err: $err");
+    }
+    return _aux;
+    // return ["kevin", "paulos", "isra", "alexis"];
   }
 
-  void llenadolistaUsuarios() {
+  void llenadolistaUsuarios(String termino) async {
     //llenamos el array de los usuarios
-    _usuarios = llenadoarrayusuarios();
+    _usuarios = await llenadoarrayusuarios(termino);
     listaUsuarios = ListView.builder(
       itemCount: _usuarios.length,
       itemBuilder: (context, position) {
@@ -183,7 +207,7 @@ class _SearchPageUState extends State<SearchPageU> {
       if (txtBusquedaController.text != _currentSearch) {
         setState(() {
           _currentSearch = txtBusquedaController.text;
-          llenadolistaUsuarios();
+          llenadolistaUsuarios(_currentSearch);
         });
       }
     }
