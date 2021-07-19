@@ -58,7 +58,7 @@ class _SearchPageUState extends State<SearchPageU> {
   //lista de libros en el genero
   String _currentSearch;
   //lista de generos
-  List _usuarios = [];
+  UsuariosList _usuarios;
   Widget listaUsuarios;
   //array que contrendra todos los widgets
   var pwdWidgets = <Widget>[];
@@ -149,8 +149,9 @@ class _SearchPageUState extends State<SearchPageU> {
   void llenadolistaUsuarios(String termino) async {
     //llenamos el array de los usuarios
     _usuarios = await llenadoarrayusuarios(termino);
+    setState(() {});
     listaUsuarios = ListView.builder(
-      itemCount: _usuarios.length,
+      itemCount: _usuarios.usuarios.length,
       itemBuilder: (context, position) {
         return Card(
           child: Padding(
@@ -158,7 +159,8 @@ class _SearchPageUState extends State<SearchPageU> {
             child: InkWell(
               onTap: () {
                 //funcion que se ejecuta en al interactuar con el cuadro
-                print('Console Message Using Print $position');
+                print(
+                    'Console Message Using Print ${_usuarios.usuarios[position].id}');
               },
               child: Row(
                 children: <Widget>[
@@ -170,7 +172,7 @@ class _SearchPageUState extends State<SearchPageU> {
                         image: DecorationImage(
                           image: NetworkImage(
                             //url de la imagen de perfil
-                            "https://www.svgrepo.com/show/46001/user.svg",
+                            _usuarios.usuarios[position].fotoPerfil,
                           ),
                           fit: BoxFit.fill,
                         ),
@@ -187,7 +189,7 @@ class _SearchPageUState extends State<SearchPageU> {
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
                         //nombre del usuario
-                        _usuarios[position],
+                        _usuarios.usuarios[position].nombre,
                       ),
                     ),
                   ),
