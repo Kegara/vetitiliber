@@ -140,6 +140,11 @@ class _SearchPageLState extends State<SearchPageL> {
           "termino": txtabuscar,
         },
       );
+      print("response.body: ${response.body}");
+      if (response.body == "[]") {
+        // Este es el caso en el que no encuetra ningun libro con ese titulo
+        print("no se encontro ningun libro con un titulo parecido");
+      }
       final json = jsonDecode(response.body);
       _auxLibro = new LibrosList.fromJson(json);
     } catch (err) {
