@@ -142,7 +142,7 @@ class _SearchPageLState extends State<SearchPageL> {
       );
       print("response.body: ${response.body}");
       if (response.body == "[]") {
-        // Este es el caso en el que no encuetra ningun libro con ese titulo
+        // Este es el caso en el que no encuentra ningun libro con ese titulo
         print("no se encontro ningun libro con un titulo parecido");
       }
       final json = jsonDecode(response.body);
