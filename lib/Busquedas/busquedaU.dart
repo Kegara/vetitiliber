@@ -10,6 +10,42 @@ class SearchPageU extends StatefulWidget {
   _SearchPageUState createState() => _SearchPageUState();
 }
 
+class Usuario {
+  final int id;
+  final String nombre;
+  final String fotoPerfil;
+
+  Usuario({
+    this.id,
+    this.nombre,
+    this.fotoPerfil,
+  });
+
+  factory Usuario.fromJson(Map<String, dynamic> json) {
+    return new Usuario(
+      id: json['id'],
+      nombre: json['nombre'],
+      fotoPerfil: json['fotoPerfil'],
+    );
+  }
+}
+
+class UsuariosList {
+  final List<Usuario> usuarios;
+
+  UsuariosList({
+    this.usuarios,
+  });
+
+  factory UsuariosList.fromJson(List<dynamic> parsedJson) {
+    List<Usuario> usuarios = new List<Usuario>();
+    usuarios = parsedJson.map((e) => Usuario.fromJson(e)).toList();
+    return UsuariosList(
+      usuarios: usuarios,
+    );
+  }
+}
+
 class _SearchPageUState extends State<SearchPageU> {
   //Creamos controlador de texto para el texto de busqueda
   final txtBusquedaController = TextEditingController();
