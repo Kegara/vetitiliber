@@ -26,69 +26,71 @@ class _SearchPageLState extends State<SearchPageL> {
 
   @override
   Widget build(BuildContext context) {
-     return Scaffold(
-        //llamada al menu lateral y appbar
-        drawer: MenuLateral(),
-        appBar: appBar1("Busqueda de libros", context),
-        resizeToAvoidBottomInset: false,
-        body: SafeArea(
-          child: Column(
-            children: <Widget>[
-              //Texto de titulo
-              Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
-                child: Text("Busqueda de libros"),
-              ),
-              //Form con busqueda
-              Form(
-                  key: _formKeySU,
-                  child: TextFormField(
-                    controller: txtBusquedaController,
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
-                    autofocus: true,
-                    decoration: InputDecoration(
-                      suffixIcon: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          IconButton(
-                            icon: Icon(Icons.search),
-                            onPressed: () => {busqueda()},
-                          ),
-                        ],
+    return Scaffold(
+      //llamada al menu lateral y appbar
+      drawer: MenuLateral(),
+      appBar: appBar1("Busqueda de libros", context),
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            //Texto de titulo
+            Padding(
+              padding: const EdgeInsets.only(top: 10, bottom: 10),
+              child: Text("Busqueda de libros"),
+            ),
+            //Form con busqueda
+            Form(
+              key: _formKeySU,
+              child: TextFormField(
+                controller: txtBusquedaController,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Por favor introduzca el nombre del libro que quiere buscar';
+                  }
+                  return null;
+                },
+                autofocus: true,
+                decoration: InputDecoration(
+                  suffixIcon: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(Icons.search),
+                        onPressed: () => {busqueda()},
                       ),
-                      border: OutlineInputBorder(),
-                      labelText: 'Libro a buscar',
-                    ),
-                  )),
-              // Columna que contiene los widgets
-              Expanded(child:  
-        new SizedBox(
-          height: (MediaQuery.of(context).size.height * 0.8),
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: listaLibros,
-          ),
+                    ],
+                  ),
+                  border: OutlineInputBorder(),
+                  labelText: 'Libro a buscar',
+                ),
+              ),
+            ),
+            // Columna que contiene los widgets
+            Expanded(
+              child: new SizedBox(
+                height: (MediaQuery.of(context).size.height * 0.8),
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: listaLibros,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
-            ],
-          ),
-        ));
+    );
   }
 
-  
- void initState() {
+  void initState() {
     //ponemos en el widget lista usuarios el texto de inicio
     listaLibros = Text("Busca a un libro por su nombre!");
     super.initState();
   }
-   //llenamos erray que llenara la lista de los usuarios
-   List llenadoLibros(String txtabuscar) {
+
+  //llenamos erray que llenara la lista de los usuarios
+  List llenadoLibros(String txtabuscar) {
     var random = new Random();
     switch (random.nextInt(3)) {
       case 1:
@@ -106,8 +108,8 @@ class _SearchPageLState extends State<SearchPageL> {
           "g3",
           "g4"
         ];
-        break; 
-         case 1:
+        break;
+      case 1:
         return [
           "El Libro con el Titulo mas Largo del Mundo ",
           "g2",
@@ -198,11 +200,10 @@ class _SearchPageLState extends State<SearchPageL> {
     }
   }
 
-   void gridlibros(String busquedaS) {
+  void gridlibros(String busquedaS) {
     //se llenan los libros de la seccion
     List _books = llenadoLibros(busquedaS);
-    setState(() {
-    });
+    setState(() {});
     //grid que contendra la busqueda de los libros
     listaLibros = GridView.count(
       childAspectRatio: ((MediaQuery.of(context).size.width / 2 - 40) /
@@ -218,9 +219,10 @@ class _SearchPageLState extends State<SearchPageL> {
           return Padding(
             padding: const EdgeInsets.only(right: 10.0, left: 10.0),
             child: Column(
-              children: [  Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
-              ),
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
+                ),
                 //se genera un contenedor
                 contenedoresLibrosD(index),
                 new Expanded(
@@ -240,30 +242,31 @@ class _SearchPageLState extends State<SearchPageL> {
       ),
     );
   }
-   Widget contenedoresLibrosD(int nContenedor) {
-      return Container(
-        height: (MediaQuery.of(context).size.height * 0.4),
-        decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-          image: DecorationImage(
-            //Ruta de la imagen
-            image: NetworkImage(
-              "https://th.bing.com/th/id/R.8d9ba5df9a59ec6f73f0a40630247440?rik=QnOZeZ%2btOaCbTw&riu=http%3a%2f%2froc21cdn-roc21.netdna-ssl.com%2fblog%2fwp-content%2fuploads%2f2016%2f10%2fportadas-libros-siencia-ficcion-cuatro.jpg&ehk=Dze1Ot%2fzw99kcOQoVtYx1tnfpIBiYCgSLG%2fo%2fxdwLn0%3d&risl=&pid=ImgRaw",
-            ),
-            fit: BoxFit.cover,
+
+  Widget contenedoresLibrosD(int nContenedor) {
+    return Container(
+      height: (MediaQuery.of(context).size.height * 0.4),
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        image: DecorationImage(
+          //Ruta de la imagen
+          image: NetworkImage(
+            "https://th.bing.com/th/id/R.8d9ba5df9a59ec6f73f0a40630247440?rik=QnOZeZ%2btOaCbTw&riu=http%3a%2f%2froc21cdn-roc21.netdna-ssl.com%2fblog%2fwp-content%2fuploads%2f2016%2f10%2fportadas-libros-siencia-ficcion-cuatro.jpg&ehk=Dze1Ot%2fzw99kcOQoVtYx1tnfpIBiYCgSLG%2fo%2fxdwLn0%3d&risl=&pid=ImgRaw",
           ),
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-          color: Colors.white,
-          boxShadow: [new BoxShadow(blurRadius: 0.0)],
+          fit: BoxFit.cover,
         ),
-        //widget que genera el evento de onTap
-        child: InkWell(
-          onTap: () {
-            print("Container $nContenedor was tapped");
-          },
-        ),
-      );
-    }
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        color: Colors.white,
+        boxShadow: [new BoxShadow(blurRadius: 0.0)],
+      ),
+      //widget que genera el evento de onTap
+      child: InkWell(
+        onTap: () {
+          print("Container $nContenedor was tapped");
+        },
+      ),
+    );
+  }
 
   void busqueda() {
     //validamos el cuadro de texto
@@ -277,5 +280,4 @@ class _SearchPageLState extends State<SearchPageL> {
       }
     }
   }
-
- }
+}
