@@ -26,50 +26,53 @@ class _SearchPageUState extends State<SearchPageU> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        //llamada al menu lateral y appbar
-        drawer: MenuLateral(),
-        appBar: appBar1("Busqueda de usuarios", context),
-        resizeToAvoidBottomInset: false,
-        body: SafeArea(
-          child: Column(
-            children: <Widget>[
-              //Texto de titulo
-
-              Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
-                child: Text("Busqueda por usuarios"),
-              ),
-              Form(
-                  key: _formKeySU,
-                  child: TextFormField(
-                    controller: txtBusquedaController,
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
-                    autofocus: true,
-                    decoration: InputDecoration(
-                      suffixIcon: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          IconButton(
-                            icon: Icon(Icons.search),
-                            onPressed: () => {busqueda()},
-                          ),
-                        ],
+      //llamada al menu lateral y appbar
+      drawer: MenuLateral(),
+      appBar: appBar1("Busqueda de usuarios", context),
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            //Texto de titulo
+            Padding(
+              padding: const EdgeInsets.only(top: 10, bottom: 10),
+              child: Text("Busqueda por usuarios"),
+            ),
+            Form(
+              key: _formKeySU,
+              child: TextFormField(
+                controller: txtBusquedaController,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
+                autofocus: true,
+                decoration: InputDecoration(
+                  suffixIcon: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(Icons.search),
+                        onPressed: () => {busqueda()},
                       ),
-                      border: OutlineInputBorder(),
-                      labelText: 'Usuario a buscar',
-                    ),
-                  )),
-              // Columna que contiene los widgets
-              Expanded(child: listaUsuarios),
-            ],
-          ),
-        ));
+                    ],
+                  ),
+                  border: OutlineInputBorder(),
+                  labelText: 'Usuario a buscar',
+                ),
+              ),
+            ),
+            // Columna que contiene los widgets
+            Expanded(
+              child: listaUsuarios,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   void initState() {
@@ -93,35 +96,44 @@ class _SearchPageUState extends State<SearchPageU> {
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: InkWell(
-                onTap: () {
-                  //funcion que se ejecuta en al interactuar con el cuadro
-                  print('Console Message Using Print $position');
-                },
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                        child: Container(
+              onTap: () {
+                //funcion que se ejecuta en al interactuar con el cuadro
+                print('Console Message Using Print $position');
+              },
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
                       height: 100,
                       decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          image: DecorationImage(
-                              image: NetworkImage(
-                                  //url de la imagen de perfil
-                                  "https://www.svgrepo.com/show/46001/user.svg"),
-                              fit: BoxFit.fill),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(50),
+                        shape: BoxShape.rectangle,
+                        image: DecorationImage(
+                          image: NetworkImage(
+                            //url de la imagen de perfil
+                            "https://www.svgrepo.com/show/46001/user.svg",
                           ),
-                          boxShadow: [new BoxShadow(blurRadius: 0.0)]),
-                    )),
-                    Expanded(
-                        flex: 2,
-                        child: Padding(
-                            padding: const EdgeInsets.all(16.0), child: Text(
-                                //nombre del usuario
-                                _usuarios[position]))),
-                  ],
-                )),
+                          fit: BoxFit.fill,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(50),
+                        ),
+                        boxShadow: [new BoxShadow(blurRadius: 0.0)],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        //nombre del usuario
+                        _usuarios[position],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         );
       },
