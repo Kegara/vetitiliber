@@ -8,6 +8,7 @@ import 'package:vetitiliber/Busquedas/busquedaU.dart';
 import 'package:vetitiliber/Busquedas/busquedaL.dart';
 import 'package:vetitiliber/libro/detallelibro.dart';
 import 'package:vetitiliber/elementos/aboutus.dart';
+import 'package:vetitiliber/libro/leerPdf.dart';
 
 class MenuLateral extends StatelessWidget {
   @override
@@ -30,7 +31,9 @@ class MenuLateral extends StatelessWidget {
           Divider(),
           new ListTile(
             title: Text("PDF VIEWER"),
-            onTap: () {},
+            onTap: () {
+                Navigator.of(context).pushNamed(LeerPDF.id);
+            },
           ),
           Divider(),
           new ListTile(
@@ -98,11 +101,6 @@ class MenuLateral extends StatelessWidget {
           ),
           Divider(),
           new ListTile(
-            title: Text("Ayuda"),
-            onTap: () {},
-          ),
-          Divider(),
-          new ListTile(
             title: Text("About us"),
             onTap: () {
               Navigator.of(context).pushNamed(AboutusPage.id);
@@ -127,19 +125,10 @@ appBar1(String x, BuildContext context) {
     title: Text(x),
     actions: [
       IconButton(
-        icon: const Icon(Icons.add_alert),
-        tooltip: 'Show Snackbar',
-        onPressed: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('This is a snackbar')));
-        },
-      ),
-      IconButton(
         icon: const Icon(Icons.search),
         tooltip: 'Show Snackbar',
         onPressed: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('This is a snackbar')));
+              Navigator.of(context).pushNamed(SearchPageL.id);
         },
       )
     ],
