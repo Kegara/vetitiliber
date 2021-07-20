@@ -3,8 +3,8 @@ import 'package:vetitiliber/componentes/menulateral.dart';
 import 'package:vetitiliber/libro/answer.dart';
 
 class DetalibroPage extends StatefulWidget {
-  DetalibroPage({Key key, this.title}) : super(key: key);
-  final String title;
+  DetalibroPage({Key key, this.idUser, this.idLibro}) : super(key: key);
+  final String idUser,idLibro;
 
   static String id = 'DetalibroPage';
   @override

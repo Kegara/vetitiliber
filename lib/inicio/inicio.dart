@@ -76,7 +76,11 @@ class _StartPageState extends State<StartPage> {
           int id = widget.IdUser;
           print("Container $nContenedor was tapped");
           print("Id del usuario a continuacion:$id");
-          Navigator.of(context).pushNamed(DetalibroPage.id);
+            var route = new MaterialPageRoute(
+              builder: (BuildContext context) =>
+              new DetalibroPage(),
+            );          
+          Navigator.of(context).push(route);
         },
       ),
     );
