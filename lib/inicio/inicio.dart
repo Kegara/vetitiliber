@@ -4,14 +4,19 @@ import 'package:vetitiliber/componentes/menulateral.dart';
 import 'package:vetitiliber/libro/detallelibro.dart';
 
 class StartPage extends StatefulWidget {
-  StartPage({Key key, this.title}) : super(key: key);
-  final String title;
+  //Variable en donde guardaremos la id del usuario
+  // ignore: non_constant_identifier_names
+  final int IdUser;
+
+  // ignore: non_constant_identifier_names
+  StartPage({Key key, this.IdUser}) : super(key: key);
   static String id = 'StartPage';
   @override
   _StartPageState createState() => _StartPageState();
 }
 
 class _StartPageState extends State<StartPage> {
+
   //listado de libros
   List _topBooks = ["g1 ", "g2", "g3", "g4", "g4"];
 
@@ -27,7 +32,7 @@ class _StartPageState extends State<StartPage> {
     return Scaffold(
       drawer: MenuLateral(),
       appBar: appBar1("MY REVIEW", context),
-      body: SafeArea(
+      body: SafeArea( 
         child: Center(
           child: Column(
             children: <Widget>[
@@ -46,7 +51,6 @@ class _StartPageState extends State<StartPage> {
       ),
     );
   }
-
   // contenedor que tendra la info del libro el cual tiene asociado un onTap que redirige a la informacion del libro
   Widget contenedoresLibros(int nContenedor) {
     return Container(
@@ -69,7 +73,9 @@ class _StartPageState extends State<StartPage> {
       ),
       child: InkWell(
         onTap: () {
+          int id = widget.IdUser;
           print("Container $nContenedor was tapped");
+          print("Id del usuario a continuacion:$id");
           Navigator.of(context).pushNamed(DetalibroPage.id);
         },
       ),
@@ -78,6 +84,7 @@ class _StartPageState extends State<StartPage> {
 
   Widget newSection(String sectionName) {
     //se obtienen los libros
+    
     _topBooks = obtenerTopBooks();
     // printUsuarioId();
     getUsuarioId().then((value) {
@@ -119,6 +126,7 @@ class _StartPageState extends State<StartPage> {
 
   List obtenerTopBooks() {
     return ["g1 ", "g2", "g3", "g4", "g4"];
+    
   }
 
   void printUsuarioId() async {

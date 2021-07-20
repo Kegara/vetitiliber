@@ -86,8 +86,15 @@ class _LoginPageState extends State<LoginPage> {
 
             final prefs = await SharedPreferences.getInstance();
             prefs.setInt('idUsuario', int.parse(json['id']));
+            int idUser = int.parse(json['id']);
+            print("ID del usuario: $idUser");
 
-            Navigator.of(context).pushNamed(StartPage.id);
+            var route = new MaterialPageRoute(
+              builder: (BuildContext context) =>
+              new StartPage(IdUser: idUser),
+            );
+
+            Navigator.of(context).push(route);
           }
         }
       } else {
