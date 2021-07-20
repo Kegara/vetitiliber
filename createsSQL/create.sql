@@ -193,8 +193,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `myReview`.`configuracion` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `nComentarios` INT UNSIGNED NOT NULL,
-  `nReacciones` INT UNSIGNED NOT NULL,
   `vLibros` INT UNSIGNED NOT NULL,
   `vResenas` INT UNSIGNED NOT NULL,
   `vPerfil` INT UNSIGNED NOT NULL,
@@ -204,28 +202,6 @@ CREATE TABLE IF NOT EXISTS `myReview`.`configuracion` (
   CONSTRAINT `fk_configuracion_usuario1`
     FOREIGN KEY (`usuario_id`)
     REFERENCES `myReview`.`usuario` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `myReview`.`invisible`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `myReview`.`invisible` (
-  `configuracion_id` INT UNSIGNED NOT NULL,
-  `libro_id` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`configuracion_id`, `libro_id`),
-  INDEX `fk_configuracion_has_libro_libro1_idx` (`libro_id` ASC),
-  INDEX `fk_configuracion_has_libro_configuracion1_idx` (`configuracion_id` ASC),
-  CONSTRAINT `fk_configuracion_has_libro_configuracion1`
-    FOREIGN KEY (`configuracion_id`)
-    REFERENCES `myReview`.`configuracion` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_configuracion_has_libro_libro1`
-    FOREIGN KEY (`libro_id`)
-    REFERENCES `myReview`.`libro` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -296,7 +272,7 @@ CREATE TABLE IF NOT EXISTS `myReview`.`A_responde_B` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
+ 
 
 -- -----------------------------------------------------
 -- Table `myReview`.`libro_has_genero`

@@ -7,7 +7,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:vetitiliber/libro/pdf_api.dart';
 import 'package:vetitiliber/libro/readPDF.dart';
-
+import 'package:vetitiliber/componentes/menulateral.dart';
 
 
 // ignore: camel_case_types
@@ -24,7 +24,9 @@ class _leerPDF extends State<LeerPDF> {
   File file;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+   return Scaffold(
+      drawer: MenuLateral(),
+      appBar: appBar1("Busqueda de libros", context),
       body: Center(
         child: TextButton(
           child:Text('Selecciona un PDF'),
@@ -38,7 +40,6 @@ class _leerPDF extends State<LeerPDF> {
   
   void _seleccionarPDF() async {
     final file = await PDFApi.pickFile();
-
     if (file == null) return;
     openPDF(context, file);
   }

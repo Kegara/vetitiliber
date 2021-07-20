@@ -19,20 +19,26 @@ class _DetalibroPageState extends State<DetalibroPage> {
       appBar: AppBar(
         title: Text("MY REVIEW"),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.add_alert),
-            tooltip: 'Show Snackbar',
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('This is a snackbar')));
-            },
-          ),
+          // IconButton(
+          //   icon: const Icon(Icons.add_alert),
+          //   tooltip: 'Show Snackbar',
+          //   onPressed: () {
+          //     ScaffoldMessenger.of(context).showSnackBar(
+          //       const SnackBar(
+          //         content: Text('This is a snackbar'),
+          //       ),
+          //     );
+          //   },
+          // ),
           IconButton(
             icon: const Icon(Icons.search),
             tooltip: 'Show Snackbar',
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('This is a snackbar')));
+                const SnackBar(
+                  content: Text('This is a snackbar'),
+                ),
+              );
             },
           )
         ],
@@ -63,113 +69,167 @@ class MyCustomFormState extends State<MyCustomForm> {
   Widget build(BuildContext context) {
     // Crea un widget Form usando el _formKey que creamos anteriormente
     return Form(
-        key: _formKey,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
-            Widget>[
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
           Text(
-              "Nombre del libro", //Texto inicial de la sección debe ir el titulo del libro
-              style: new TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 5.0,
-                  color: Colors.black)),
+            "Nombre del libro", //Texto inicial de la sección debe ir el titulo del libro
+            style: new TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 5.0,
+              color: Colors.black,
+            ),
+          ),
           Text(
-              "☆☆☆☆☆(80)", //Texto inicial de la sección debe ir la clificación y pot cuantos
-              style: new TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 5.0,
-                  color: Colors.black)),
+            "☆☆☆☆☆(80)", //Texto inicial de la sección debe ir la calificación y por cuantos
+            style: new TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 5.0,
+              color: Colors.black,
+            ),
+          ),
           new Expanded(
             //Aquí empieza el listado de acciones
             child: ListView(
               children: <Widget>[
-                Text("\n",
-                    style: new TextStyle(
-                        fontSize: 5,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 5.0,
-                        color: Colors.black)),
+                Text(
+                  "\n",
+                  style: new TextStyle(
+                    fontSize: 5,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 5.0,
+                    color: Colors.black,
+                  ),
+                ),
                 //Imagen del libro--------------------------------
                 Image.asset(
                   'assets/imagenes/login/LOGO2.png', //Imagen de portada
                   fit: BoxFit.cover,
                 ),
-                Text("Detalles\n",
-                    style: new TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 5.0,
-                        color: Colors.black)),
+                Text(
+                  "Detalles\n",
+                  style: new TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 5.0,
+                    color: Colors.black,
+                  ),
+                ),
                 //Inicia el campo de sipnosis--------------------------------------------------
-                Row(children: <Widget>[
-                  Expanded(
-                      child: Text("Sipnosis\n",
-                          style: new TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 5.0,
-                              color: Colors.black)),
-                      flex: 3),
-                  Expanded(
-                      child: Text("Sipnosis\n",
-                          style: new TextStyle(
-                              fontSize: 15,
-                              letterSpacing: 2.0,
-                              color: Colors.black)),
-                      flex: 7)
-                ]),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        "Sipnosis\n",
+                        style: new TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 5.0,
+                          color: Colors.black,
+                        ),
+                      ),
+                      flex: 3,
+                    ),
+                    Expanded(
+                      child: Text(
+                        "Sipnosis\n",
+                        style: new TextStyle(
+                          fontSize: 15,
+                          letterSpacing: 2.0,
+                          color: Colors.black,
+                        ),
+                      ),
+                      flex: 7,
+                    ),
+                  ],
+                ),
                 //Inicia el campo del autor--------------------------------------------------
-                Row(children: <Widget>[
-                  Expanded(
-                      child: Text("Autor\n",
-                          style: new TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 5.0,
-                              color: Colors.black)),
-                      flex: 3),
-                  Expanded(
-                      child: Text("Nombre del autor\n",
-                          style: new TextStyle(
-                              fontSize: 15,
-                              letterSpacing: 2.0,
-                              color: Colors.black)),
-                      flex: 7)
-                ]),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        "Autor\n",
+                        style: new TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 5.0,
+                          color: Colors.black,
+                        ),
+                      ),
+                      flex: 3,
+                    ),
+                    Expanded(
+                      child: Text(
+                        "Nombre del autor\n",
+                        style: new TextStyle(
+                          fontSize: 15,
+                          letterSpacing: 2.0,
+                          color: Colors.black,
+                        ),
+                      ),
+                      flex: 7,
+                    ),
+                  ],
+                ),
                 //Inicia el campo de genero--------------------------------------------------
-                Row(children: <Widget>[
-                  Expanded(
-                      child: Text("Genero\n",
-                          style: new TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 5.0,
-                              color: Colors.black)),
-                      flex: 3),
-                  Expanded(
-                      child: Text("Van los generos\n",
-                          style: new TextStyle(
-                              fontSize: 15,
-                              letterSpacing: 2.0,
-                              color: Colors.black)),
-                      flex: 7)
-                ]),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        "Genero\n",
+                        style: new TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 5.0,
+                          color: Colors.black,
+                        ),
+                      ),
+                      flex: 3,
+                    ),
+                    Expanded(
+                      child: Text(
+                        "Van los generos\n",
+                        style: new TextStyle(
+                          fontSize: 15,
+                          letterSpacing: 2.0,
+                          color: Colors.black,
+                        ),
+                      ),
+                      flex: 7,
+                    ),
+                  ],
+                ),
                 //Nuevo campo-------------------------------------------------------------------
-                Text("\nReseñas\n",
-                    style: new TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 5.0,
-                        color: Colors.black)),
-                Row(children: <Widget>[
-                  Expanded(child: Center(child: MyStatefulWidget()), flex: 2),
-                  Expanded(child: Text(''), flex: 8),
-                ]),
+                Text(
+                  "\nReseñas\n",
+                  style: new TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 5.0,
+                    color: Colors.black,
+                  ),
+                ),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Center(
+                        child: MyStatefulWidget(),
+                      ),
+                      flex: 2,
+                    ),
+                    Expanded(
+                      child: Text(''),
+                      flex: 8,
+                    ),
+                  ],
+                ),
                 TextFormField(
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
+                      return 'Por favor introduzca texto';
                     }
                     return null;
                   },
@@ -179,8 +239,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                     hintText: 'Escriba su reseña, por favor.',
                   ),
                 ),
-                Row(children: <Widget>[
-                  Expanded(
+                Row(
+                  children: <Widget>[
+                    Expanded(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: ElevatedButton(
@@ -189,23 +250,30 @@ class MyCustomFormState extends State<MyCustomForm> {
                             // el formulario no es válido.
                             if (_formKey.currentState.validate()) {
                               // Si el formulario es válido, queremos mostrar un Snackbar
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text("Procesing Data"),
-                                behavior: SnackBarBehavior.floating,
-                              ));
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text("Procesing Data"),
+                                  behavior: SnackBarBehavior.floating,
+                                ),
+                              );
                             }
                           },
                           child: Text('Publicar'),
                         ),
                       ),
-                      flex: 3),
-                  Expanded(child: Text(''), flex: 7)
-                ]),
+                      flex: 3,
+                    ),
+                    Expanded(
+                      child: Text(''),
+                      flex: 7,
+                    )
+                  ],
+                ),
                 Divider(),
                 //Visualización de las reseñas-------------------------------------------------------------------
-                Row(children: <Widget>[
-                  Expanded(
+                Row(
+                  children: <Widget>[
+                    Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(top: 5, bottom: 10),
                         child: Image.asset(
@@ -213,96 +281,121 @@ class MyCustomFormState extends State<MyCustomForm> {
                           fit: BoxFit.cover,
                         ),
                       ),
-                      flex: 3),
-                  Expanded(
+                      flex: 3,
+                    ),
+                    Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(top: 5, bottom: 10),
-                        child: Text("Name del usuario\n☆☆☆☆☆",
-                            style: new TextStyle(
-                                fontSize: 15,
-                                letterSpacing: 2.0,
-                                color: Colors.black)),
+                        child: Text(
+                          "Name del usuario\n☆☆☆☆☆",
+                          style: new TextStyle(
+                            fontSize: 15,
+                            letterSpacing: 2.0,
+                            color: Colors.black,
+                          ),
+                        ),
                       ),
-                      flex: 7)
-                ]),
-                Row(children: <Widget>[
-                  Expanded(
+                      flex: 7,
+                    )
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(top: 10, bottom: 10),
-                        child: Text("Va toda la reseña",
-                            style: new TextStyle(
-                                fontSize: 15,
-                                letterSpacing: 2.0,
-                                color: Colors.black)),
+                        child: Text(
+                          "Va toda la reseña",
+                          style: new TextStyle(
+                            fontSize: 15,
+                            letterSpacing: 2.0,
+                            color: Colors.black,
+                          ),
+                        ),
                       ),
-                      flex: 9),
-                  Expanded(
+                      flex: 9,
+                    ),
+                    Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(top: 10, bottom: 10),
-                        child: Text("",
-                            style: new TextStyle(
-                                fontSize: 15,
-                                letterSpacing: 2.0,
-                                color: Colors.black)),
+                        child: Text(
+                          "",
+                          style: new TextStyle(
+                            fontSize: 15,
+                            letterSpacing: 2.0,
+                            color: Colors.black,
+                          ),
+                        ),
                       ),
-                      flex: 1)
-                ]),
+                      flex: 1,
+                    )
+                  ],
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10, bottom: 10),
-                          child: Icon(
-                            Icons.thumb_up_alt_outlined,
-                            color: Colors.lightBlue,
-                            size: 24.0,
-                            semanticLabel:
-                                'Text to announce in accessibility modes',
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10, bottom: 10),
+                        child: Icon(
+                          Icons.thumb_up_alt_outlined,
+                          color: Colors.lightBlue,
+                          size: 24.0,
+                          semanticLabel:
+                              'Text to announce in accessibility modes',
+                        ),
+                      ),
+                      flex: 3,
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10, bottom: 10),
+                        child: Text(
+                          "80",
+                          style: TextStyle(
+                            fontSize: 10,
+                            letterSpacing: 2.0,
+                            color: Colors.black,
                           ),
                         ),
-                        flex: 3),
+                      ),
+                      flex: 1,
+                    ),
                     Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10, bottom: 10),
-                          child: Text("80",
-                              style: TextStyle(
-                                  fontSize: 10,
-                                  letterSpacing: 2.0,
-                                  color: Colors.black)),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10, bottom: 10),
+                        child: Icon(
+                          Icons.thumb_down_outlined,
+                          color: Colors.red,
+                          size: 30.0,
                         ),
-                        flex: 1),
+                      ),
+                      flex: 3,
+                    ),
                     Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10, bottom: 10),
-                          child: Icon(
-                            Icons.thumb_down_outlined,
-                            color: Colors.red,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10, bottom: 10),
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.insert_comment_outlined,
+                            color: Colors.black,
                             size: 30.0,
                           ),
+                          onPressed: () {
+                            Navigator.of(context).pushNamed(AnswerPage.id);
+                          },
                         ),
-                        flex: 3),
-                    Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10, bottom: 10),
-                          child: IconButton(
-                            icon: const Icon(
-                              Icons.insert_comment_outlined,
-                              color: Colors.black,
-                              size: 30.0,
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pushNamed(AnswerPage.id);
-                            },
-                          ),
-                        ),
-                        flex: 3),
+                      ),
+                      flex: 3,
+                    ),
                   ],
-                )
+                ),
               ],
             ),
-          )
-        ]));
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -334,19 +427,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           dropdownValue = newValue;
         });
       },
-      items: <String>[
-        '0',
-        '0.5',
-        '1',
-        '1.5',
-        '2',
-        '2.5',
-        '3',
-        '3.5',
-        '4',
-        '4.5',
-        '5'
-      ].map<DropdownMenuItem<String>>((String value) {
+      items: <String>['0', '1', '2', '3', '4', '5']
+          .map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value),

@@ -181,8 +181,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `configuracion` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `nComentarios` INT UNSIGNED NOT NULL,
-  `nReacciones` INT UNSIGNED NOT NULL,
   `vLibros` INT UNSIGNED NOT NULL,
   `vResenas` INT UNSIGNED NOT NULL,
   `vPerfil` INT UNSIGNED NOT NULL,
@@ -192,28 +190,6 @@ CREATE TABLE IF NOT EXISTS `configuracion` (
   CONSTRAINT `fk_configuracion_usuario1`
     FOREIGN KEY (`usuario_id`)
     REFERENCES `usuario` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `invisible`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `invisible` (
-  `configuracion_id` INT UNSIGNED NOT NULL,
-  `libro_id` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`configuracion_id`, `libro_id`),
-  INDEX `fk_configuracion_has_libro_libro1_idx` (`libro_id` ASC),
-  INDEX `fk_configuracion_has_libro_configuracion1_idx` (`configuracion_id` ASC),
-  CONSTRAINT `fk_configuracion_has_libro_configuracion1`
-    FOREIGN KEY (`configuracion_id`)
-    REFERENCES `configuracion` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_configuracion_has_libro_libro1`
-    FOREIGN KEY (`libro_id`)
-    REFERENCES `libro` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

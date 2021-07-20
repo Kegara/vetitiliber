@@ -242,8 +242,10 @@ class _SearchPageState extends State<SearchPage> {
                   child: Column(
                     children: <Widget>[
                       //se crea el objeto portada libro
-                      contenedoresLibros(_books2.libros[index].id,
-                          _books2.libros[index].portada),
+                      contenedoresLibros(
+                        _books2.libros[index].id,
+                        _books2.libros[index].portada,
+                      ),
                       new Expanded(
                         //titulo del libro
                         child: Text(
