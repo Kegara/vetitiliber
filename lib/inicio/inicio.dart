@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vetitiliber/componentes/menulateral.dart';
 import 'package:vetitiliber/libro/detallelibro.dart';
@@ -15,10 +18,45 @@ class StartPage extends StatefulWidget {
   _StartPageState createState() => _StartPageState();
 }
 
-class _StartPageState extends State<StartPage> {
+class Libro {
+  final int id;
+  final String titulo;
+  final String portada;
 
+  Libro({
+    this.id,
+    this.titulo,
+    this.portada,
+  });
+
+  factory Libro.fromJson(Map<String, dynamic> json) {
+    return new Libro(
+      id: json['id'],
+      titulo: json['titulo'],
+      portada: json['portada'],
+    );
+  }
+}
+
+class LibrosList {
+  final List<Libro> libros;
+
+  LibrosList({
+    this.libros,
+  });
+
+  factory LibrosList.fromJson(List<dynamic> parsedJson) {
+    List<Libro> libros = new List<Libro>();
+    libros = parsedJson.map((e) => Libro.fromJson(e)).toList();
+    return LibrosList(
+      libros: libros,
+    );
+  }
+}
+
+class _StartPageState extends State<StartPage> {
   //listado de libros
-  List _topBooks = ["g1 ", "g2", "g3", "g4", "g4"];
+  LibrosList _topBooks;
 
   List<String> images = [
     "https://static.javatpoint.com/tutorial/flutter/images/flutter-logo.png",
@@ -27,12 +65,14 @@ class _StartPageState extends State<StartPage> {
     "https://static.javatpoint.com/tutorial/flutter/images/flutter-logo.png"
   ];
 
+  bool _aux = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: MenuLateral(),
       appBar: appBar1("MY REVIEW", context),
-      body: SafeArea( 
+      body: SafeArea(
         child: Center(
           child: Column(
             children: <Widget>[
@@ -41,7 +81,7 @@ class _StartPageState extends State<StartPage> {
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
                 child: Text("Top libros"),
               ),
-              //seccion donde se mostraran los 10 libros
+              //seccion donde se mostraran los 5 libros
               Expanded(
                 child: newSection("Top libros"),
               ),
@@ -51,8 +91,9 @@ class _StartPageState extends State<StartPage> {
       ),
     );
   }
+
   // contenedor que tendra la info del libro el cual tiene asociado un onTap que redirige a la informacion del libro
-  Widget contenedoresLibros(int nContenedor) {
+  Widget contenedoresLibros(int nContenedor, String portada) {
     return Container(
       height: (MediaQuery.of(context).size.height * 0.4),
       padding: const EdgeInsets.only(bottom: 10.0),
@@ -60,7 +101,8 @@ class _StartPageState extends State<StartPage> {
         shape: BoxShape.rectangle,
         image: DecorationImage(
           image: NetworkImage(
-              "https://th.bing.com/th/id/R.8d9ba5df9a59ec6f73f0a40630247440?rik=QnOZeZ%2btOaCbTw&riu=http%3a%2f%2froc21cdn-roc21.netdna-ssl.com%2fblog%2fwp-content%2fuploads%2f2016%2f10%2fportadas-libros-siencia-ficcion-cuatro.jpg&ehk=Dze1Ot%2fzw99kcOQoVtYx1tnfpIBiYCgSLG%2fo%2fxdwLn0%3d&risl=&pid=ImgRaw"),
+            portada,
+          ),
           fit: BoxFit.cover,
         ),
         borderRadius: BorderRadius.all(
@@ -88,49 +130,101 @@ class _StartPageState extends State<StartPage> {
 
   Widget newSection(String sectionName) {
     //se obtienen los libros
-    
-    _topBooks = obtenerTopBooks();
-    // printUsuarioId();
-    getUsuarioId().then((value) {
-      print(value);
+    // _topBooks = obtenerTopBooks().then((value) => null);
+    obtenerTopBooks().then((value) {
+      setState(() {
+        _topBooks = value;
+        _aux = true;
+      });
     });
 
-    return GridView.count(
-      childAspectRatio: ((MediaQuery.of(context).size.width / 2 - 40) /
-          (MediaQuery.of(context).size.height * 0.4)),
-      crossAxisCount: 2,
-      crossAxisSpacing: 0.0,
-      mainAxisSpacing: 0.0,
-      //generacion de libros en base a el tamaño de _topBooks contenedor de los libros
-      children: List.generate(
-        _topBooks.length,
-        (index) {
-          //generacion de libros
-          return Padding(
-            padding: const EdgeInsets.only(right: 10.0, left: 10.0),
-            child: Column(
-              children: [
-                //generacion de portadas
-                contenedoresLibros(index),
-                new Expanded(
-                  //generacion de titulo de libros
-                  child: Text(
-                    "El Libro con el Titulo mas Largo del Mundo El Libro con el Titulo mas Largo del Mundo  El Libro con el Titulo mas Largo del Mundo ",
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 3,
+    // printUsuarioId();
+    // getUsuarioId().then((value) {
+    //   print("id de usuario: $value");
+    // });
+
+    if (_aux) {
+      return GridView.count(
+        childAspectRatio: ((MediaQuery.of(context).size.width / 2 - 40) /
+            (MediaQuery.of(context).size.height * 0.4)),
+        crossAxisCount: 2,
+        crossAxisSpacing: 0.0,
+        mainAxisSpacing: 0.0,
+        //generacion de libros en base a el tamaño de _topBooks contenedor de los libros
+        children: List.generate(
+          _topBooks.libros.length,
+          (index) {
+            //generacion de libros
+            return Padding(
+              padding: const EdgeInsets.only(right: 10.0, left: 10.0),
+              child: Column(
+                children: [
+                  //generacion de portadas
+                  contenedoresLibros(_topBooks.libros[index].id,
+                      _topBooks.libros[index].portada),
+                  new Expanded(
+                    //generacion de titulo de libros
+                    child: Text(
+                      _topBooks.libros[index].titulo,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 3,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-    );
+                ],
+              ),
+            );
+          },
+        ),
+      );
+    } else {
+      return GridView.count(
+        childAspectRatio: ((MediaQuery.of(context).size.width / 2 - 40) /
+            (MediaQuery.of(context).size.height * 0.4)),
+        crossAxisCount: 2,
+        crossAxisSpacing: 0.0,
+        mainAxisSpacing: 0.0,
+        //generacion de libros en base a el tamaño de _topBooks contenedor de los libros
+        children: List.generate(
+          5,
+          (index) {
+            //generacion de libros
+            return Padding(
+              padding: const EdgeInsets.only(right: 10.0, left: 10.0),
+              child: Column(
+                children: [
+                  //generacion de portadas
+                  contenedoresLibros(index,
+                      "https://th.bing.com/th/id/R.8d9ba5df9a59ec6f73f0a40630247440?rik=QnOZeZ%2btOaCbTw&riu=http%3a%2f%2froc21cdn-roc21.netdna-ssl.com%2fblog%2fwp-content%2fuploads%2f2016%2f10%2fportadas-libros-siencia-ficcion-cuatro.jpg&ehk=Dze1Ot%2fzw99kcOQoVtYx1tnfpIBiYCgSLG%2fo%2fxdwLn0%3d&risl=&pid=ImgRaw"),
+                  new Expanded(
+                    //generacion de titulo de libros
+                    child: Text(
+                      "El Libro con el Titulo mas Largo del Mundo El Libro con el Titulo mas Largo del Mundo  El Libro con el Titulo mas Largo del Mundo ",
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 3,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      );
+    }
   }
 
-  List obtenerTopBooks() {
-    return ["g1 ", "g2", "g3", "g4", "g4"];
-    
+  Future<LibrosList> obtenerTopBooks() async {
+    final _url =
+        "https://myreviewvl.000webhostapp.com/BD/Usuario/topLibros.php";
+    LibrosList _aux;
+    try {
+      final response = await get(Uri.parse(_url));
+      final json = jsonDecode(response.body);
+      _aux = new LibrosList.fromJson(json);
+    } catch (err) {
+      print("(obtenerTopBooks) err: $err");
+    }
+    return _aux;
+    // return ["g1 ", "g2", "g3", "g4", "g4"];
   }
 
   void printUsuarioId() async {

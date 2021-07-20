@@ -1,18 +1,22 @@
 <?php
-include('../conexion.php');
-if (isset($_POST)){
-    $termino = $_POST['termino'];
+
+include "../conexion.php";
+
     $sql = 
     "SELECT
-        id,
-        portada,
-        titulo
+        libro.id,
+        libro.titulo,
+        libro.portada
     FROM
-        libro
-    WHERE
-        titulo LIKE '%$termino%'
-    ;";
-
+        resena
+        INNER JOIN libro ON resena.libro_id = libro.id
+    GROUP BY
+        libro_id
+    ORDER BY
+        AVG(calificacion) DESC
+    LIMIT
+        5;";
+ 
     $db_name = "id17151113_myreview";
     $db_server = "localhost";
     $db_user = "id17151113_myreviewus";
@@ -29,6 +33,4 @@ if (isset($_POST)){
     echo json_encode($result);
 
     mysqli_close($conexion);
-
-}
 ?>
