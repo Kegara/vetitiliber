@@ -5,6 +5,7 @@ if (isset($_POST)){
     $sql = 
     "SELECT
         id,
+        portada,
         titulo
     FROM
         libro
