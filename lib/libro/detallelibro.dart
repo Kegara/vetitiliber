@@ -50,6 +50,36 @@ class Libro {
   }
 }
 
+class Genero {
+  final String nombre;
+
+  Genero({
+    this.nombre,
+  });
+
+  factory Genero.fromJson(Map<String, dynamic> json) {
+    return new Genero(
+      nombre: json['nombre'],
+    );
+  }
+}
+
+class GenerosList {
+  final List<Genero> generos;
+
+  GenerosList({
+    this.generos,
+  });
+
+  factory GenerosList.fromJson(List<dynamic> json) {
+    List<Genero> generos = new List<Genero>();
+    generos = json.map((e) => Genero.fromJson(e)).toList();
+    return new GenerosList(
+      generos: generos,
+    );
+  }
+}
+
 class Resena {
   final int id;
   final String usuario;
@@ -98,7 +128,27 @@ class MyCustomFormState extends State<MyCustomForm> {
   final _formKey = GlobalKey<FormState>();
   final _formKeyResenas = GlobalKey<FormState>();
 
+  GenerosList _generos;
+
+  Future<GenerosList> getGenerosLibro(int id) async {
+    final _url =
+        "https://myreviewvl.000webhostapp.com/BD/Usuario/generosLibro.php";
+    GenerosList _aux;
+    try {
+      final response = await post(
+        Uri.parse(_url),
+        body: {"id": id.toString()},
+      );
+      final json = jsonDecode(response.body);
+      _aux = new GenerosList.fromJson(json);
+    } catch (err) {
+      print("(getGenerosLibro) err: $err");
+    }
+    return _aux;
+  }
+
   Future<Libro> getInfoLibro(int id) async {
+    _generos = await getGenerosLibro(id);
     final _url =
         "https://myreviewvl.000webhostapp.com/BD/Usuario/detallesLibro.php";
     Libro _aux;
@@ -110,7 +160,7 @@ class MyCustomFormState extends State<MyCustomForm> {
       final json = jsonDecode(response.body);
       _aux = new Libro.fromJson(json);
     } catch (err) {
-      print("err: $err");
+      print("(getInfoLibro) err: $err");
     }
     return _aux;
   }
@@ -121,172 +171,343 @@ class MyCustomFormState extends State<MyCustomForm> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.idUser);
-    print(widget.idLibro);
+    String _auxGeneros = "";
     if (!_auxBool) {
       getInfoLibro(widget.idLibro).then((value) {
         setState(() {
           _infoLibro = value;
           _auxBool = true;
+          for (Genero genero in _generos.generos) {
+            _auxGeneros += "${genero.nombre}\n";
+          }
+          print(_auxGeneros);
         });
       });
     }
 
-    return Column(
-      children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              //Texto inicial de la sección debe ir el titulo del libro
+    if (_auxBool) {
+      return Column(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                //Texto inicial de la sección debe ir el titulo del libro
 
-              new Expanded(
-                //Aquí empieza el listado de acciones
-                child: ListView(
-                  children: <Widget>[
-                    //titulo libro
-                    txtconf(
-                      "Lo bueno de una cuenta oficial sin lo malo de una cuenta oficial. Administrada por el equipo de comunidad española.",
-                      30,
-                      5,
-                      FontWeight.bold,
-                    ),
-                    //calificacion y total de reviews
-                    calificacion(4, 50),
-                    //espacio xddxdxd
-                    txtconf("\n", 5, 5, FontWeight.bold),
-                    //Imagen del libro--------------------------------
-                    Image.asset(
-                      'assets/imagenes/login/LOGO2.png', //Imagen de portada
-                      fit: BoxFit.cover,
-                    ),
-                    //titulo detalles
-                    txtconf("Detalles\n", 20, 5, FontWeight.bold),
-                    //Inicia el campo de sipnosis--------------------------------------------------
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child:
-                              //titulo sinopsis
-                              txtconf("Sipnosis\n", 15, 5, FontWeight.bold),
-                          flex: 3,
-                        ),
-                        Expanded(
-                          child:
-                              //detalle sinopsis
-                              txtconf("Sipnosis\n", 15, 2, FontWeight.normal),
-                          flex: 7,
-                        ),
-                      ],
-                    ),
-                    //Inicia el campo del autor--------------------------------------------------
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: txtconf("Autor\n", 15, 5, FontWeight.bold),
-                          flex: 3,
-                        ),
-                        Expanded(
-                          child: txtconf(
-                              "Nombre del autor\n", 15, 2, FontWeight.normal),
-                          flex: 7,
-                        ),
-                      ],
-                    ),
-                    //Inicia el campo de genero--------------------------------------------------
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: txtconf("Genero", 15, 5, FontWeight.bold),
-                          flex: 3,
-                        ),
-                        Expanded(
-                          child: txtconf(
-                            "Aqui van los generos \n",
-                            15,
-                            2,
-                            FontWeight.normal,
-                          ),
-                          flex: 7,
-                        ),
-                      ],
-                    ),
-                    //Nuevo campo-------------------------------------------------------------------
-
-                    txtconf("\nReseñas\n", 20, 5, FontWeight.bold),
-
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Center(
-                            child: MyStatefulWidget(),
-                          ),
-                          flex: 2,
-                        ),
-                        Expanded(
-                          child: ElevatedButton(
+                new Expanded(
+                  //Aquí empieza el listado de acciones
+                  child: ListView(
+                    children: <Widget>[
+                      //titulo libro
+                      txtconf(
+                        _infoLibro.titulo,
+                        30,
+                        5,
+                        FontWeight.bold,
+                      ),
+                      //calificacion y total de reviews
+                      calificacion(
+                        _infoLibro.calificacionP.round(),
+                        _infoLibro.resenas,
+                      ),
+                      //espacio xddxdxd
+                      txtconf("\n", 5, 5, FontWeight.bold),
+                      //Imagen del libro--------------------------------
+                      Image.network(
+                        _infoLibro.portada, //Imagen de portada
+                        fit: BoxFit.cover,
+                      ),
+                      //titulo detalles
+                      txtconf("Detalles\n", 20, 5, FontWeight.bold),
+                      //Inicia el campo de sipnosis--------------------------------------------------
+                      Row(
+                        children: <Widget>[
+                          Expanded(
                             child:
-                                txtconf("Calificar", 15, 2, FontWeight.normal),
-                            onPressed: () {
-                              calificarlibro();
-                            },
+                                //titulo sinopsis
+                                txtconf("Sipnosis\n", 15, 5, FontWeight.bold),
+                            flex: 3,
                           ),
-                          flex: 8,
-                        ),
-                      ],
-                    ),
-                    Form(
-                      key: _formKeyResenas,
-                      child: TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor introduzca texto';
-                          }
-                          return null;
-                        },
-                        maxLines: null,
-                        maxLength: 200,
-                        decoration: InputDecoration(
-                          hintText: 'Escriba su reseña, por favor.',
-                        ),
-                      ),
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 16.0),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                hacerreview();
-                              },
-                              child: Text('Publicar'),
+                          Expanded(
+                            child:
+                                //detalle sinopsis
+                                txtconf(
+                              "${_infoLibro.sinopsis}\n",
+                              15,
+                              2,
+                              FontWeight.normal,
                             ),
+                            flex: 7,
                           ),
-                          flex: 3,
-                        ),
-                        Expanded(
-                          child: Text(''),
-                          flex: 7,
-                        )
-                      ],
-                    ),
-                    Divider(),
-                    //Visualización de las reseñas-------------------------------------------------------------------
-                    Expanded(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: generadorresenas(),
+                        ],
                       ),
-                    )
-                  ],
+                      //Inicia el campo del autor--------------------------------------------------
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: txtconf("Autor\n", 15, 5, FontWeight.bold),
+                            flex: 3,
+                          ),
+                          Expanded(
+                            child: txtconf("${_infoLibro.nombreAutor}\n", 15, 2,
+                                FontWeight.normal),
+                            flex: 7,
+                          ),
+                        ],
+                      ),
+                      //Inicia el campo de genero--------------------------------------------------
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: txtconf("Generos\n", 15, 5, FontWeight.bold),
+                            flex: 3,
+                          ),
+                          Expanded(
+                            child: txtconf(
+                              "$_auxGeneros",
+                              15,
+                              2,
+                              FontWeight.normal,
+                            ),
+                            flex: 7,
+                          ),
+                        ],
+                      ),
+                      //Nuevo campo-------------------------------------------------------------------
+
+                      txtconf("\nReseñas\n", 20, 5, FontWeight.bold),
+
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Center(
+                              child: MyStatefulWidget(),
+                            ),
+                            flex: 2,
+                          ),
+                          Expanded(
+                            child: ElevatedButton(
+                              child: txtconf(
+                                  "Calificar", 15, 2, FontWeight.normal),
+                              onPressed: () {
+                                calificarlibro();
+                              },
+                            ),
+                            flex: 8,
+                          ),
+                        ],
+                      ),
+                      Form(
+                        key: _formKeyResenas,
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Por favor introduzca texto';
+                            }
+                            return null;
+                          },
+                          maxLines: null,
+                          maxLength: 200,
+                          decoration: InputDecoration(
+                            hintText: 'Escriba su reseña, por favor.',
+                          ),
+                        ),
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 16.0),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  hacerreview();
+                                },
+                                child: Text('Publicar'),
+                              ),
+                            ),
+                            flex: 3,
+                          ),
+                          Expanded(
+                            child: Text(''),
+                            flex: 7,
+                          )
+                        ],
+                      ),
+                      Divider(),
+                      //Visualización de las reseñas-------------------------------------------------------------------
+                      Expanded(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: generadorresenas(),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    } else {
+      return Column(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                //Texto inicial de la sección debe ir el titulo del libro
+
+                new Expanded(
+                  //Aquí empieza el listado de acciones
+                  child: ListView(
+                    children: <Widget>[
+                      //titulo libro
+                      txtconf(
+                        "Lo bueno de una cuenta oficial sin lo malo de una cuenta oficial. Administrada por el equipo de comunidad española.",
+                        30,
+                        5,
+                        FontWeight.bold,
+                      ),
+                      //calificacion y total de reviews
+                      calificacion(4, 50),
+                      //espacio xddxdxd
+                      txtconf("\n", 5, 5, FontWeight.bold),
+                      //Imagen del libro--------------------------------
+                      Image.asset(
+                        'assets/imagenes/login/LOGO2.png', //Imagen de portada
+                        fit: BoxFit.cover,
+                      ),
+                      //titulo detalles
+                      txtconf("Detalles\n", 20, 5, FontWeight.bold),
+                      //Inicia el campo de sipnosis--------------------------------------------------
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child:
+                                //titulo sinopsis
+                                txtconf("Sipnosis\n", 15, 5, FontWeight.bold),
+                            flex: 3,
+                          ),
+                          Expanded(
+                            child:
+                                //detalle sinopsis
+                                txtconf("Sipnosis\n", 15, 2, FontWeight.normal),
+                            flex: 7,
+                          ),
+                        ],
+                      ),
+                      //Inicia el campo del autor--------------------------------------------------
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: txtconf("Autor\n", 15, 5, FontWeight.bold),
+                            flex: 3,
+                          ),
+                          Expanded(
+                            child: txtconf(
+                                "Nombre del autor\n", 15, 2, FontWeight.normal),
+                            flex: 7,
+                          ),
+                        ],
+                      ),
+                      //Inicia el campo de genero--------------------------------------------------
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: txtconf("Genero", 15, 5, FontWeight.bold),
+                            flex: 3,
+                          ),
+                          Expanded(
+                            child: txtconf(
+                              "Aqui van los generos \n",
+                              15,
+                              2,
+                              FontWeight.normal,
+                            ),
+                            flex: 7,
+                          ),
+                        ],
+                      ),
+                      //Nuevo campo-------------------------------------------------------------------
+
+                      txtconf("\nReseñas\n", 20, 5, FontWeight.bold),
+
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Center(
+                              child: MyStatefulWidget(),
+                            ),
+                            flex: 2,
+                          ),
+                          Expanded(
+                            child: ElevatedButton(
+                              child: txtconf(
+                                  "Calificar", 15, 2, FontWeight.normal),
+                              onPressed: () {
+                                calificarlibro();
+                              },
+                            ),
+                            flex: 8,
+                          ),
+                        ],
+                      ),
+                      Form(
+                        key: _formKeyResenas,
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Por favor introduzca texto';
+                            }
+                            return null;
+                          },
+                          maxLines: null,
+                          maxLength: 200,
+                          decoration: InputDecoration(
+                            hintText: 'Escriba su reseña, por favor.',
+                          ),
+                        ),
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 16.0),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  hacerreview();
+                                },
+                                child: Text('Publicar'),
+                              ),
+                            ),
+                            flex: 3,
+                          ),
+                          Expanded(
+                            child: Text(''),
+                            flex: 7,
+                          )
+                        ],
+                      ),
+                      Divider(),
+                      //Visualización de las reseñas-------------------------------------------------------------------
+                      Expanded(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: generadorresenas(),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
+    }
   }
 
   void hacerreview() {
