@@ -117,15 +117,16 @@ class MyCustomFormState extends State<MyCustomForm> {
     }
     return Column(
       children: [
-          titulo("El libro mas grande del mundo"),
+        titulo("El libro mas grande del mundo"),
         calificacion(3, 50),
-        Expanded(child: Form(
+        Expanded(
+            child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[ 
+            children: <Widget>[
               //Texto inicial de la sección debe ir el titulo del libro
-     
+
               new Expanded(
                 //Aquí empieza el listado de acciones
                 child: ListView(
