@@ -1,14 +1,52 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:vetitiliber/componentes/menulateral.dart';
 import 'package:vetitiliber/libro/answer.dart';
 
 class DetalibroPage extends StatefulWidget {
   DetalibroPage({Key key, this.title}) : super(key: key);
   final String title;
-
   static String id = 'DetalibroPage';
   @override
   _DetalibroPageState createState() => _DetalibroPageState();
+}
+
+final int _idLibro = 6;
+
+class Libro {
+  final int id;
+  final String titulo;
+  final String sinopsis;
+  final String portada;
+  final int autorID;
+  final String nombreAutor;
+  final double calificacionP;
+  final int resenas;
+
+  Libro({
+    this.id,
+    this.titulo,
+    this.sinopsis,
+    this.portada,
+    this.autorID,
+    this.nombreAutor,
+    this.calificacionP,
+    this.resenas,
+  });
+
+  factory Libro.fromJson(Map<String, dynamic> json) {
+    return new Libro(
+      id: int.parse(json['id']),
+      titulo: json['titulo'],
+      sinopsis: json['sinopsis'],
+      portada: json['portada'],
+      autorID: json['autorID'],
+      nombreAutor: json['nombreAutor'],
+      calificacionP: double.parse(json['calificacionP']),
+      resenas: int.parse(json['resenas']),
+    );
+  }
 }
 
 class _DetalibroPageState extends State<DetalibroPage> {
@@ -65,16 +103,43 @@ class MyCustomFormState extends State<MyCustomForm> {
   // Nota: Esto es un GlobalKey<FormState>, no un GlobalKey<MyCustomFormState>!
   final _formKey = GlobalKey<FormState>();
 
+  Future<Libro> getInfoLibro(int id) async {
+    final _url =
+        "https://myreviewvl.000webhostapp.com/BD/Usuario/detallesLibro.php";
+    Libro _aux;
+    try {
+      final response = await post(
+        Uri.parse(_url),
+        body: {"id": id.toString()},
+      );
+      final json = jsonDecode(response.body);
+      _aux = new Libro.fromJson(json);
+    } catch (err) {
+      print("err: $err");
+    }
+    return _aux;
+  }
+
+  Libro _infoLibro;
+
+  bool _auxBool = false;
+
   @override
   Widget build(BuildContext context) {
-    // Crea un widget Form usando el _formKey que creamos anteriormente
+    getInfoLibro(_idLibro).then((value) {
+      setState(() {
+        _infoLibro = value;
+        _auxBool = true;
+      });
+    });
     return Form(
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            "Nombre del libro", //Texto inicial de la sección debe ir el titulo del libro
+            //Texto inicial de la sección debe ir el titulo del libro
+            "Titulo va aqui",
             style: new TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.bold,
@@ -83,7 +148,8 @@ class MyCustomFormState extends State<MyCustomForm> {
             ),
           ),
           Text(
-            "☆☆☆☆☆(80)", //Texto inicial de la sección debe ir la calificación y por cuantos
+            //Texto inicial de la sección debe ir la calificación y por cuantos
+            "☆☆☆☆☆(80)",
             style: new TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,
