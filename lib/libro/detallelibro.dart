@@ -57,15 +57,16 @@ class _DetalibroPageState extends State<DetalibroPage> {
     return Scaffold(
       drawer: MenuLateral(),
     appBar: appBar1("Descripción del libro", context),
-      body: MyCustomForm(),
+      body: MyCustomForm(widget.idLibro, widget.idUser),
     );
   }
 }
 
 // Crea un Widget Form
-class MyCustomForm extends StatefulWidget {
-  MyCustomForm({Key key, this.idUser, this.idLibro}) : super(key: key);
-  final int idUser, idLibro;
+class MyCustomForm  extends StatefulWidget {
+  final int idLibro, idUser;
+
+  MyCustomForm(this.idLibro, this.idUser);
 
   @override
   MyCustomFormState createState() {
@@ -104,7 +105,9 @@ class MyCustomFormState extends State<MyCustomForm> {
   bool _auxBool = false;
 
   @override
-  Widget build(BuildContext context) {print(widget.idLibro);
+  Widget build(BuildContext context) {
+    print(widget.idUser);
+    print(widget.idLibro);
     getInfoLibro(widget.idLibro).then((value) {
       setState(() {
         _infoLibro = value;

@@ -120,7 +120,7 @@ class _StartPageState extends State<StartPage> {
           print("Id del usuario a continuacion:$id");
             var route = new MaterialPageRoute(
               builder: (BuildContext context) =>
-              new MyCustomForm(idUser: id, idLibro: nContenedor),
+              new DetalibroPage(idUser: id, idLibro: nContenedor),
             );          
           Navigator.of(context).push(route);
         },
