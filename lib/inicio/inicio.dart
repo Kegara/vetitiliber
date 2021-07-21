@@ -58,13 +58,6 @@ class _StartPageState extends State<StartPage> {
   //listado de libros
   LibrosList _topBooks;
 
-  List<String> images = [
-    "https://static.javatpoint.com/tutorial/flutter/images/flutter-logo.png",
-    "https://static.javatpoint.com/tutorial/flutter/images/flutter-logo.png",
-    "https://static.javatpoint.com/tutorial/flutter/images/flutter-logo.png",
-    "https://static.javatpoint.com/tutorial/flutter/images/flutter-logo.png"
-  ];
-
   bool _aux = false;
 
   @override
@@ -136,6 +129,7 @@ class _StartPageState extends State<StartPage> {
         setState(() {
           _topBooks = value;
           _aux = true;
+          print("avr .v");
         });
       });
     }
