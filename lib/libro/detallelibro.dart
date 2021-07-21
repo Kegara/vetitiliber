@@ -122,7 +122,6 @@ class MyCustomForm extends StatefulWidget {
 // Crea una clase State correspondiente. Esta clase contendrá los datos relacionados con
 // el formulario.
 class MyCustomFormState extends State<MyCustomForm> {
-
   // Crea una clave global que identificará de manera única el widget Form
   // y nos permita validar el formulario
   // Nota: Esto es un GlobalKey<FormState>, no un GlobalKey<MyCustomFormState>!
@@ -321,7 +320,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                 onPressed: () {
                                   hacerreview();
                                 },
-                                child: Text('Publicar 2'),
+                                child: Text('Publicar'),
                               ),
                             ),
                             flex: 3,
@@ -470,7 +469,6 @@ class MyCustomFormState extends State<MyCustomForm> {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 16.0),
                               child: ElevatedButton(
-                                
                                 onPressed: () {
                                   hacerreview();
                                 },
@@ -503,12 +501,12 @@ class MyCustomFormState extends State<MyCustomForm> {
       );
     }
   }
+
 //funcion que genera la review
   void hacerreview() {
-  
-     String resena2 = reviewController.text;
-      
-      print(resena2);
+    String resena2 = reviewController.text;
+
+    print(resena2);
     if (_formKeyResenas.currentState.validate()) {
       // Si el formulario es válido, queremos mostrar un Snackbar
       ScaffoldMessenger.of(context).showSnackBar(
@@ -518,7 +516,7 @@ class MyCustomFormState extends State<MyCustomForm> {
         ),
       );
       //se llama a la funcion que califica el libro
-      calificarlibro(resena2) ;
+      calificarlibro(resena2);
     }
   }
 
