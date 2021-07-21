@@ -4,6 +4,8 @@ import 'package:http/http.dart';
 import 'package:vetitiliber/componentes/menulateral.dart';
 import 'package:vetitiliber/libro/answer.dart';
 
+String calf;
+
 class DetalibroPage extends StatefulWidget {
   DetalibroPage({Key key, this.idUser, this.idLibro}) : super(key: key);
 
@@ -50,6 +52,22 @@ class Libro {
   }
 }
 
+class Resena{
+  final int id;
+  final String usuario;
+  final int calificacion;
+  final int likes;
+  final String resenas;
+    Resena({
+    this.id,
+    this.usuario,
+    this.calificacion,
+    this.likes,
+    this.resenas
+  });
+
+}
+
 class _DetalibroPageState extends State<DetalibroPage> {
   @override
   Widget build(BuildContext context) {
@@ -78,10 +96,9 @@ class MyCustomForm extends StatefulWidget {
 class MyCustomFormState extends State<MyCustomForm> {
   // Crea una clave global que identificará de manera única el widget Form
   // y nos permita validar el formulario
-  //
   // Nota: Esto es un GlobalKey<FormState>, no un GlobalKey<MyCustomFormState>!
   final _formKey = GlobalKey<FormState>();
-
+  final _formKeyResenas = GlobalKey<FormState>();
   Future<Libro> getInfoLibro(int id) async {
     final _url =
         "https://myreviewvl.000webhostapp.com/BD/Usuario/detallesLibro.php";
@@ -117,11 +134,7 @@ class MyCustomFormState extends State<MyCustomForm> {
     }
     return Column(
       children: [
-        titulo("El libro mas grande del mundo"),
-        calificacion(3, 50),
         Expanded(
-            child: Form(
-          key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -131,53 +144,36 @@ class MyCustomFormState extends State<MyCustomForm> {
                 //Aquí empieza el listado de acciones
                 child: ListView(
                   children: <Widget>[
-                    Text(
-                      "\n",
-                      style: new TextStyle(
-                        fontSize: 5,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 5.0,
-                        color: Colors.black,
-                      ),
-                    ),
+                    //titulo
+                    txtconf(
+                        "Lo bueno de una cuenta oficial sin lo malo de una cuenta oficial. Administrada por el equipo de comunidad española.",
+                        30,
+                        5,
+                        FontWeight.bold),
+                    //calificacion
+                    calificacion(4, 50),
+                    //espacio
+                    txtconf("\n", 5, 5, FontWeight.bold),
                     //Imagen del libro--------------------------------
                     Image.asset(
                       'assets/imagenes/login/LOGO2.png', //Imagen de portada
                       fit: BoxFit.cover,
                     ),
-                    Text(
-                      "Detalles\n",
-                      style: new TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 5.0,
-                        color: Colors.black,
-                      ),
-                    ),
+                    //texto detalles
+                    txtconf("Detalles\n", 20, 5, FontWeight.bold),
                     //Inicia el campo de sipnosis--------------------------------------------------
                     Row(
                       children: <Widget>[
                         Expanded(
-                          child: Text(
-                            "Sipnosis\n",
-                            style: new TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 5.0,
-                              color: Colors.black,
-                            ),
-                          ),
+                          child:
+                              //titulo sinopsis
+                              txtconf("Sipnosis\n", 15, 5, FontWeight.bold),
                           flex: 3,
                         ),
                         Expanded(
-                          child: Text(
-                            "Sipnosis\n",
-                            style: new TextStyle(
-                              fontSize: 15,
-                              letterSpacing: 2.0,
-                              color: Colors.black,
-                            ),
-                          ),
+                          child:
+                              //detalle sinopsis
+                              txtconf("Sipnosis\n", 15, 2, FontWeight.normal),
                           flex: 7,
                         ),
                       ],
@@ -186,26 +182,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                     Row(
                       children: <Widget>[
                         Expanded(
-                          child: Text(
-                            "Autor\n",
-                            style: new TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 5.0,
-                              color: Colors.black,
-                            ),
-                          ),
+                          child: txtconf("Autor\n", 15, 5, FontWeight.bold),
                           flex: 3,
                         ),
                         Expanded(
-                          child: Text(
-                            "Nombre del autor\n",
-                            style: new TextStyle(
-                              fontSize: 15,
-                              letterSpacing: 2.0,
-                              color: Colors.black,
-                            ),
-                          ),
+                          child: txtconf(
+                              "Nombre del autor\n", 15, 2, FontWeight.normal),
                           flex: 7,
                         ),
                       ],
@@ -214,67 +196,54 @@ class MyCustomFormState extends State<MyCustomForm> {
                     Row(
                       children: <Widget>[
                         Expanded(
-                          child: Text(
-                            "Genero\n",
-                            style: new TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 5.0,
-                              color: Colors.black,
-                            ),
-                          ),
+                          child: txtconf("Genero", 15, 5, FontWeight.bold),
                           flex: 3,
                         ),
                         Expanded(
-                          child: Text(
-                            "Van los generos\n",
-                            style: new TextStyle(
-                              fontSize: 15,
-                              letterSpacing: 2.0,
-                              color: Colors.black,
-                            ),
-                          ),
+                          child: txtconf("Aqui van los generos\n", 15, 2,
+                              FontWeight.normal),
                           flex: 7,
                         ),
                       ],
                     ),
                     //Nuevo campo-------------------------------------------------------------------
-                    Text(
-                      "\nReseñas\n",
-                      style: new TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 5.0,
-                        color: Colors.black,
-                      ),
-                    ),
+
+                    txtconf("\nReseñas\n", 20, 5, FontWeight.bold),
+
                     Row(
                       children: <Widget>[
                         Expanded(
-                          child: Center(
-                            child: MyStatefulWidget(),
-                          ),
+                          child: Center(child: MyStatefulWidget()),
                           flex: 2,
                         ),
                         Expanded(
-                          child: Text(''),
+                          child: ElevatedButton(
+                            child:
+                                txtconf("Calificar", 15, 2, FontWeight.normal),
+                            onPressed: () {
+                              calificarlibro();
+                            },
+                          ),
                           flex: 8,
                         ),
                       ],
                     ),
-                    TextFormField(
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Por favor introduzca texto';
-                        }
-                        return null;
-                      },
-                      maxLines: null,
-                      maxLength: 200,
-                      decoration: InputDecoration(
-                        hintText: 'Escriba su reseña, por favor.',
-                      ),
-                    ),
+                    Form(
+                        key: _formKeyResenas,
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Por favor introduzca texto';
+                            }
+                            return null;
+                          },
+                          maxLines: null,
+                          maxLength: 200,
+                          decoration: InputDecoration(
+                            hintText: 'Escriba su reseña, por favor.',
+                          ),
+                        )
+                        ),
                     Row(
                       children: <Widget>[
                         Expanded(
@@ -282,17 +251,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                             padding: const EdgeInsets.symmetric(vertical: 16.0),
                             child: ElevatedButton(
                               onPressed: () {
-                                // devolverá true si el formulario es válido, o falso si
-                                // el formulario no es válido.
-                                if (_formKey.currentState.validate()) {
-                                  // Si el formulario es válido, queremos mostrar un Snackbar
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text("Procesing Data"),
-                                      behavior: SnackBarBehavior.floating,
-                                    ),
-                                  );
-                                }
+                                hacerreview() ;
                               },
                               child: Text('Publicar'),
                             ),
@@ -307,31 +266,65 @@ class MyCustomFormState extends State<MyCustomForm> {
                     ),
                     Divider(),
                     //Visualización de las reseñas-------------------------------------------------------------------
-                    Row(
+                    Expanded(
+                      child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children:   generadorresenas()
+                    
+                    ),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+  void hacerreview() {
+// devolverá true si el formulario es válido, o falso si
+// el formulario no es válido.
+    if (_formKeyResenas.currentState.validate()) {
+      // Si el formulario es válido, queremos mostrar un Snackbar
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Procesing Data"),
+          behavior: SnackBarBehavior.floating,
+          
+        ),
+      );
+
+    }
+  }
+  Widget resenas(String usuario,int calificacion,int idresena,String resena,int likes,bool likeada){
+     return  Column(children: [
+     Row(
                       children: <Widget>[
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 5, bottom: 10),
+                       Expanded(
+                          child: Padding( 
+                          padding: const EdgeInsets.only(top: 5, bottom: 10),
                             child: Image.asset(
                               'assets/imagenes/login/LOGO2.png', //Imagen de portada
                               fit: BoxFit.cover,
                             ),
-                          ),
-                          flex: 3,
+                          ), flex: 3,
+                         
                         ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 5, bottom: 10),
+                    Expanded(
+                          child:    Padding(   padding: const EdgeInsets.only(top: 5, bottom: 10),
+                          
                             child: Text(
-                              "Name del usuario\n☆☆☆☆☆",
+                              (estrellas(usuario+"\n",calificacion)),
                               style: new TextStyle(
                                 fontSize: 15,
                                 letterSpacing: 2.0,
                                 color: Colors.black,
                               ),
                             ),
-                          ),
-                          flex: 7,
+                          ), flex: 7,
+                         
                         )
                       ],
                     ),
@@ -341,7 +334,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                           child: Padding(
                             padding: const EdgeInsets.only(top: 10, bottom: 10),
                             child: Text(
-                              "Va toda la reseña",
+                              "$resena",
                               style: new TextStyle(
                                 fontSize: 15,
                                 letterSpacing: 2.0,
@@ -354,14 +347,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                         Expanded(
                           child: Padding(
                             padding: const EdgeInsets.only(top: 10, bottom: 10),
-                            child: Text(
-                              "",
-                              style: new TextStyle(
-                                fontSize: 15,
-                                letterSpacing: 2.0,
-                                color: Colors.black,
-                              ),
-                            ),
+                            child: txtconf("", 15, 2, FontWeight.normal),
                           ),
                           flex: 1,
                         )
@@ -374,7 +360,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                           child: Padding(
                             padding: const EdgeInsets.only(top: 10, bottom: 10),
                             child: Icon(
-                              Icons.thumb_up_alt_outlined,
+                             likeada==true? Icons.thumb_up :Icons.thumb_up_alt_outlined,
                               color: Colors.lightBlue,
                               size: 24.0,
                               semanticLabel:
@@ -383,30 +369,31 @@ class MyCustomFormState extends State<MyCustomForm> {
                           ),
                           flex: 3,
                         ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 10),
-                            child: Text(
-                              "80",
+                      Expanded( 
+                              child:  Padding(  padding: const EdgeInsets.only(top: 10, bottom: 10),
+                     
+                             child: Text(
+                              "$likes",
                               style: TextStyle(
                                 fontSize: 10,
                                 letterSpacing: 2.0,
                                 color: Colors.black,
                               ),
-                            ),
-                          ),
-                          flex: 1,
+                            ), 
+                          ),flex: 1,
+                         
                         ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 10),
+                  Expanded( 
+                          child:      Padding(    padding: const EdgeInsets.only(top: 10, bottom: 10),
+                        
                             child: Icon(
                               Icons.thumb_down_outlined,
                               color: Colors.red,
                               size: 30.0,
                             ),
-                          ),
-                          flex: 3,
+                         
+                       
+                           ),   flex: 3,
                         ),
                         Expanded(
                           child: Padding(
@@ -425,16 +412,25 @@ class MyCustomFormState extends State<MyCustomForm> {
                           flex: 3,
                         ),
                       ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ))
-      ],
-    );
+                    )
+                    ]
+                    );
+               
+}
+
+  List<Widget> generadorresenas(){
+    var pwdWidgets = <Widget>[];
+        pwdWidgets.add(resenas("Paulos",2,1,"zzz",80,true));
+        pwdWidgets.add(resenas("Paulos  2",3,1,"zzz",80,false));
+        pwdWidgets.add(resenas("Paulos",1,1,"zzz",80,true));
+        pwdWidgets.add(resenas("Paulos  2",4,1,"zzz",80,false));
+        pwdWidgets.add(resenas("Paulos",5,1,"zzz",80,true));
+        pwdWidgets.add(resenas("Paulos  2",2,1,"zzz",80,false));
+        pwdWidgets.add(resenas("Paulos",3,1,"zzz",80,true));
+        pwdWidgets.add(resenas("Paulos  2",1,1,"zzz",80,false));
+  return pwdWidgets;
   }
+  
 }
 
 class MyStatefulWidget extends StatefulWidget {
@@ -444,27 +440,9 @@ class MyStatefulWidget extends StatefulWidget {
   State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
 }
 
-Widget titulo(String titulo) {
-  return Text(
-    //Texto inicial de la sección debe ir el titulo del libro
-    "Titulo va aqui",
-    style: new TextStyle(
-      fontSize: 30,
-      fontWeight: FontWeight.bold,
-      letterSpacing: 5.0,
-      color: Colors.black,
-    ),
-  );
-}
-
-Widget calificacion(double calificacion, int reviews) {
+Widget calificacion(int calificacion, int reviews) {
   String calS = " ";
-  for (int cont = 1; cont <= calificacion; cont++) {
-    calS += "★";
-  }
-  for (int cont = 1; cont <= (5 - calificacion); cont++) {
-    calS += "☆";
-  }
+  calS +=estrellas(calS,calificacion);
   calS += " (" + reviews.toString() + ")";
   return Text(
     //Texto inicial de la sección debe ir la calificación y por cuantos
@@ -477,13 +455,34 @@ Widget calificacion(double calificacion, int reviews) {
     ),
   );
 }
+String  estrellas(String string,int calificacion){
+  var calS=string;
+ for (int cont = 1; cont <= calificacion; cont++) {
+    calS += "★";
+  }
+  for (int cont = 1; cont <= (5 - calificacion); cont++) {
+    calS += "☆";
+  }
+  return calS;
+}
+Widget txtconf(String texto, double fz, double ls, FontWeight fw) {
+  return Text(
+    texto,
+    style: new TextStyle(
+      fontSize: fz,
+      fontWeight: fw,
+      letterSpacing: ls,
+      color: Colors.black,
+    ),
+  );
+}
 
 /// This is the private State class that goes with MyStatefulWidget.
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   String dropdownValue = '0';
-
   @override
   Widget build(BuildContext context) {
+    calf = dropdownValue;
     return DropdownButton<String>(
       value: dropdownValue,
       icon: const Icon(Icons.star_rounded),
@@ -497,6 +496,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       onChanged: (String newValue) {
         setState(() {
           dropdownValue = newValue;
+          setcalf(newValue);
         });
       },
       items: <String>['0', '1', '2', '3', '4', '5']
@@ -508,4 +508,19 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       }).toList(),
     );
   }
+}
+
+void calificarlibro() {
+  //calf es la calificacion
+  print(int.parse(getcalf()));
+}
+
+String getcalf() {
+  //regresa el valor de la calificacion
+  return calf;
+}
+
+void setcalf(String ncalf) {
+  //calf es la calificacion
+  calf = ncalf;
 }
