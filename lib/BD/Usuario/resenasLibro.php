@@ -6,14 +6,20 @@ if (isset($_POST)){
     $id = $_POST['id'];
     $sql = 
     "SELECT
-      resena.id,
-      resena.calificacion,
-      resena.contenido,
-      resena.usuario_id
+        resena.id,
+        resena.calificacion,
+        resena.contenido,
+        resena.usuario_id,
+        usuario.nombre,
+        SUM(reaccion.like) AS likes
     FROM
-      resena
+        resena
+        INNER JOIN usuario ON resena.usuario_id = usuario.id
+        LEFT JOIN reaccion ON resena.id = reaccion.resena_id
     WHERE
-      resena.libro_id = $id;";
+        resena.libro_id = $id
+    GROUP BY
+        resena.id;";
 
     $db_name = "id17151113_myreview";
     $db_server = "localhost";
