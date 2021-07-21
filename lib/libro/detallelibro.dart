@@ -56,13 +56,13 @@ class _DetalibroPageState extends State<DetalibroPage> {
     return Scaffold(
       drawer: MenuLateral(),
       appBar: appBar1("Descripción del libro", context),
-      body: MyCustomForm(widget.idLibro,widget.idUser),
+      body: MyCustomForm(widget.idLibro, widget.idUser),
     );
   }
 }
 
 // Crea un Widget Form
-class MyCustomForm  extends StatefulWidget {
+class MyCustomForm extends StatefulWidget {
   final int idLibro, idUser;
 
   MyCustomForm(this.idLibro, this.idUser);
