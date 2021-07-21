@@ -58,13 +58,6 @@ class _StartPageState extends State<StartPage> {
   //listado de libros
   LibrosList _topBooks;
 
-  List<String> images = [
-    "https://static.javatpoint.com/tutorial/flutter/images/flutter-logo.png",
-    "https://static.javatpoint.com/tutorial/flutter/images/flutter-logo.png",
-    "https://static.javatpoint.com/tutorial/flutter/images/flutter-logo.png",
-    "https://static.javatpoint.com/tutorial/flutter/images/flutter-logo.png"
-  ];
-
   bool _aux = false;
 
   @override
@@ -131,13 +124,15 @@ class _StartPageState extends State<StartPage> {
   Widget newSection(String sectionName) {
     //se obtienen los libros
     // _topBooks = obtenerTopBooks().then((value) => null);
-    obtenerTopBooks().then((value) {
-      setState(() {
-        _topBooks = value;
-        _aux = true;
+    if (!_aux) {
+      obtenerTopBooks().then((value) {
+        setState(() {
+          _topBooks = value;
+          _aux = true;
+          print("avr .v");
+        });
       });
-    });
-
+    }
     // printUsuarioId();
     // getUsuarioId().then((value) {
     //   print("id de usuario: $value");
