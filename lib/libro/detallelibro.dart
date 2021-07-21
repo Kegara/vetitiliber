@@ -8,7 +8,7 @@ class DetalibroPage extends StatefulWidget {
   DetalibroPage({Key key, this.idUser, this.idLibro}) : super(key: key);
 
 
-  final int idUser, idLibro;
+  final String idUser, idLibro;
   static String id = 'DetalibroPage';
   @override
   _DetalibroPageState createState() => _DetalibroPageState();
@@ -108,31 +108,16 @@ class MyCustomFormState extends State<MyCustomForm> {
         _auxBool = true;
       });
     });
-    return Form(
+    return Column(
+      children: [
+        //Texto inicial de la sección debe ir el titulo del libro
+       titulo("El libro mas grande del mundo"),
+       calificacion(3,50),
+        Form(
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            //Texto inicial de la sección debe ir el titulo del libro
-            "Titulo va aqui",
-            style: new TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 5.0,
-              color: Colors.black,
-            ),
-          ),
-          Text(
-            //Texto inicial de la sección debe ir la calificación y por cuantos
-            "☆☆☆☆☆(80)",
-            style: new TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 5.0,
-              color: Colors.black,
-            ),
-          ),
           new Expanded(
             //Aquí empieza el listado de acciones
             child: ListView(
@@ -437,6 +422,8 @@ class MyCustomFormState extends State<MyCustomForm> {
           ),
         ],
       ),
+    )
+      ],
     );
   }
 }
@@ -447,7 +434,40 @@ class MyStatefulWidget extends StatefulWidget {
   @override
   State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
 }
+Widget titulo(String titulo){
+    return Text(
+            //Texto inicial de la sección debe ir el titulo del libro
+            "Titulo va aqui",
+            style: new TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 5.0,
+              color: Colors.black,
+            ),
+          );
+}
+Widget calificacion(double calificacion,int reviews)
+{
+  String calS=" ";
+  for(int cont =1;cont<=calificacion;cont++){
+    calS+="★";
+  }
+   for(int cont =1;cont<=(5-calificacion);cont++){
+    calS+="☆";
+  }
+  calS+=" ("+reviews.toString()+")";
+       return     Text(
+            //Texto inicial de la sección debe ir la calificación y por cuantos
+            calS,
+            style: new TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 5.0,
+              color: Colors.black,
+            ),
+          );
 
+}
 /// This is the private State class that goes with MyStatefulWidget.
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   String dropdownValue = '0';
