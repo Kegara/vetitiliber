@@ -4,7 +4,7 @@ import 'package:vetitiliber/libro/answer.dart';
 
 class DetalibroPage extends StatefulWidget {
   DetalibroPage({Key key, this.idUser, this.idLibro}) : super(key: key);
-  final String idUser,idLibro;
+  final int idUser,idLibro;
 
   static String id = 'DetalibroPage';
   @override
