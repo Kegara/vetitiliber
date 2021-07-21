@@ -54,7 +54,7 @@ class _ListadolibroPage extends State<ListadolibroPage> {
   // contenedor que tendra la info del libro el cual tiene asociado un onTap que redirige a la informacion del libro
   Widget contenedoresLibros(int nContenedor) {
     return Container(
-      height: (MediaQuery.of(context).size.height * 0.4),
+      height: (MediaQuery.of(context).size.height * 0.3),
       padding: const EdgeInsets.only(bottom: 10.0),
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
@@ -99,14 +99,42 @@ class _ListadolibroPage extends State<ListadolibroPage> {
             padding: const EdgeInsets.only(right: 10.0, left: 10.0),
             child: Column(
               children: [
-                //generacion de portadas
-                contenedoresLibros(index),
                 new Expanded(
                   //generacion de titulo de libros
                   child: Text(
                     "El Libro con el Titulo mas Largo del Mundo El Libro con el Titulo mas Largo del Mundo  El Libro con el Titulo mas Largo del Mundo ",
                     overflow: TextOverflow.ellipsis,
                     maxLines: 3,
+                  ),
+                ),
+                //generacion de portadas
+                contenedoresLibros(index),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10, bottom: 10),
+                        child: Image.asset(
+                          'assets/imagenes/login/LOGO2.png', //Imagen de portada
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      flex: 3,
+                    ),
+                    new Expanded(
+                        //generacion de titulo de libros
+                        child: Text(
+                          "Nombre del usuario",
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 3,
+                        ),
+                        flex: 7),
+                  ],
+                ),
+                new Expanded(
+                  //generacion de titulo de libros
+                  child: Text(
+                    "☆☆☆☆☆",
                   ),
                 ),
               ],
