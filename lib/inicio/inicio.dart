@@ -118,10 +118,10 @@ class _StartPageState extends State<StartPage> {
           int id = widget.IdUser;
           print("Container $nContenedor was tapped");
           print("Id del usuario a continuacion:$id");
-            var route = new MaterialPageRoute(
-              builder: (BuildContext context) =>
-              new MyCustomForm(idUser: id, idLibro: nContenedor),
-            );          
+          var route = new MaterialPageRoute(
+            builder: (BuildContext context) =>
+                new MyCustomForm(idUser: id, idLibro: nContenedor),
+          );
           Navigator.of(context).push(route);
         },
       ),
@@ -131,13 +131,14 @@ class _StartPageState extends State<StartPage> {
   Widget newSection(String sectionName) {
     //se obtienen los libros
     // _topBooks = obtenerTopBooks().then((value) => null);
-    obtenerTopBooks().then((value) {
-      setState(() {
-        _topBooks = value;
-        _aux = true;
+    if (!_aux) {
+      obtenerTopBooks().then((value) {
+        setState(() {
+          _topBooks = value;
+          _aux = true;
+        });
       });
-    });
-
+    }
     // printUsuarioId();
     // getUsuarioId().then((value) {
     //   print("id de usuario: $value");
