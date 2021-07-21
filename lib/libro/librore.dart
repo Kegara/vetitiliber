@@ -52,7 +52,7 @@ class _ListadolibroPage extends State<ListadolibroPage> {
   }
 
   // contenedor que tendra la info del libro el cual tiene asociado un onTap que redirige a la informacion del libro
-  Widget contenedoresLibros(int nContenedor) {
+  /* Widget contenedoresLibros(int nContenedor) {
     return Container(
       height: (MediaQuery.of(context).size.height * 0.3),
       padding: const EdgeInsets.only(bottom: 10.0),
@@ -78,7 +78,7 @@ class _ListadolibroPage extends State<ListadolibroPage> {
         },
       ),
     );
-  }
+  }*/
 
   Widget newSection(String sectionName) {
     //se obtienen los libros
@@ -108,7 +108,7 @@ class _ListadolibroPage extends State<ListadolibroPage> {
                   ),
                 ),
                 //generacion de portadas
-                contenedoresLibros(index),
+                //contenedoresLibros(index),
                 Row(
                   children: [
                     Expanded(
