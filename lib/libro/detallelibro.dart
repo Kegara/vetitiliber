@@ -169,9 +169,10 @@ class MyCustomFormState extends State<MyCustomForm> {
 
   bool _auxBool = false;
 
+  String _auxGeneros = "";
+
   @override
   Widget build(BuildContext context) {
-    String _auxGeneros = "";
     if (!_auxBool) {
       getInfoLibro(widget.idLibro).then((value) {
         setState(() {
@@ -180,12 +181,13 @@ class MyCustomFormState extends State<MyCustomForm> {
           for (Genero genero in _generos.generos) {
             _auxGeneros += "${genero.nombre}\n";
           }
-          print(_auxGeneros);
+          print("(1) _auxGeneros: $_auxGeneros");
         });
       });
     }
 
     if (_auxBool) {
+      print("(2) _auxGeneros: $_auxGeneros");
       return Column(
         children: [
           Expanded(
@@ -264,7 +266,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                           ),
                           Expanded(
                             child: txtconf(
-                              "$_auxGeneros",
+                              "\n$_auxGeneros",
                               15,
                               2,
                               FontWeight.normal,
