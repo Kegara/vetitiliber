@@ -15,8 +15,6 @@ class DetalibroPage extends StatefulWidget {
   _DetalibroPageState createState() => _DetalibroPageState();
 }
 
-final int _idLibro = 6;
-
 class Libro {
   final int id;
   final String titulo;
@@ -52,20 +50,20 @@ class Libro {
   }
 }
 
-class Resena{
+class Resena {
   final int id;
   final String usuario;
   final int calificacion;
   final int likes;
   final String resenas;
-    Resena({
+
+  Resena({
     this.id,
     this.usuario,
     this.calificacion,
     this.likes,
-    this.resenas
+    this.resenas,
   });
-
 }
 
 class _DetalibroPageState extends State<DetalibroPage> {
@@ -99,6 +97,7 @@ class MyCustomFormState extends State<MyCustomForm> {
   // Nota: Esto es un GlobalKey<FormState>, no un GlobalKey<MyCustomFormState>!
   final _formKey = GlobalKey<FormState>();
   final _formKeyResenas = GlobalKey<FormState>();
+
   Future<Libro> getInfoLibro(int id) async {
     final _url =
         "https://myreviewvl.000webhostapp.com/BD/Usuario/detallesLibro.php";
@@ -132,6 +131,7 @@ class MyCustomFormState extends State<MyCustomForm> {
         });
       });
     }
+
     return Column(
       children: [
         Expanded(
@@ -144,12 +144,13 @@ class MyCustomFormState extends State<MyCustomForm> {
                 //Aquí empieza el listado de acciones
                 child: ListView(
                   children: <Widget>[
-                    //titulo libro 
+                    //titulo libro
                     txtconf(
-                        "Lo bueno de una cuenta oficial sin lo malo de una cuenta oficial. Administrada por el equipo de comunidad española.",
-                        30,
-                        5,
-                        FontWeight.bold),
+                      "Lo bueno de una cuenta oficial sin lo malo de una cuenta oficial. Administrada por el equipo de comunidad española.",
+                      30,
+                      5,
+                      FontWeight.bold,
+                    ),
                     //calificacion y total de reviews
                     calificacion(4, 50),
                     //espacio xddxdxd
@@ -200,8 +201,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                           flex: 3,
                         ),
                         Expanded(
-                          child: txtconf("Aqui van los generos \n", 15, 2,
-                              FontWeight.normal),
+                          child: txtconf(
+                            "Aqui van los generos \n",
+                            15,
+                            2,
+                            FontWeight.normal,
+                          ),
                           flex: 7,
                         ),
                       ],
@@ -213,7 +218,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                     Row(
                       children: <Widget>[
                         Expanded(
-                          child: Center(child: MyStatefulWidget()),
+                          child: Center(
+                            child: MyStatefulWidget(),
+                          ),
                           flex: 2,
                         ),
                         Expanded(
@@ -229,21 +236,21 @@ class MyCustomFormState extends State<MyCustomForm> {
                       ],
                     ),
                     Form(
-                        key: _formKeyResenas,
-                        child: TextFormField(
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Por favor introduzca texto';
-                            }
-                            return null;
-                          },
-                          maxLines: null,
-                          maxLength: 200,
-                          decoration: InputDecoration(
-                            hintText: 'Escriba su reseña, por favor.',
-                          ),
-                        )
+                      key: _formKeyResenas,
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Por favor introduzca texto';
+                          }
+                          return null;
+                        },
+                        maxLines: null,
+                        maxLength: 200,
+                        decoration: InputDecoration(
+                          hintText: 'Escriba su reseña, por favor.',
                         ),
+                      ),
+                    ),
                     Row(
                       children: <Widget>[
                         Expanded(
@@ -251,7 +258,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                             padding: const EdgeInsets.symmetric(vertical: 16.0),
                             child: ElevatedButton(
                               onPressed: () {
-                                hacerreview() ;
+                                hacerreview();
                               },
                               child: Text('Publicar'),
                             ),
@@ -268,17 +275,16 @@ class MyCustomFormState extends State<MyCustomForm> {
                     //Visualización de las reseñas-------------------------------------------------------------------
                     Expanded(
                       child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children:   generadorresenas()
-                    
-                    ),
+                        mainAxisSize: MainAxisSize.min,
+                        children: generadorresenas(),
+                      ),
                     )
                   ],
                 ),
               ),
             ],
           ),
-        )
+        ),
       ],
     );
   }
@@ -292,146 +298,146 @@ class MyCustomFormState extends State<MyCustomForm> {
         SnackBar(
           content: Text("Procesing Data"),
           behavior: SnackBarBehavior.floating,
-          
         ),
       );
-
     }
   }
+
   //widget que contiene la reseña
-  Widget resenas(String usuario,int calificacion,int idresena,String resena,int likes,bool likeada){
-     return  Column(children: [
-     Row(
-                      children: <Widget>[
-                       Expanded(
-                          child: Padding( 
-                          padding: const EdgeInsets.only(top: 5, bottom: 10),
-                            child: Image.asset(
-                              'assets/imagenes/login/LOGO2.png', //Imagen de portada
-                              fit: BoxFit.cover,
-                            ),
-                          ), flex: 3,
-                         
-                        ),
-                    Expanded(
-                          child:    Padding(   padding: const EdgeInsets.only(top: 5, bottom: 10),
-                          
-                            child: Text(
-                              (estrellas(usuario+"\n",calificacion)),
-                              style: new TextStyle(
-                                fontSize: 15,
-                                letterSpacing: 2.0,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ), flex: 7,
-                         
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 10),
-                            child: Text(
-                              "$resena",
-                              style: new TextStyle(
-                                fontSize: 15,
-                                letterSpacing: 2.0,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                          flex: 9,
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 10),
-                            child: txtconf("", 15, 2, FontWeight.normal),
-                          ),
-                          flex: 1,
-                        )
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 10),
-                            child: Icon(
-                             likeada==true? Icons.thumb_up :Icons.thumb_up_alt_outlined,
-                              color: Colors.lightBlue,
-                              size: 24.0,
-                              semanticLabel:
-                                  'Text to announce in accessibility modes',
-                            ),
-                          ),
-                          flex: 3,
-                        ),
-                      Expanded( 
-                              child:  Padding(  padding: const EdgeInsets.only(top: 10, bottom: 10),
-                     
-                             child: Text(
-                              "$likes",
-                              style: TextStyle(
-                                fontSize: 10,
-                                letterSpacing: 2.0,
-                                color: Colors.black,
-                              ),
-                            ), 
-                          ),flex: 1,
-                         
-                        ),
-                  Expanded( 
-                          child:      Padding(    padding: const EdgeInsets.only(top: 10, bottom: 10),
-                        
-                            child: Icon(
-                              Icons.thumb_down_outlined,
-                              color: Colors.red,
-                              size: 30.0,
-                            ),
-                         
-                       
-                           ),   flex: 3,
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 10),
-                            child: IconButton(
-                              icon: const Icon(
-                                Icons.insert_comment_outlined,
-                                color: Colors.black,
-                                size: 30.0,
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pushNamed(AnswerPage.id);
-                              },
-                            ),
-                          ),
-                          flex: 3,
-                        ),
-                      ],
-                    )
-                    ]
-                    );
-               
-}
-  //esta funcion genera una lista de reseñas y las regresa para mostrarlas en el container
-  List<Widget> generadorresenas(){
-    var pwdWidgets = <Widget>[];
-        pwdWidgets.add(resenas("Paulos",2,1,"zzz",80,true));
-        pwdWidgets.add(resenas("Paulos  2",3,1,"zzz",80,false));
-        pwdWidgets.add(resenas("Paulos",1,1,"zzz",80,true));
-        pwdWidgets.add(resenas("Paulos  2",4,1,"zzz",80,false));
-        pwdWidgets.add(resenas("Paulos",5,1,"zzz",80,true));
-        pwdWidgets.add(resenas("Paulos  2",2,1,"zzz",80,false));
-        pwdWidgets.add(resenas("Paulos",3,1,"zzz",80,true));
-        pwdWidgets.add(resenas("Paulos  2",1,1,"zzz",80,false));
-  return pwdWidgets;
+  Widget resenas(String usuario, int calificacion, int idresena, String resena,
+      int likes, bool likeada) {
+    return Column(
+      children: [
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 5, bottom: 10),
+                child: Image.asset(
+                  'assets/imagenes/login/LOGO2.png', //Imagen de portada
+                  fit: BoxFit.cover,
+                ),
+              ),
+              flex: 3,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 5, bottom: 10),
+                child: Text(
+                  (estrellas(usuario + "\n", calificacion)),
+                  style: new TextStyle(
+                    fontSize: 15,
+                    letterSpacing: 2.0,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              flex: 7,
+            )
+          ],
+        ),
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                child: Text(
+                  "$resena",
+                  style: new TextStyle(
+                    fontSize: 15,
+                    letterSpacing: 2.0,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              flex: 9,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                child: txtconf("", 15, 2, FontWeight.normal),
+              ),
+              flex: 1,
+            )
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                child: Icon(
+                  likeada == true
+                      ? Icons.thumb_up
+                      : Icons.thumb_up_alt_outlined,
+                  color: Colors.lightBlue,
+                  size: 24.0,
+                  semanticLabel: 'Text to announce in accessibility modes',
+                ),
+              ),
+              flex: 3,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                child: Text(
+                  "$likes",
+                  style: TextStyle(
+                    fontSize: 10,
+                    letterSpacing: 2.0,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              flex: 1,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                child: Icon(
+                  Icons.thumb_down_outlined,
+                  color: Colors.red,
+                  size: 30.0,
+                ),
+              ),
+              flex: 3,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.insert_comment_outlined,
+                    color: Colors.black,
+                    size: 30.0,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(AnswerPage.id);
+                  },
+                ),
+              ),
+              flex: 3,
+            ),
+          ],
+        )
+      ],
+    );
   }
-  
+
+  //esta funcion genera una lista de reseñas y las regresa para mostrarlas en el container
+  List<Widget> generadorresenas() {
+    var pwdWidgets = <Widget>[];
+    pwdWidgets.add(resenas("Paulos", 2, 1, "zzz", 80, true));
+    pwdWidgets.add(resenas("Paulos  2", 3, 1, "zzz", 80, false));
+    pwdWidgets.add(resenas("Paulos", 1, 1, "zzz", 80, true));
+    pwdWidgets.add(resenas("Paulos  2", 4, 1, "zzz", 80, false));
+    pwdWidgets.add(resenas("Paulos", 5, 1, "zzz", 80, true));
+    pwdWidgets.add(resenas("Paulos  2", 2, 1, "zzz", 80, false));
+    pwdWidgets.add(resenas("Paulos", 3, 1, "zzz", 80, true));
+    pwdWidgets.add(resenas("Paulos  2", 1, 1, "zzz", 80, false));
+    return pwdWidgets;
+  }
 }
 
 class MyStatefulWidget extends StatefulWidget {
@@ -440,10 +446,11 @@ class MyStatefulWidget extends StatefulWidget {
   @override
   State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
 }
+
 //calificacion de los libros
 Widget calificacion(int calificacion, int reviews) {
   String calS = " ";
-  calS +=estrellas(calS,calificacion);
+  calS += estrellas(calS, calificacion);
   calS += " (" + reviews.toString() + ")";
   return Text(
     //Texto inicial de la sección debe ir la calificación y por cuantos
@@ -456,9 +463,10 @@ Widget calificacion(int calificacion, int reviews) {
     ),
   );
 }
-String  estrellas(String string,int calificacion){
-  var calS=string;
- for (int cont = 1; cont <= calificacion; cont++) {
+
+String estrellas(String string, int calificacion) {
+  var calS = string;
+  for (int cont = 1; cont <= calificacion; cont++) {
     calS += "★";
   }
   for (int cont = 1; cont <= (5 - calificacion); cont++) {
@@ -466,7 +474,8 @@ String  estrellas(String string,int calificacion){
   }
   return calS;
 }
-//formato para la creacion de textos 
+
+//formato para la creacion de textos
 Widget txtconf(String texto, double fz, double ls, FontWeight fw) {
   return Text(
     texto,
@@ -511,16 +520,19 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     );
   }
 }
+
 //funcion para calificar libros
 void calificarlibro() {
   //calf es la calificacion
   print(int.parse(getcalf()));
 }
+
 //funcion para obtener la calificacion del combobox
 String getcalf() {
   //regresa el valor de la calificacion
   return calf;
 }
+
 //funcion para poner la calificacion del combobox
 void setcalf(String ncalf) {
   //calf es la calificacion
