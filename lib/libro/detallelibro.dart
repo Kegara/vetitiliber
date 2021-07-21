@@ -7,8 +7,7 @@ import 'package:vetitiliber/libro/answer.dart';
 class DetalibroPage extends StatefulWidget {
   DetalibroPage({Key key, this.idUser, this.idLibro}) : super(key: key);
 
-
-  final String idUser, idLibro;
+  final int idUser, idLibro;
   static String id = 'DetalibroPage';
   @override
   _DetalibroPageState createState() => _DetalibroPageState();
@@ -56,7 +55,7 @@ class _DetalibroPageState extends State<DetalibroPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: MenuLateral(),
-    appBar: appBar1("Descripción del libro", context),
+      appBar: appBar1("Descripción del libro", context),
       body: MyCustomForm(),
     );
   }
@@ -64,6 +63,9 @@ class _DetalibroPageState extends State<DetalibroPage> {
 
 // Crea un Widget Form
 class MyCustomForm extends StatefulWidget {
+  MyCustomForm({Key key, this.idUser, this.idLibro}) : super(key: key);
+  final int idUser, idLibro;
+
   @override
   MyCustomFormState createState() {
     return MyCustomFormState();
@@ -102,7 +104,8 @@ class MyCustomFormState extends State<MyCustomForm> {
 
   @override
   Widget build(BuildContext context) {
-    getInfoLibro(_idLibro).then((value) {
+    print(widget.idLibro);
+    getInfoLibro(widget.idLibro).then((value) {
       setState(() {
         _infoLibro = value;
         _auxBool = true;
