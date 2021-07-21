@@ -144,22 +144,22 @@ class MyCustomFormState extends State<MyCustomForm> {
                 //Aquí empieza el listado de acciones
                 child: ListView(
                   children: <Widget>[
-                    //titulo
+                    //titulo libro 
                     txtconf(
                         "Lo bueno de una cuenta oficial sin lo malo de una cuenta oficial. Administrada por el equipo de comunidad española.",
                         30,
                         5,
                         FontWeight.bold),
-                    //calificacion
+                    //calificacion y total de reviews
                     calificacion(4, 50),
-                    //espacio
+                    //espacio xddxdxd
                     txtconf("\n", 5, 5, FontWeight.bold),
                     //Imagen del libro--------------------------------
                     Image.asset(
                       'assets/imagenes/login/LOGO2.png', //Imagen de portada
                       fit: BoxFit.cover,
                     ),
-                    //texto detalles
+                    //titulo detalles
                     txtconf("Detalles\n", 20, 5, FontWeight.bold),
                     //Inicia el campo de sipnosis--------------------------------------------------
                     Row(
@@ -200,7 +200,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                           flex: 3,
                         ),
                         Expanded(
-                          child: txtconf("Aqui van los generos\n", 15, 2,
+                          child: txtconf("Aqui van los generos \n", 15, 2,
                               FontWeight.normal),
                           flex: 7,
                         ),
@@ -298,6 +298,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 
     }
   }
+  //widget que contiene la reseña
   Widget resenas(String usuario,int calificacion,int idresena,String resena,int likes,bool likeada){
      return  Column(children: [
      Row(
@@ -417,7 +418,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                     );
                
 }
-
+  //esta funcion genera una lista de reseñas y las regresa para mostrarlas en el container
   List<Widget> generadorresenas(){
     var pwdWidgets = <Widget>[];
         pwdWidgets.add(resenas("Paulos",2,1,"zzz",80,true));
@@ -439,7 +440,7 @@ class MyStatefulWidget extends StatefulWidget {
   @override
   State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
 }
-
+//calificacion de los libros
 Widget calificacion(int calificacion, int reviews) {
   String calS = " ";
   calS +=estrellas(calS,calificacion);
@@ -465,6 +466,7 @@ String  estrellas(String string,int calificacion){
   }
   return calS;
 }
+//formato para la creacion de textos 
 Widget txtconf(String texto, double fz, double ls, FontWeight fw) {
   return Text(
     texto,
@@ -509,17 +511,17 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     );
   }
 }
-
+//funcion para calificar libros
 void calificarlibro() {
   //calf es la calificacion
   print(int.parse(getcalf()));
 }
-
+//funcion para obtener la calificacion del combobox
 String getcalf() {
   //regresa el valor de la calificacion
   return calf;
 }
-
+//funcion para poner la calificacion del combobox
 void setcalf(String ncalf) {
   //calf es la calificacion
   calf = ncalf;
