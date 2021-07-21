@@ -64,6 +64,9 @@ class _DetalibroPageState extends State<DetalibroPage> {
 
 // Crea un Widget Form
 class MyCustomForm extends StatefulWidget {
+  MyCustomForm({Key key, this.idUser, this.idLibro}) : super(key: key);
+  final int idUser, idLibro;
+
   @override
   MyCustomFormState createState() {
     return MyCustomFormState();
@@ -101,8 +104,8 @@ class MyCustomFormState extends State<MyCustomForm> {
   bool _auxBool = false;
 
   @override
-  Widget build(BuildContext context) {
-    getInfoLibro(_idLibro).then((value) {
+  Widget build(BuildContext context) {print(widget.idLibro);
+    getInfoLibro(widget.idLibro).then((value) {
       setState(() {
         _infoLibro = value;
         _auxBool = true;
