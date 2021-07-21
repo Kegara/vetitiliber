@@ -11,7 +11,8 @@ if (isset($_POST)){
         resena.contenido,
         resena.usuario_id,
         usuario.nombre,
-        SUM(reaccion.like) AS likes
+        SUM(reaccion.like) AS likes,
+        usuario.fotoPerfil
     FROM
         resena
         INNER JOIN usuario ON resena.usuario_id = usuario.id
