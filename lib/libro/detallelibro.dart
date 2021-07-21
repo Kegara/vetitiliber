@@ -107,12 +107,14 @@ class MyCustomFormState extends State<MyCustomForm> {
   Widget build(BuildContext context) {
     print(widget.idUser);
     print(widget.idLibro);
-    getInfoLibro(widget.idLibro).then((value) {
-      setState(() {
-        _infoLibro = value;
-        _auxBool = true;
+    if (!_auxBool) {
+      getInfoLibro(widget.idLibro).then((value) {
+        setState(() {
+          _infoLibro = value;
+          _auxBool = true;
+        });
       });
-    });
+    }
     return Column(
       children: [
         //Texto inicial de la sección debe ir el titulo del libro
