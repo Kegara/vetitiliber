@@ -122,12 +122,13 @@ class MyCustomForm extends StatefulWidget {
 // Crea una clase State correspondiente. Esta clase contendrá los datos relacionados con
 // el formulario.
 class MyCustomFormState extends State<MyCustomForm> {
+
   // Crea una clave global que identificará de manera única el widget Form
   // y nos permita validar el formulario
   // Nota: Esto es un GlobalKey<FormState>, no un GlobalKey<MyCustomFormState>!
-  final _formKey = GlobalKey<FormState>();
   final _formKeyResenas = GlobalKey<FormState>();
-
+  //valor donde se fuardara la reseña escrita por el usuario
+  final reviewController = TextEditingController();
   GenerosList _generos;
 
   Future<GenerosList> getGenerosLibro(int id) async {
@@ -288,13 +289,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                             flex: 2,
                           ),
                           Expanded(
-                            child: ElevatedButton(
-                              child: txtconf(
-                                  "Calificar", 15, 2, FontWeight.normal),
-                              onPressed: () {
-                                calificarlibro();
-                              },
-                            ),
+                            child: Text("Calificación"),
                             flex: 8,
                           ),
                         ],
@@ -302,6 +297,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                       Form(
                         key: _formKeyResenas,
                         child: TextFormField(
+                          controller: reviewController,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Por favor introduzca texto';
@@ -325,7 +321,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                 onPressed: () {
                                   hacerreview();
                                 },
-                                child: Text('Publicar'),
+                                child: Text('Publicar 2'),
                               ),
                             ),
                             flex: 3,
@@ -445,13 +441,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                             flex: 2,
                           ),
                           Expanded(
-                            child: ElevatedButton(
-                              child: txtconf(
-                                  "Calificar", 15, 2, FontWeight.normal),
-                              onPressed: () {
-                                calificarlibro();
-                              },
-                            ),
+                            child: Text("Calificación"),
                             flex: 8,
                           ),
                         ],
@@ -459,6 +449,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                       Form(
                         key: _formKeyResenas,
                         child: TextFormField(
+                          controller: reviewController,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Por favor introduzca texto';
@@ -479,6 +470,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 16.0),
                               child: ElevatedButton(
+                                
                                 onPressed: () {
                                   hacerreview();
                                 },
@@ -511,10 +503,12 @@ class MyCustomFormState extends State<MyCustomForm> {
       );
     }
   }
-
+//funcion que genera la review
   void hacerreview() {
-// devolverá true si el formulario es válido, o falso si
-// el formulario no es válido.
+  
+     String resena2 = reviewController.text;
+      
+      print(resena2);
     if (_formKeyResenas.currentState.validate()) {
       // Si el formulario es válido, queremos mostrar un Snackbar
       ScaffoldMessenger.of(context).showSnackBar(
@@ -523,6 +517,8 @@ class MyCustomFormState extends State<MyCustomForm> {
           behavior: SnackBarBehavior.floating,
         ),
       );
+      //se llama a la funcion que califica el libro
+      calificarlibro(resena2) ;
     }
   }
 
@@ -745,7 +741,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 }
 
 //funcion para calificar libros
-void calificarlibro() {
+void calificarlibro(String resena) {
+  //la reseña escrita por el usuario
+  print(resena);
   //calf es la calificacion
   print(int.parse(getcalf()));
 }
