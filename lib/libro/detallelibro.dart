@@ -54,33 +54,7 @@ class _DetalibroPageState extends State<DetalibroPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: MenuLateral(),
-      appBar: AppBar(
-        title: Text("MY REVIEW"),
-        actions: [
-          // IconButton(
-          //   icon: const Icon(Icons.add_alert),
-          //   tooltip: 'Show Snackbar',
-          //   onPressed: () {
-          //     ScaffoldMessenger.of(context).showSnackBar(
-          //       const SnackBar(
-          //         content: Text('This is a snackbar'),
-          //       ),
-          //     );
-          //   },
-          // ),
-          IconButton(
-            icon: const Icon(Icons.search),
-            tooltip: 'Show Snackbar',
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('This is a snackbar'),
-                ),
-              );
-            },
-          )
-        ],
-      ),
+    appBar: appBar1("Descripción del libro", context),
       body: MyCustomForm(),
     );
   }
