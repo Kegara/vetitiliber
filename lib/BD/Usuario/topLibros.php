@@ -13,7 +13,8 @@ include "../conexion.php";
     GROUP BY
         libro_id
     ORDER BY
-        AVG(calificacion) DESC
+        AVG(calificacion) DESC,
+        libro.titulo
     LIMIT
         5;";
  
