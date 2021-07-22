@@ -169,6 +169,8 @@ class MyCustomForm extends StatefulWidget {
 // Crea una clase State correspondiente. Esta clase contendrá los datos relacionados con
 // el formulario.
 class MyCustomFormState extends State<MyCustomForm> {
+    final urlInsertResena = "https://myreviewvl.000webhostapp.com/BD/Usuario/InsertarResena.php";
+    int calificacionget;
   // Crea una clave global que identificará de manera única el widget Form
   // y nos permita validar el formulario
   // Nota: Esto es un GlobalKey<FormState>, no un GlobalKey<MyCustomFormState>!
@@ -559,6 +561,8 @@ class MyCustomFormState extends State<MyCustomForm> {
 
     print(resena2);
     if (_formKeyResenas.currentState.validate()) {
+
+      postResena(widget.idUser, widget.idLibro, reviewController.text, getcalf());
       // Si el formulario es válido, queremos mostrar un Snackbar
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -867,6 +871,21 @@ class MyCustomFormState extends State<MyCustomForm> {
     }
     return pwdWidgets;
   }
+    void postResena(int userID, int libroID, String resena, int calificacion) async{
+    try{
+      final response = await post(
+        Uri.parse(urlInsertResena),
+        body: {
+          "calicicacion": calificacion,
+          "contenido": resena,
+          "usuario_id": userID,
+          "libro_id": libroID,
+        },
+      );
+    }catch(err){
+      print("err: $err");
+    }
+  }
 }
 
 class MyStatefulWidget extends StatefulWidget {
@@ -955,14 +974,14 @@ void calificarlibro(String resena) {
   //la reseña escrita por el usuario
   print(resena);
   //calf es la calificacion
-  print(int.parse(getcalf()));
 }
 
 void like() {}
 //funcion para obtener la calificacion del combobox
-String getcalf() {
+int getcalf() {
+  int calicicacion = int.parse(calf);
   //regresa el valor de la calificacion
-  return calf;
+  return calicicacion;
 }
 
 //funcion para poner la calificacion del combobox
