@@ -207,6 +207,7 @@ class MyCustomFormState extends State<MyCustomForm> {
         Uri.parse(_url),
         body: {"id": id.toString()},
       );
+      print("(getInfoLibro) response.body: ${response.body}");
       final json = jsonDecode(response.body);
       _auxResenasList = new Libro.fromJson(json);
     } catch (err) {
@@ -644,20 +645,20 @@ class MyCustomFormState extends State<MyCustomForm> {
           children: <Widget>[
             Expanded(
               child: ElevatedButton(
-                onPressed: (){
-                    like();
+                onPressed: () {
+                  like();
                 },
-                child:  Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
-                child: Icon(
-                  likeada == true
-                      ? Icons.thumb_up
-                      : Icons.thumb_up_alt_outlined,
-                  color: Colors.lightBlue,
-                  size: 24.0,
-                  semanticLabel: 'Text to announce in accessibility modes',
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
+                  child: Icon(
+                    likeada == true
+                        ? Icons.thumb_up
+                        : Icons.thumb_up_alt_outlined,
+                    color: Colors.lightBlue,
+                    size: 24.0,
+                    semanticLabel: 'Text to announce in accessibility modes',
+                  ),
                 ),
-              ),
               ),
               flex: 3,
             ),
@@ -974,9 +975,8 @@ void calificarlibro(String resena) {
   print(resena);
   //calf es la calificacion
 }
-void like(){
 
-}
+void like() {}
 //funcion para obtener la calificacion del combobox
 String getcalf() {
   //regresa el valor de la calificacion

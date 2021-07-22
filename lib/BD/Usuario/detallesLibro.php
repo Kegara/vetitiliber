@@ -18,8 +18,10 @@ if (isset($_POST)){
         resena.libro_id;";
     
     $query = $conexion -> query($sql);
-
-    echo json_encode($result);
+    
+    while ($resultado = $query->fetch_assoc()) {
+        echo json_encode($resultado);
+    }
 
     mysqli_close($conexion);
 
