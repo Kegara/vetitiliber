@@ -34,12 +34,15 @@ class _ListadolibroPage extends State<ListadolibroPage> {
               //titulo de seccion
               Padding(
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
-                child: Text("Mis Reviews",
-                    style: new TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 5.0,
-                        color: Colors.black)),
+                child: Text(
+                  "Mis Reviews",
+                  style: new TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 5.0,
+                    color: Colors.black,
+                  ),
+                ),
               ),
               //seccion donde se mostraran los 10 libros
               Expanded(
@@ -115,21 +118,22 @@ class _ListadolibroPage extends State<ListadolibroPage> {
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(top: 10, bottom: 10),
-                        child: Image.asset(
-                          'assets/imagenes/login/LOGO2.png', //Imagen de portada
+                        child: Image.network(
+                          'https://image.freepik.com/vector-gratis/perfil-avatar-hombre-icono-redondo_24640-14044.jpg', //Imagen de portada
                           fit: BoxFit.cover,
                         ),
                       ),
                       flex: 3,
                     ),
                     new Expanded(
-                        //generacion de titulo de libros
-                        child: Text(
-                          "Nombre del usuario",
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 3,
-                        ),
-                        flex: 7),
+                      //generacion de titulo de libros
+                      child: Text(
+                        "Nombre del usuario",
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 3,
+                      ),
+                      flex: 7,
+                    ),
                   ],
                 ),
                 new Expanded(
