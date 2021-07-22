@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -111,10 +110,10 @@ class _StartPageState extends State<StartPage> {
           int id = widget.IdUser;
           print("Container $nContenedor was tapped");
           print("Id del usuario a continuacion:$id");
-            var route = new MaterialPageRoute(
-              builder: (BuildContext context) =>
-              new DetalibroPage(idUser: id, idLibro: nContenedor),
-            );          
+          var route = new MaterialPageRoute(
+            builder: (BuildContext context) =>
+                new DetalibroPage(idUser: id, idLibro: nContenedor),
+          );
           Navigator.of(context).push(route);
         },
       ),

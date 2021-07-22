@@ -73,6 +73,7 @@ class GenerosList {
   });
 
   factory GenerosList.fromJson(List<dynamic> json) {
+    // ignore: deprecated_member_use
     List<Genero> generos = new List<Genero>();
     generos = json.map((e) => Genero.fromJson(e)).toList();
     return new GenerosList(
@@ -81,15 +82,15 @@ class GenerosList {
   }
 }
 
-class likedReview {
+class LikedReview {
   final int id;
 
-  likedReview({
+  LikedReview({
     this.id,
   });
 
-  factory likedReview.fromJson(Map<String, dynamic> json) {
-    return new likedReview(
+  factory LikedReview.fromJson(Map<String, dynamic> json) {
+    return new LikedReview(
       id: json['id'],
     );
   }
@@ -135,6 +136,7 @@ class ResenasList {
   });
 
   factory ResenasList.fromJson(List<dynamic> json) {
+    // ignore: deprecated_member_use
     List<Resena> resenas = new List<Resena>();
     resenas = json.map((e) => Resena.fromJson(e)).toList();
     return new ResenasList(
@@ -169,8 +171,9 @@ class MyCustomForm extends StatefulWidget {
 // Crea una clase State correspondiente. Esta clase contendrá los datos relacionados con
 // el formulario.
 class MyCustomFormState extends State<MyCustomForm> {
-    final urlInsertResena = "https://myreviewvl.000webhostapp.com/BD/Usuario/InsertarResena.php";
-    int calificacionget;
+  final urlInsertResena =
+      "https://myreviewvl.000webhostapp.com/BD/Usuario/InsertarResena.php";
+  int calificacionget;
   // Crea una clave global que identificará de manera única el widget Form
   // y nos permita validar el formulario
   // Nota: Esto es un GlobalKey<FormState>, no un GlobalKey<MyCustomFormState>!
@@ -198,7 +201,6 @@ class MyCustomFormState extends State<MyCustomForm> {
 
   Future<Libro> getInfoLibro(int id) async {
     _generos = await getGenerosLibro(id);
-    for (Genero genero in _generos.generos) {}
     final _url =
         "https://myreviewvl.000webhostapp.com/BD/Usuario/detallesLibro.php";
     Libro _auxResenasList;
@@ -562,7 +564,12 @@ class MyCustomFormState extends State<MyCustomForm> {
     print(resena2);
     if (_formKeyResenas.currentState.validate()) {
       String resenaf = reviewController.text;
-      postResena(widget.idUser.toString(), widget.idLibro.toString(), resenaf, getcalf());
+      postResena(
+        widget.idUser.toString(),
+        widget.idLibro.toString(),
+        resenaf,
+        getcalf(),
+      );
       // Si el formulario es válido, queremos mostrar un Snackbar
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -709,12 +716,12 @@ class MyCustomFormState extends State<MyCustomForm> {
     );
   }
 
-  List<likedReview> _likedReviews;
+  List<LikedReview> _likedReviews;
 
-  Future<List<likedReview>> getLiked() async {
+  Future<List<LikedReview>> getLiked() async {
     final _url =
         "https://myreviewvl.000webhostapp.com/BD/Usuario/likedReviews.php";
-    List<likedReview> _aux;
+    List<LikedReview> _aux;
     try {
       final response = await post(
         Uri.parse(_url),
@@ -724,7 +731,7 @@ class MyCustomFormState extends State<MyCustomForm> {
       );
       List<dynamic> json = jsonDecode(response.body);
       print("response.body: ${response.body}");
-      _aux = json.map((e) => likedReview.fromJson(e)).toList();
+      _aux = json.map((e) => LikedReview.fromJson(e)).toList();
     } catch (err) {
       print("(getLiked) err: $err");
     }
@@ -738,7 +745,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 
   Future<ResenasList> getResenas() async {
     _likedReviews = await getLiked();
-    for (likedReview lr in _likedReviews) {
+    for (LikedReview lr in _likedReviews) {
       print("lr: ${lr.id}");
     }
     print("getUsuarioId(): ${await getUsuarioId()}");
@@ -762,7 +769,7 @@ class MyCustomFormState extends State<MyCustomForm> {
   }
 
   bool checkLiked(id) {
-    for (likedReview review in _likedReviews) {
+    for (LikedReview review in _likedReviews) {
       if (review.id == id) {
         return true;
       }
@@ -871,9 +878,10 @@ class MyCustomFormState extends State<MyCustomForm> {
     }
     return pwdWidgets;
   }
-    void postResena(userID, libroID,resena,calificacion) async{
-    try{
-      final response = await post(
+
+  void postResena(userID, libroID, resena, calificacion) async {
+    try {
+      await post(
         Uri.parse(urlInsertResena),
         body: {
           "calificacion": calificacion,
@@ -882,7 +890,7 @@ class MyCustomFormState extends State<MyCustomForm> {
           "libro_id": libroID,
         },
       );
-    }catch(err){
+    } catch (err) {
       print("error en el post: $err");
     }
   }
