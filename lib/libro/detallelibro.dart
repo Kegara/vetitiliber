@@ -639,7 +639,11 @@ class MyCustomFormState extends State<MyCustomForm> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Expanded(
-              child: Padding(
+              child: ElevatedButton(
+                onPressed: (){
+                    like();
+                },
+                child:  Padding(
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
                 child: Icon(
                   likeada == true
@@ -649,6 +653,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                   size: 24.0,
                   semanticLabel: 'Text to announce in accessibility modes',
                 ),
+              ),
               ),
               flex: 3,
             ),
@@ -951,7 +956,9 @@ void calificarlibro(String resena) {
   //calf es la calificacion
   print(int.parse(getcalf()));
 }
+void like(){
 
+}
 //funcion para obtener la calificacion del combobox
 String getcalf() {
   //regresa el valor de la calificacion
