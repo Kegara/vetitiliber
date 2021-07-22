@@ -684,12 +684,17 @@ class MyCustomFormState extends State<MyCustomForm> {
               flex: 1,
             ),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
-                child: Icon(
-                  Icons.thumb_down_outlined,
-                  color: Colors.red,
-                  size: 30.0,
+              child: ElevatedButton(
+                onPressed: () {
+                  //Aqui va la funcion pa dislikes
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
+                  child: Icon(
+                    Icons.thumb_down_outlined,
+                    color: Colors.red,
+                    size: 30.0,
+                  ),
                 ),
               ),
               flex: 3,
