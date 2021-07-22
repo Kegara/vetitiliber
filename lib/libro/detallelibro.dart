@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vetitiliber/componentes/menulateral.dart';
 import 'package:vetitiliber/libro/answer.dart';
 
@@ -80,20 +81,66 @@ class GenerosList {
   }
 }
 
+class likedReview {
+  final int id;
+
+  likedReview({
+    this.id,
+  });
+
+  factory likedReview.fromJson(Map<String, dynamic> json) {
+    return new likedReview(
+      id: json['id'],
+    );
+  }
+}
+
 class Resena {
   final int id;
-  final String usuario;
   final int calificacion;
+  final String contenido;
+  final int usuarioID;
+  final String usuario;
   final int likes;
-  final String resenas;
+  final String fotoPerfil;
 
   Resena({
     this.id,
-    this.usuario,
     this.calificacion,
+    this.contenido,
+    this.usuarioID,
+    this.usuario,
     this.likes,
+    this.fotoPerfil,
+  });
+
+  factory Resena.fromJson(Map<String, dynamic> json) {
+    return new Resena(
+      id: json['id'],
+      calificacion: json['calificacion'],
+      contenido: json['contenido'],
+      usuarioID: json['usuarioID'],
+      usuario: json['nombre'],
+      likes: int.parse(json['likes']),
+      fotoPerfil: json['fotoPerfil'],
+    );
+  }
+}
+
+class ResenasList {
+  final List<Resena> resenas;
+
+  ResenasList({
     this.resenas,
   });
+
+  factory ResenasList.fromJson(List<dynamic> json) {
+    List<Resena> resenas = new List<Resena>();
+    resenas = json.map((e) => Resena.fromJson(e)).toList();
+    return new ResenasList(
+      resenas: resenas,
+    );
+  }
 }
 
 class _DetalibroPageState extends State<DetalibroPage> {
@@ -133,61 +180,64 @@ class MyCustomFormState extends State<MyCustomForm> {
   Future<GenerosList> getGenerosLibro(int id) async {
     final _url =
         "https://myreviewvl.000webhostapp.com/BD/Usuario/generosLibro.php";
-    GenerosList _aux;
+    GenerosList _auxResenasList;
     try {
       final response = await post(
         Uri.parse(_url),
         body: {"id": id.toString()},
       );
       final json = jsonDecode(response.body);
-      _aux = new GenerosList.fromJson(json);
+      _auxResenasList = new GenerosList.fromJson(json);
     } catch (err) {
       print("(getGenerosLibro) err: $err");
     }
-    return _aux;
+    return _auxResenasList;
   }
 
   Future<Libro> getInfoLibro(int id) async {
     _generos = await getGenerosLibro(id);
+    for (Genero genero in _generos.generos) {}
     final _url =
         "https://myreviewvl.000webhostapp.com/BD/Usuario/detallesLibro.php";
-    Libro _aux;
+    Libro _auxResenasList;
     try {
       final response = await post(
         Uri.parse(_url),
         body: {"id": id.toString()},
       );
       final json = jsonDecode(response.body);
-      _aux = new Libro.fromJson(json);
+      _auxResenasList = new Libro.fromJson(json);
     } catch (err) {
       print("(getInfoLibro) err: $err");
     }
-    return _aux;
+    return _auxResenasList;
   }
 
   Libro _infoLibro;
 
-  bool _auxBool = false;
+  bool _auxResenasListBool = false;
 
-  String _auxGeneros = "";
+  String _auxResenasListGeneros = "";
 
   @override
   Widget build(BuildContext context) {
-    if (!_auxBool) {
+    if (!_auxResenasListBool) {
       getInfoLibro(widget.idLibro).then((value) {
         setState(() {
+          _auxResenasListGeneros = "";
           _infoLibro = value;
-          _auxBool = true;
+          _auxResenasListBool = true;
           for (Genero genero in _generos.generos) {
-            _auxGeneros += "${genero.nombre}\n";
+            print("genero.nombre: ${genero.nombre}");
+            _auxResenasListGeneros += "${genero.nombre}\n";
           }
-          print("(1) _auxGeneros: $_auxGeneros");
+          print("(1) _auxResenasListGeneros: $_auxResenasListGeneros");
         });
       });
     }
 
-    if (_auxBool) {
-      print("(2) _auxGeneros: $_auxGeneros");
+    if (_auxResenasListBool) {
+      print("(2) _auxResenasListGeneros: $_auxResenasListGeneros");
       return Column(
         children: [
           Expanded(
@@ -266,7 +316,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                           ),
                           Expanded(
                             child: txtconf(
-                              "\n$_auxGeneros",
+                              "\n$_auxResenasListGeneros",
                               15,
                               2,
                               FontWeight.normal,
@@ -502,7 +552,7 @@ class MyCustomFormState extends State<MyCustomForm> {
     }
   }
 
-//funcion que genera la review
+  // funcion que genera la review
   void hacerreview() {
     String resena2 = reviewController.text;
 
@@ -521,8 +571,15 @@ class MyCustomFormState extends State<MyCustomForm> {
   }
 
   //widget que contiene la reseña
-  Widget resenas(String usuario, int calificacion, int idresena, String resena,
-      int likes, bool likeada) {
+  Widget resenas(
+    String usuario,
+    int calificacion,
+    int idresena,
+    String resena,
+    int likes,
+    bool likeada,
+    String fotoPerfil,
+  ) {
     return Column(
       children: [
         Row(
@@ -530,8 +587,8 @@ class MyCustomFormState extends State<MyCustomForm> {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(top: 5, bottom: 10),
-                child: Image.asset(
-                  'assets/imagenes/login/LOGO2.png', //Imagen de portada
+                child: Image.network(
+                  fotoPerfil, //Imagen de portada
                   fit: BoxFit.cover,
                 ),
               ),
@@ -642,17 +699,166 @@ class MyCustomFormState extends State<MyCustomForm> {
     );
   }
 
+  List<likedReview> _likedReviews;
+
+  Future<List<likedReview>> getLiked() async {
+    final _url =
+        "https://myreviewvl.000webhostapp.com/BD/Usuario/likedReviews.php";
+    List<likedReview> _aux;
+    try {
+      final response = await post(
+        Uri.parse(_url),
+        body: {
+          'id': await getUsuarioId(),
+        },
+      );
+      List<dynamic> json = jsonDecode(response.body);
+      print("response.body: ${response.body}");
+      _aux = json.map((e) => likedReview.fromJson(e)).toList();
+    } catch (err) {
+      print("(getLiked) err: $err");
+    }
+    return _aux;
+  }
+
+  Future<String> getUsuarioId() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('idUsuario').toString();
+  }
+
+  Future<ResenasList> getResenas() async {
+    _likedReviews = await getLiked();
+    for (likedReview lr in _likedReviews) {
+      print("lr: ${lr.id}");
+    }
+    print("getUsuarioId(): ${await getUsuarioId()}");
+    print("widget.idLibro: ${widget.idLibro}");
+    final _url =
+        "https://myreviewvl.000webhostapp.com/BD/Usuario/resenasLibro.php";
+    ResenasList _auxResenasList;
+    try {
+      final response = await post(
+        Uri.parse(_url),
+        body: {
+          "id": widget.idLibro.toString(),
+        },
+      );
+      final json = jsonDecode(response.body);
+      _auxResenasList = new ResenasList.fromJson(json);
+    } catch (err) {
+      print("(getResenas) err: $err");
+    }
+    return _auxResenasList;
+  }
+
+  bool checkLiked(id) {
+    for (likedReview review in _likedReviews) {
+      if (review.id == id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool _auxBoolResenas = false;
+
+  ResenasList _resenasList;
+
   //esta funcion genera una lista de reseñas y las regresa para mostrarlas en el container
   List<Widget> generadorresenas() {
     var pwdWidgets = <Widget>[];
-    pwdWidgets.add(resenas("Paulos", 2, 1, "zzz", 80, true));
-    pwdWidgets.add(resenas("Paulos  2", 3, 1, "zzz", 80, false));
-    pwdWidgets.add(resenas("Paulos", 1, 1, "zzz", 80, true));
-    pwdWidgets.add(resenas("Paulos  2", 4, 1, "zzz", 80, false));
-    pwdWidgets.add(resenas("Paulos", 5, 1, "zzz", 80, true));
-    pwdWidgets.add(resenas("Paulos  2", 2, 1, "zzz", 80, false));
-    pwdWidgets.add(resenas("Paulos", 3, 1, "zzz", 80, true));
-    pwdWidgets.add(resenas("Paulos  2", 1, 1, "zzz", 80, false));
+    if (_auxBoolResenas) {
+      for (Resena resena in _resenasList.resenas) {
+        pwdWidgets.add(resenas(
+          resena.usuario,
+          resena.calificacion,
+          resena.id,
+          resena.contenido,
+          resena.likes,
+          checkLiked(resena.id),
+          resena.fotoPerfil,
+        ));
+      }
+    } else {
+      getResenas().then((value) {
+        setState(() {
+          _resenasList = value;
+          _auxBoolResenas = true;
+        });
+      });
+      pwdWidgets.add(resenas(
+        "Paulos",
+        2,
+        1,
+        "zzz",
+        80,
+        true,
+        'https://image.freepik.com/vector-gratis/perfil-avatar-hombre-icono-redondo_24640-14044.jpg',
+      ));
+      pwdWidgets.add(resenas(
+        "Paulos  2",
+        3,
+        1,
+        "zzz",
+        80,
+        false,
+        'https://image.freepik.com/vector-gratis/perfil-avatar-hombre-icono-redondo_24640-14044.jpg',
+      ));
+      pwdWidgets.add(resenas(
+        "Paulos",
+        1,
+        1,
+        "zzz",
+        80,
+        true,
+        'https://image.freepik.com/vector-gratis/perfil-avatar-hombre-icono-redondo_24640-14044.jpg',
+      ));
+      pwdWidgets.add(resenas(
+        "Paulos  2",
+        4,
+        1,
+        "zzz",
+        80,
+        false,
+        'https://image.freepik.com/vector-gratis/perfil-avatar-hombre-icono-redondo_24640-14044.jpg',
+      ));
+      pwdWidgets.add(resenas(
+        "Paulos",
+        5,
+        1,
+        "zzz",
+        80,
+        true,
+        'https://image.freepik.com/vector-gratis/perfil-avatar-hombre-icono-redondo_24640-14044.jpg',
+      ));
+      pwdWidgets.add(resenas(
+        "Paulos  2",
+        2,
+        1,
+        "zzz",
+        80,
+        false,
+        'https://image.freepik.com/vector-gratis/perfil-avatar-hombre-icono-redondo_24640-14044.jpg',
+      ));
+      pwdWidgets.add(resenas(
+        "Paulos",
+        3,
+        1,
+        "zzz",
+        80,
+        true,
+        'https://image.freepik.com/vector-gratis/perfil-avatar-hombre-icono-redondo_24640-14044.jpg',
+      ));
+      pwdWidgets.add(resenas(
+        "Paulos  2",
+        1,
+        1,
+        "zzz",
+        80,
+        false,
+        'https://image.freepik.com/vector-gratis/perfil-avatar-hombre-icono-redondo_24640-14044.jpg',
+      ));
+    }
     return pwdWidgets;
   }
 }
