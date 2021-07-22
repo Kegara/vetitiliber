@@ -561,8 +561,8 @@ class MyCustomFormState extends State<MyCustomForm> {
 
     print(resena2);
     if (_formKeyResenas.currentState.validate()) {
-
-      postResena(widget.idUser, widget.idLibro, reviewController.text, getcalf());
+      String resenaf = reviewController.text;
+      postResena(widget.idUser.toString(), widget.idLibro.toString(), resenaf, getcalf());
       // Si el formulario es válido, queremos mostrar un Snackbar
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -871,19 +871,19 @@ class MyCustomFormState extends State<MyCustomForm> {
     }
     return pwdWidgets;
   }
-    void postResena(int userID, int libroID, String resena, int calificacion) async{
+    void postResena(userID, libroID,resena,calificacion) async{
     try{
       final response = await post(
         Uri.parse(urlInsertResena),
         body: {
-          "calicicacion": calificacion,
+          "calificacion": calificacion,
           "contenido": resena,
           "usuario_id": userID,
           "libro_id": libroID,
         },
       );
     }catch(err){
-      print("err: $err");
+      print("error en el post: $err");
     }
   }
 }
@@ -978,10 +978,9 @@ void calificarlibro(String resena) {
 
 void like() {}
 //funcion para obtener la calificacion del combobox
-int getcalf() {
-  int calicicacion = int.parse(calf);
+String getcalf() {
   //regresa el valor de la calificacion
-  return calicicacion;
+  return calf;
 }
 
 //funcion para poner la calificacion del combobox
