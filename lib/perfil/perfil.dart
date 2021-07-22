@@ -41,12 +41,12 @@ class InfoUsuario {
   factory InfoUsuario.fromJson(Map<String, dynamic> json) {
     return new InfoUsuario(
       fotoPerfil: json['fotoPerfil'],
-      nSeguidores: json['nSeguidores'],
-      nReviews: json['nReviews'],
-      nFavoritos: json['fotoPerfil'],
-      nLeidos: json['nLeidos'],
-      nLeyendo: json['fotoPerfil'],
-      nPendientes: json['fotoPerfil'],
+      nSeguidores: int.parse(json['nSeguidores']),
+      nReviews: int.parse(json['nReviews']),
+      nFavoritos: int.parse(json['nFavoritos']),
+      nLeidos: int.parse(json['nLeidos']),
+      nLeyendo: int.parse(json['nLeyendo']),
+      nPendientes: int.parse(json['nPendientes']),
     );
   }
 }
@@ -61,21 +61,19 @@ InfoUsuario _infoUsuario;
 Future<InfoUsuario> getInfoUsuario() async {
   final _url =
       "https://myreviewvl.000webhostapp.com/BD/Usuario/infoUsuario.php";
+  final idUs = await getUsuarioId();
   InfoUsuario _aux;
-  bool _respuestaInvalida = true;
   try {
-    do {
-      final response = await post(
-        Uri.parse(_url),
-        body: {
-          "id": await getUsuarioId(),
-        },
-      );
-      print("(getInfoUsuario) response.body: ${response.body}");
-      _respuestaInvalida = (response.body == "[]");
-      final json = jsonDecode(response.body);
-      _aux = new InfoUsuario.fromJson(json);
-    } while (_respuestaInvalida);
+    final response = await post(
+      Uri.parse(_url),
+      body: {
+        "id": idUs,
+      },
+    );
+    final json = jsonDecode(response.body);
+    print("json.runtimeType: ${json.runtimeType}");
+    _aux = new InfoUsuario.fromJson(json);
+    print("json: $json");
   } catch (err) {
     print("(getInfoUsuario) err: $err");
   }
@@ -86,8 +84,26 @@ class _PerfilPageState extends State<PerfilPage> {
   String fotoPerfil =
       'https://image.freepik.com/vector-gratis/perfil-avatar-hombre-icono-redondo_24640-14044.jpg';
   int nSeguidores = 0;
+  int nReviews = 0;
+  int nFavoritos = 0;
+  int nLeidos = 0;
+  int nLeyendo = 0;
+  int nPendientes = 0;
+
   @override
   Widget build(BuildContext context) {
+    getInfoUsuario().then((value) {
+      setState(() {
+        _infoUsuario = value;
+        fotoPerfil = _infoUsuario.fotoPerfil;
+        nSeguidores = _infoUsuario.nSeguidores;
+        nReviews = _infoUsuario.nReviews;
+        nFavoritos = _infoUsuario.nFavoritos;
+        nLeidos = _infoUsuario.nLeidos;
+        nLeyendo = _infoUsuario.nLeyendo;
+        nPendientes = _infoUsuario.nPendientes;
+      });
+    });
     return Scaffold(
       drawer: MenuLateral(),
       appBar: AppBar(
@@ -134,8 +150,9 @@ class _PerfilPageState extends State<PerfilPage> {
                 children: <Widget>[
                   Divider(),
                   new ListTile(
-                    title:
-                        Text("Reviews"), //Agregar la cantidad de reviews aquí
+                    title: Text(
+                      "Reviews ($nReviews)",
+                    ), //Agregar la cantidad de reviews aquí
                     onTap: () {
                       //Aquí ira la función que lleve a ver sus reviews
                       Navigator.of(context).pushNamed(ListadolibroPage.id);
@@ -144,7 +161,8 @@ class _PerfilPageState extends State<PerfilPage> {
                   Divider(),
                   new ListTile(
                     title: Text(
-                        "Favoritos"), //Agregar la cantidad de favoritos aquí
+                      "Favoritos ($nFavoritos)",
+                    ), //Agregar la cantidad de favoritos aquí
                     onTap: () {
                       //Aquí ira la función que lleve a ver sus Favoritos
                       Navigator.of(context).pushNamed(ListadofavPage.id);
@@ -152,7 +170,9 @@ class _PerfilPageState extends State<PerfilPage> {
                   ),
                   Divider(),
                   new ListTile(
-                    title: Text("Leídos"), //Agregar la cantidad de leidos aquí
+                    title: Text(
+                      "Leídos ($nLeidos)",
+                    ), //Agregar la cantidad de leidos aquí
                     onTap: () {
                       //Aquí ira la función que lleve a ver sus Leídos
                       Navigator.of(context).pushNamed(ListadoleiPage.id);
@@ -160,8 +180,9 @@ class _PerfilPageState extends State<PerfilPage> {
                   ),
                   Divider(),
                   new ListTile(
-                    title:
-                        Text("Leyendo"), //Agregar la cantidad de leyendo aquí
+                    title: Text(
+                      "Leyendo ($nLeyendo)",
+                    ), //Agregar la cantidad de leyendo aquí
                     onTap: () {
                       //Aquí ira la función que lleve a ver sus Leyendo
                       Navigator.of(context).pushNamed(ListadoleyPage.id);
@@ -170,7 +191,8 @@ class _PerfilPageState extends State<PerfilPage> {
                   Divider(),
                   new ListTile(
                     title: Text(
-                        "Pendientes"), //Agregar la cantidad de pendiente aquí
+                      "Pendientes ($nPendientes)",
+                    ), //Agregar la cantidad de pendiente aquí
                     onTap: () {
                       //Aquí ira la función que lleve a ver sus Pndientes
                       Navigator.of(context).pushNamed(ListadopenPage.id);
