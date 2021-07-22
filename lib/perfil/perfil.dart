@@ -71,14 +71,14 @@ Future<InfoUsuario> getInfoUsuario() async {
       },
     );
     final json = jsonDecode(response.body);
-    print("json.runtimeType: ${json.runtimeType}");
     _aux = new InfoUsuario.fromJson(json);
-    print("json: $json");
   } catch (err) {
     print("(getInfoUsuario) err: $err");
   }
   return _aux;
 }
+
+bool _auxBool = true;
 
 class _PerfilPageState extends State<PerfilPage> {
   String fotoPerfil =
@@ -92,18 +92,22 @@ class _PerfilPageState extends State<PerfilPage> {
 
   @override
   Widget build(BuildContext context) {
-    getInfoUsuario().then((value) {
-      setState(() {
-        _infoUsuario = value;
-        fotoPerfil = _infoUsuario.fotoPerfil;
-        nSeguidores = _infoUsuario.nSeguidores;
-        nReviews = _infoUsuario.nReviews;
-        nFavoritos = _infoUsuario.nFavoritos;
-        nLeidos = _infoUsuario.nLeidos;
-        nLeyendo = _infoUsuario.nLeyendo;
-        nPendientes = _infoUsuario.nPendientes;
+    if (_auxBool) {
+      getInfoUsuario().then((value) {
+        setState(() {
+          _infoUsuario = value;
+          fotoPerfil = _infoUsuario.fotoPerfil;
+          nSeguidores = _infoUsuario.nSeguidores;
+          nReviews = _infoUsuario.nReviews;
+          nFavoritos = _infoUsuario.nFavoritos;
+          nLeidos = _infoUsuario.nLeidos;
+          nLeyendo = _infoUsuario.nLeyendo;
+          nPendientes = _infoUsuario.nPendientes;
+          _auxBool = false;
+          print("setState");
+        });
       });
-    });
+    }
     return Scaffold(
       drawer: MenuLateral(),
       appBar: AppBar(
