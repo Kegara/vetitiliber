@@ -86,8 +86,14 @@ class _ListadolibroPage extends State<ListadolibroPage> {
 
   Widget newSection(String sectionName) {
     //se obtienen los libros
-    _listBooks = obtenerListado();
-
+    // _listBooks = obtenerListado();
+    var longitud = _listBooks.length;
+    String titulo =
+        "El Libro con el Titulo mas Largo del Mundo El Libro con el Titulo mas Largo del Mundo  El Libro con el Titulo mas Largo del Mundo";
+    String fotoPerfil =
+        'https://image.freepik.com/vector-gratis/perfil-avatar-hombre-icono-redondo_24640-14044.jpg';
+    String nombreUs = "Nombre del usuario";
+    int calificacion = 5;
     return GridView.count(
       childAspectRatio: ((MediaQuery.of(context).size.width / 2 - 40) /
           (MediaQuery.of(context).size.height * 0.4)),
@@ -96,7 +102,7 @@ class _ListadolibroPage extends State<ListadolibroPage> {
       mainAxisSpacing: 0.0,
       //generacion de libros en base a el tamaño de _topBooks contenedor de los libros
       children: List.generate(
-        _listBooks.length,
+        longitud,
         (index) {
           //generacion de libros
           return Padding(
@@ -106,7 +112,7 @@ class _ListadolibroPage extends State<ListadolibroPage> {
                 new Expanded(
                   //generacion de titulo de libros
                   child: Text(
-                    "El Libro con el Titulo mas Largo del Mundo El Libro con el Titulo mas Largo del Mundo  El Libro con el Titulo mas Largo del Mundo ",
+                    titulo,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 3,
                   ),
@@ -119,7 +125,7 @@ class _ListadolibroPage extends State<ListadolibroPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 10, bottom: 10),
                         child: Image.network(
-                          'https://image.freepik.com/vector-gratis/perfil-avatar-hombre-icono-redondo_24640-14044.jpg', //Imagen de portada
+                          fotoPerfil, //Imagen de portada
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -128,7 +134,7 @@ class _ListadolibroPage extends State<ListadolibroPage> {
                     new Expanded(
                       //generacion de titulo de libros
                       child: Text(
-                        "Nombre del usuario",
+                        nombreUs,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 3,
                       ),
@@ -139,7 +145,12 @@ class _ListadolibroPage extends State<ListadolibroPage> {
                 new Expanded(
                   //generacion de titulo de libros
                   child: Text(
-                    "☆☆☆☆☆",
+                    (estrellas(calificacion)),
+                    style: new TextStyle(
+                      fontSize: 15,
+                      letterSpacing: 2.0,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
               ],
@@ -150,7 +161,18 @@ class _ListadolibroPage extends State<ListadolibroPage> {
     );
   }
 
-  List obtenerListado() {
-    return ["g1 ", "g2", "g3", "g4", "g4"];
+  String estrellas(int calificacion) {
+    var calS = "";
+    for (int cont = 1; cont <= calificacion; cont++) {
+      calS += "★";
+    }
+    for (int cont = 1; cont <= (5 - calificacion); cont++) {
+      calS += "☆";
+    }
+    return calS;
+  }
+
+  Future<Resena> obtenerListado() async {
+    // return ["g1 ", "g2", "g3", "g4", "g4"];
   }
 }
