@@ -45,6 +45,7 @@ class LibrosList {
   });
 
   factory LibrosList.fromJson(List<dynamic> parsedJson) {
+    // ignore: deprecated_member_use
     List<Libro> libros = new List<Libro>();
     libros = parsedJson.map((e) => Libro.fromJson(e)).toList();
     return LibrosList(
