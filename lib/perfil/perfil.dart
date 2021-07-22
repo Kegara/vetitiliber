@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vetitiliber/componentes/menulateral.dart';
 import 'package:vetitiliber/libro/librore.dart';
 import 'package:vetitiliber/libro/librofav.dart';
@@ -15,7 +19,73 @@ class PerfilPage extends StatefulWidget {
   _PerfilPageState createState() => _PerfilPageState();
 }
 
+class InfoUsuario {
+  final String fotoPerfil;
+  final int nSeguidores;
+  final int nReviews;
+  final int nFavoritos;
+  final int nLeidos;
+  final int nLeyendo;
+  final int nPendientes;
+
+  InfoUsuario({
+    this.fotoPerfil,
+    this.nSeguidores,
+    this.nReviews,
+    this.nFavoritos,
+    this.nLeidos,
+    this.nLeyendo,
+    this.nPendientes,
+  });
+
+  factory InfoUsuario.fromJson(Map<String, dynamic> json) {
+    return new InfoUsuario(
+      fotoPerfil: json['fotoPerfil'],
+      nSeguidores: json['nSeguidores'],
+      nReviews: json['nReviews'],
+      nFavoritos: json['fotoPerfil'],
+      nLeidos: json['nLeidos'],
+      nLeyendo: json['fotoPerfil'],
+      nPendientes: json['fotoPerfil'],
+    );
+  }
+}
+
+Future<String> getUsuarioId() async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getInt('idUsuario').toString();
+}
+
+InfoUsuario _infoUsuario;
+
+Future<InfoUsuario> getInfoUsuario() async {
+  final _url =
+      "https://myreviewvl.000webhostapp.com/BD/Usuario/infoUsuario.php";
+  InfoUsuario _aux;
+  bool _respuestaInvalida = true;
+  try {
+    do {
+      final response = await post(
+        Uri.parse(_url),
+        body: {
+          "id": await getUsuarioId(),
+        },
+      );
+      print("(getInfoUsuario) response.body: ${response.body}");
+      _respuestaInvalida = (response.body == "[]");
+      final json = jsonDecode(response.body);
+      _aux = new InfoUsuario.fromJson(json);
+    } while (_respuestaInvalida);
+  } catch (err) {
+    print("(getInfoUsuario) err: $err");
+  }
+  return _aux;
+}
+
 class _PerfilPageState extends State<PerfilPage> {
+  String fotoPerfil =
+      'https://image.freepik.com/vector-gratis/perfil-avatar-hombre-icono-redondo_24640-14044.jpg';
+  int nSeguidores = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,12 +115,12 @@ class _PerfilPageState extends State<PerfilPage> {
                 color: Colors.blueAccent,
               ),
             ),
-            Image.asset(
-              'assets/imagenes/login/LOGO2.png', //Imagen del usuario
+            Image.network(
+              fotoPerfil, //Imagen del usuario
               fit: BoxFit.cover,
             ),
             new Text(
-              "\nSeguidores:\n", //Insertar cantidad de seguidores aquí
+              "\nSeguidores: $nSeguidores\n", //Insertar cantidad de seguidores aquí
               style: new TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
