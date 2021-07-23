@@ -886,6 +886,20 @@ class MyCustomFormState extends State<MyCustomForm> {
       print("error en el post: $err");
     }
   }
+      void postActualizarResena(resenaID,resena,calificacion) async{
+    try{
+      final response = await post(
+        Uri.parse(urlInsertResena),
+        body: {
+          "calificacion": calificacion,
+          "contenido": resena,
+          "resena_id": resenaID,
+        },
+      );
+    }catch(err){
+      print("error en el post: $err");
+    }
+  }
 }
 
 class MyStatefulWidget extends StatefulWidget {
@@ -976,7 +990,9 @@ void calificarlibro(String resena) {
   //calf es la calificacion
 }
 
-void like() {}
+void like() {
+
+}
 //funcion para obtener la calificacion del combobox
 String getcalf() {
   //regresa el valor de la calificacion
