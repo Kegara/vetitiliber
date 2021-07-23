@@ -207,7 +207,9 @@ class MyCustomFormState extends State<MyCustomForm> {
     try {
       final response = await post(
         Uri.parse(_url),
-        body: {"id": id.toString()},
+        body: {
+          "id": id.toString(),
+        },
       );
       print("(getInfoLibro) response.body: ${response.body}");
       final json = jsonDecode(response.body);
@@ -899,8 +901,9 @@ class MyCustomFormState extends State<MyCustomForm> {
       print("error en el post: $err");
     }
   }
-      void postActualizarResena(resenaID,resena,calificacion) async{
-    try{
+
+  void postActualizarResena(resenaID, resena, calificacion) async {
+    try {
       final response = await post(
         Uri.parse(urlInsertResena),
         body: {
@@ -909,7 +912,7 @@ class MyCustomFormState extends State<MyCustomForm> {
           "resena_id": resenaID,
         },
       );
-    }catch(err){
+    } catch (err) {
       print("error en el post: $err");
     }
   }
@@ -1003,9 +1006,7 @@ void calificarlibro(String resena) {
   //calf es la calificacion
 }
 
-void like() {
-
-}
+void like() {}
 //funcion para obtener la calificacion del combobox
 String getcalf() {
   //regresa el valor de la calificacion
