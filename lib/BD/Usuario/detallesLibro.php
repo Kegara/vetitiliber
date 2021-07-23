@@ -6,16 +6,14 @@ if (isset($_POST)){
     "SELECT
         libro.*,
         autor.nombre AS nombreAutor,
-        AVG(resena.calificacion) AS calificacionP,
+        COALESCE(AVG(resena.calificacion), 0) AS calificacionP,
         COUNT(resena.id) AS resenas
     FROM
         resena
-        INNER JOIN libro ON resena.libro_id = libro.id
+        LEFT JOIN libro ON resena.libro_id = libro.id
         INNER JOIN autor ON libro.autor_id = autor.id
     WHERE
-        libro.id = $id
-    GROUP BY
-        resena.libro_id;";
+        libro.id = $id;";
     
     $query = $conexion -> query($sql);
     
