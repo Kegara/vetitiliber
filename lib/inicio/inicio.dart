@@ -155,8 +155,10 @@ class _StartPageState extends State<StartPage> {
               child: Column(
                 children: [
                   //generacion de portadas
-                  contenedoresLibros(_topBooks.libros[index].id,
-                      _topBooks.libros[index].portada),
+                  contenedoresLibros(
+                    _topBooks.libros[index].id,
+                    _topBooks.libros[index].portada,
+                  ),
                   new Expanded(
                     //generacion de titulo de libros
                     child: Text(
