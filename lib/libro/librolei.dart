@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -115,7 +114,7 @@ class _ListadoleiPage extends State<ListadoleiPage> {
   }
 
   // contenedor que tendra la info del libro el cual tiene asociado un onTap que redirige a la informacion del libro
-  Widget contenedoresLibros(int nContenedor, String portada) {
+  Widget contenedoresLibros(int nContenedor, String portada, int id) {
     return Container(
       height: (MediaQuery.of(context).size.height * 0.4),
       padding: const EdgeInsets.only(bottom: 10.0),
@@ -140,13 +139,18 @@ class _ListadoleiPage extends State<ListadoleiPage> {
         onTap: () {
           print("Container $nContenedor was tapped");
           _auxBool = true;
-          Navigator.of(context).pushNamed(DetalibroPage.id);
+          var route = new MaterialPageRoute(
+            builder: (BuildContext context) =>
+                new DetalibroPage(idUser: id, idLibro: nContenedor),
+          );
+          Navigator.of(context).push(route);
         },
       ),
     );
   }
 
   bool _auxBool = true;
+  int idUs = 1;
 
   Widget newSection(String sectionName) {
     //se obtienen los libros
@@ -179,6 +183,7 @@ class _ListadoleiPage extends State<ListadoleiPage> {
                 contenedoresLibros(
                   _listBooks[index].id,
                   _listBooks[index].portada,
+                  idUs,
                 ),
                 new Expanded(
                   //generacion de titulo de libros
@@ -202,7 +207,7 @@ class _ListadoleiPage extends State<ListadoleiPage> {
   }
 
   Future<List<Libro>> obtenerListado() async {
-    final idUs = await getUsuarioId();
+    idUs = int.parse(await getUsuarioId());
     final _url =
         "https://myreviewvl.000webhostapp.com/BD/Usuario/librosUsuarioColeccion.php";
     List<Libro> _aux;
@@ -210,7 +215,7 @@ class _ListadoleiPage extends State<ListadoleiPage> {
       final response = await post(
         Uri.parse(_url),
         body: {
-          "idu": idUs,
+          "idu": idUs.toString(),
           "idc": '2',
         },
       );
