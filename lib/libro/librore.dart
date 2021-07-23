@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vetitiliber/componentes/menulateral.dart';
 // ignore: unused_import
 import 'package:vetitiliber/libro/detallelibro.dart';
@@ -11,9 +15,45 @@ class ListadolibroPage extends StatefulWidget {
   _ListadolibroPage createState() => _ListadolibroPage();
 }
 
+class Review {
+  final String titulo;
+  final String fotoPerfil;
+  final String nombre;
+  final int calificacion;
+  final String contenido;
+
+  Review({
+    this.titulo,
+    this.fotoPerfil,
+    this.nombre,
+    this.calificacion,
+    this.contenido,
+  });
+
+  factory Review.fromJson(Map<String, dynamic> json) {
+    return new Review(
+      titulo: json['titulo'],
+      fotoPerfil: json['fotoPerfil'],
+      nombre: json['nombre'],
+      calificacion: json['calificacion'],
+      contenido: json['contenido'],
+    );
+  }
+}
+
 class _ListadolibroPage extends State<ListadolibroPage> {
   //listado de libros
-  List _listBooks = ["g1 ", "g2", "g3", "g4", "g4"];
+  List<Review> _listBooks = [
+    new Review(
+      titulo:
+          "El Libro con el Titulo mas Largo del Mundo El Libro con el Titulo mas Largo del Mundo  El Libro con el Titulo mas Largo del Mundo",
+      fotoPerfil:
+          'https://image.freepik.com/vector-gratis/perfil-avatar-hombre-icono-redondo_24640-14044.jpg',
+      nombre: "Nombre del usuario",
+      calificacion: 5,
+      contenido: "Algo deberia ir aqui",
+    ),
+  ];
 
   List<String> images = [
     "https://static.javatpoint.com/tutorial/flutter/images/flutter-logo.png",
@@ -84,16 +124,26 @@ class _ListadolibroPage extends State<ListadolibroPage> {
     );
   }*/
 
+  bool _auxBool = true;
+
   Widget newSection(String sectionName) {
     //se obtienen los libros
     // _listBooks = obtenerListado();
-    var longitud = _listBooks.length;
-    String titulo =
-        "El Libro con el Titulo mas Largo del Mundo El Libro con el Titulo mas Largo del Mundo  El Libro con el Titulo mas Largo del Mundo";
-    String fotoPerfil =
-        'https://image.freepik.com/vector-gratis/perfil-avatar-hombre-icono-redondo_24640-14044.jpg';
-    String nombreUs = "Nombre del usuario";
-    int calificacion = 5;
+    if (_auxBool) {
+      obtenerListado().then((value) {
+        setState(() {
+          _listBooks = value;
+          _auxBool = false;
+        });
+      });
+    }
+    for (Review review in _listBooks) {
+      print("review.calificacion: ${review.calificacion}");
+      print("review.contenido: ${review.contenido}");
+      print("review.fotoPerfil: ${review.fotoPerfil}");
+      print("review.nombre: ${review.nombre}");
+      print("review.titulo: ${review.titulo}");
+    }
     return GridView.count(
       childAspectRatio: ((MediaQuery.of(context).size.width / 2 - 40) /
           (MediaQuery.of(context).size.height * 0.4)),
@@ -102,7 +152,7 @@ class _ListadolibroPage extends State<ListadolibroPage> {
       mainAxisSpacing: 0.0,
       //generacion de libros en base a el tamaño de _topBooks contenedor de los libros
       children: List.generate(
-        longitud,
+        _listBooks.length,
         (index) {
           //generacion de libros
           return Padding(
@@ -112,20 +162,20 @@ class _ListadolibroPage extends State<ListadolibroPage> {
                 new Expanded(
                   //generacion de titulo de libros
                   child: Text(
-                    titulo,
+                    _listBooks[index].titulo,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 3,
                   ),
                 ),
                 //generacion de portadas
-                //contenedoresLibros(index),
+                // contenedoresLibros(index),
                 Row(
                   children: [
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(top: 10, bottom: 10),
                         child: Image.network(
-                          fotoPerfil, //Imagen de portada
+                          _listBooks[index].fotoPerfil, //Imagen de portada
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -134,7 +184,7 @@ class _ListadolibroPage extends State<ListadolibroPage> {
                     new Expanded(
                       //generacion de titulo de libros
                       child: Text(
-                        nombreUs,
+                        _listBooks[index].nombre,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 3,
                       ),
@@ -145,7 +195,7 @@ class _ListadolibroPage extends State<ListadolibroPage> {
                 new Expanded(
                   //generacion de titulo de libros
                   child: Text(
-                    (estrellas(calificacion)),
+                    (estrellas(_listBooks[index].calificacion)),
                     style: new TextStyle(
                       fontSize: 15,
                       letterSpacing: 2.0,
@@ -172,7 +222,30 @@ class _ListadolibroPage extends State<ListadolibroPage> {
     return calS;
   }
 
-  Future<Resena> obtenerListado() async {
+  Future<String> getUsuarioId() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('idUsuario').toString();
+  }
+
+  Future<List<Review>> obtenerListado() async {
+    final _url =
+        "https://myreviewvl.000webhostapp.com/BD/Usuario/usuarioReviews.php";
+    final usID = await getUsuarioId();
+    List<Review> _aux;
+    try {
+      final response = await post(
+        Uri.parse(_url),
+        body: {
+          "id": usID,
+        },
+      );
+      List<dynamic> json = jsonDecode(response.body);
+      print("(obtenerListado) response.body: ${response.body}");
+      _aux = json.map((e) => Review.fromJson(e)).toList();
+    } catch (err) {
+      print("(obtenerListado) err: $err");
+    }
+    return _aux;
     // return ["g1 ", "g2", "g3", "g4", "g4"];
   }
 }
