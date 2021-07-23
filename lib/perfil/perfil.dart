@@ -159,6 +159,7 @@ class _PerfilPageState extends State<PerfilPage> {
                     ), //Agregar la cantidad de reviews aquí
                     onTap: () {
                       //Aquí ira la función que lleve a ver sus reviews
+                      _auxBool = true;
                       Navigator.of(context).pushNamed(ListadolibroPage.id);
                     },
                   ),
@@ -169,6 +170,7 @@ class _PerfilPageState extends State<PerfilPage> {
                     ), //Agregar la cantidad de favoritos aquí
                     onTap: () {
                       //Aquí ira la función que lleve a ver sus Favoritos
+                      _auxBool = true;
                       Navigator.of(context).pushNamed(ListadofavPage.id);
                     },
                   ),
@@ -179,6 +181,7 @@ class _PerfilPageState extends State<PerfilPage> {
                     ), //Agregar la cantidad de leidos aquí
                     onTap: () {
                       //Aquí ira la función que lleve a ver sus Leídos
+                      _auxBool = true;
                       Navigator.of(context).pushNamed(ListadoleiPage.id);
                     },
                   ),
@@ -189,6 +192,7 @@ class _PerfilPageState extends State<PerfilPage> {
                     ), //Agregar la cantidad de leyendo aquí
                     onTap: () {
                       //Aquí ira la función que lleve a ver sus Leyendo
+                      _auxBool = true;
                       Navigator.of(context).pushNamed(ListadoleyPage.id);
                     },
                   ),
@@ -199,6 +203,7 @@ class _PerfilPageState extends State<PerfilPage> {
                     ), //Agregar la cantidad de pendiente aquí
                     onTap: () {
                       //Aquí ira la función que lleve a ver sus Pndientes
+                      _auxBool = true;
                       Navigator.of(context).pushNamed(ListadopenPage.id);
                     },
                   ),
