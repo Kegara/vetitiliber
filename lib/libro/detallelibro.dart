@@ -201,6 +201,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 
   Future<Libro> getInfoLibro(int id) async {
     _generos = await getGenerosLibro(id);
+    print("(getInfoLibro) id: $id");
     final _url =
         "https://myreviewvl.000webhostapp.com/BD/Usuario/detallesLibro.php";
     Libro _auxResenasList;
@@ -755,7 +756,7 @@ class MyCustomFormState extends State<MyCustomForm> {
     for (LikedReview lr in _likedReviews) {
       print("lr: ${lr.id}");
     }
-    print("getUsuarioId(): ${await getUsuarioId()}");
+    // print("getUsuarioId(): ${await getUsuarioId()}");
     print("widget.idLibro: ${widget.idLibro}");
     final _url =
         "https://myreviewvl.000webhostapp.com/BD/Usuario/resenasLibro.php";
@@ -767,7 +768,9 @@ class MyCustomFormState extends State<MyCustomForm> {
           "id": widget.idLibro.toString(),
         },
       );
+      print("(getResenas) response.body: ${response.body}");
       final json = jsonDecode(response.body);
+      print("(getResenas) json: ${json}");
       _auxResenasList = new ResenasList.fromJson(json);
     } catch (err) {
       print("(getResenas) err: $err");
