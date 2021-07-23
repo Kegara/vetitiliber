@@ -1,32 +1,29 @@
-
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class User{
+class User {
   final String name, contrasena;
 
   User(this.name, this.contrasena);
 }
 
-class DataFromAPI extends StatefulWidget{
+class DataFromAPI extends StatefulWidget {
   @override
   _DataFromAPIState createState() => _DataFromAPIState();
-  
 }
 
-class _DataFromAPIState extends State<DataFromAPI>{
-
-  getUserData() async{
-    var response = await http.get(Uri.https('myreviewvl.000webhostapp.com', 'BD/Usuario/usuarios.php'));
+class _DataFromAPIState extends State<DataFromAPI> {
+  getUserData() async {
+    var response = await http.get(
+        Uri.https('myreviewvl.000webhostapp.com', 'BD/Usuario/usuarios.php'));
 
     var jsonData = jsonDecode(response.body);
 
     List<User> users = [];
 
-    for(var u in jsonData){
-      User user = User(u["name"],u["contrasena"]);
+    for (var u in jsonData) {
+      User user = User(u["name"], u["contrasena"]);
       users.add(user);
     }
     print(users.length);
@@ -35,8 +32,8 @@ class _DataFromAPIState extends State<DataFromAPI>{
 
   @override
   Widget build(BuildContext context) {
+    // ignore: todo
     // TODO: implement build
     throw UnimplementedError();
   }
-
 }

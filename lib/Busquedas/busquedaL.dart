@@ -1,10 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:http/http.dart';
 import 'package:vetitiliber/componentes/menulateral.dart';
-import 'dart:math';
 
 class SearchPageL extends StatefulWidget {
   SearchPageL({Key key, this.title}) : super(key: key);
@@ -43,6 +41,7 @@ class LibrosList {
   });
 
   factory LibrosList.fromJson(List<dynamic> parsedJson) {
+    // ignore: deprecated_member_use
     List<Libro> libros = new List<Libro>();
     libros = parsedJson.map((e) => Libro.fromJson(e)).toList();
     return LibrosList(

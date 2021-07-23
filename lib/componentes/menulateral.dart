@@ -6,6 +6,7 @@ import 'package:vetitiliber/Busquedas/busquedaG.dart';
 import 'package:vetitiliber/perfil/confiperfil.dart';
 import 'package:vetitiliber/Busquedas/busquedaU.dart';
 import 'package:vetitiliber/Busquedas/busquedaL.dart';
+// ignore: unused_import
 import 'package:vetitiliber/libro/detallelibro.dart';
 import 'package:vetitiliber/elementos/aboutus.dart';
 import 'package:vetitiliber/libro/leerPdf.dart';
@@ -32,7 +33,7 @@ class MenuLateral extends StatelessWidget {
           new ListTile(
             title: Text("PDF VIEWER"),
             onTap: () {
-                Navigator.of(context).pushNamed(LeerPDF.id);
+              Navigator.of(context).pushNamed(LeerPDF.id);
             },
           ),
           Divider(),
@@ -128,7 +129,7 @@ appBar1(String x, BuildContext context) {
         icon: const Icon(Icons.search),
         tooltip: 'Show Snackbar',
         onPressed: () {
-              Navigator.of(context).pushNamed(SearchPageL.id);
+          Navigator.of(context).pushNamed(SearchPageL.id);
         },
       )
     ],

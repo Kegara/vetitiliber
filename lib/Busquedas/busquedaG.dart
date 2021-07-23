@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:http/http.dart';
 import 'package:vetitiliber/componentes/menulateral.dart';
+// ignore: unused_import
 import 'dart:math';
 
 class SearchPage extends StatefulWidget {
@@ -42,6 +43,7 @@ class LibrosList {
   });
 
   factory LibrosList.fromJson(List<dynamic> parsedJson) {
+    // ignore: deprecated_member_use
     List<Libro> libros = new List<Libro>();
     libros = parsedJson.map((e) => Libro.fromJson(e)).toList();
     return LibrosList(
@@ -76,6 +78,7 @@ class GenerosList {
   });
 
   factory GenerosList.fromJson(List<dynamic> parsedJson) {
+    // ignore: deprecated_member_use
     List<Genero> generos = new List<Genero>();
     generos = parsedJson.map((e) => Genero.fromJson(e)).toList();
     print("generos[1].id: ${generos[1].id}");
