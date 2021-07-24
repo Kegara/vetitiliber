@@ -95,34 +95,7 @@ class _ListadolibroPage extends State<ListadolibroPage> {
     );
   }
 
-  // contenedor que tendra la info del libro el cual tiene asociado un onTap que redirige a la informacion del libro
-  /* Widget contenedoresLibros(int nContenedor) {
-    return Container(
-      height: (MediaQuery.of(context).size.height * 0.3),
-      padding: const EdgeInsets.only(bottom: 10.0),
-      decoration: BoxDecoration(
-        shape: BoxShape.rectangle,
-        image: DecorationImage(
-          image: NetworkImage(
-              "https://th.bing.com/th/id/R.8d9ba5df9a59ec6f73f0a40630247440?rik=QnOZeZ%2btOaCbTw&riu=http%3a%2f%2froc21cdn-roc21.netdna-ssl.com%2fblog%2fwp-content%2fuploads%2f2016%2f10%2fportadas-libros-siencia-ficcion-cuatro.jpg&ehk=Dze1Ot%2fzw99kcOQoVtYx1tnfpIBiYCgSLG%2fo%2fxdwLn0%3d&risl=&pid=ImgRaw"),
-          fit: BoxFit.cover,
-        ),
-        borderRadius: BorderRadius.all(
-          Radius.circular(20),
-        ),
-        color: Colors.white,
-        boxShadow: [
-          new BoxShadow(blurRadius: 0.0),
-        ],
-      ),
-      child: InkWell(
-        onTap: () {
-          print("Container $nContenedor was tapped");
-          Navigator.of(context).pushNamed(DetalibroPage.id);
-        },
-      ),
-    );
-  }*/
+  
 
   bool _auxBool = true;
 
@@ -146,7 +119,7 @@ class _ListadolibroPage extends State<ListadolibroPage> {
     }
     return GridView.count(
       childAspectRatio: ((MediaQuery.of(context).size.width / 2 - 40) /
-          (MediaQuery.of(context).size.height * 0.4)),
+          (MediaQuery.of(context).size.height * 0.2)),
       crossAxisCount: 2,
       crossAxisSpacing: 0.0,
       mainAxisSpacing: 0.0,
@@ -159,7 +132,9 @@ class _ListadolibroPage extends State<ListadolibroPage> {
             padding: const EdgeInsets.only(right: 10.0, left: 10.0),
             child: Column(
               children: [
-                new Expanded(
+                  Divider(thickness: 10,color: Colors.blue),
+                new Padding(
+                   padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
                   //generacion de titulo de libros
                   child: Text(
                     _listBooks[index].titulo,
@@ -169,11 +144,11 @@ class _ListadolibroPage extends State<ListadolibroPage> {
                 ),
                 //generacion de portadas
                 // contenedoresLibros(index),
-                Row(
+                 Row(
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 10, bottom: 10),
+                        padding: const EdgeInsets.only(top: 0, bottom: 0),
                         child: Image.network(
                           _listBooks[index].fotoPerfil, //Imagen de portada
                           fit: BoxFit.cover,
@@ -183,22 +158,30 @@ class _ListadolibroPage extends State<ListadolibroPage> {
                     ),
                     new Expanded(
                       //generacion de titulo de libros
-                      child: Text(
+                      child: Padding(
+                   padding: const EdgeInsets.only(top: 20.0, left: 10.0) ,
+                   child:Text(
                         _listBooks[index].nombre,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 3,
-                      ),
+                      )),
                       flex: 7,
                     ),
                   ],
                 ),
-                new Expanded(
+               
+               new Expanded(
+               child: Text(_listBooks[index].contenido,
+    textAlign: TextAlign.start,),
+               ),
+                new    Padding(
+                   padding: const EdgeInsets.only(top: 20.0, bottom: 0.0),
                   //generacion de titulo de libros
                   child: Text(
                     (estrellas(_listBooks[index].calificacion)),
                     style: new TextStyle(
                       fontSize: 15,
-                      letterSpacing: 2.0,
+                      letterSpacing: 1.0,
                       color: Colors.black,
                     ),
                   ),
