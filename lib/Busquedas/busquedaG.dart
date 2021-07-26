@@ -6,6 +6,9 @@ import 'package:vetitiliber/componentes/menulateral.dart';
 // ignore: unused_import
 import 'dart:math';
 
+import 'package:vetitiliber/libro/detallelibro.dart';
+import 'package:vetitiliber/perfil/perfil.dart';
+
 class SearchPage extends StatefulWidget {
   SearchPage({Key key, this.title}) : super(key: key);
   final String title;
@@ -209,6 +212,18 @@ class _SearchPageState extends State<SearchPage> {
       ),
       child: InkWell(
         onTap: () {
+          int idUs2 = 0;
+          getUsuarioId().then((value) {
+            setState(() {
+              idUs2 = int.parse(value);
+            });
+          });
+          print("Container $idLibro was tapped $idUs2");
+            var route = new MaterialPageRoute(
+            builder: (BuildContext context) =>
+            new DetalibroPage(idUser: idUs2, idLibro: idLibro),
+          );
+          Navigator.of(context).push(route);          
           print("Container $idLibro was tapped");
         },
       ),
@@ -571,8 +586,18 @@ class _SearchPageState extends State<SearchPage> {
       //widget que genera el evento de onTap
       child: InkWell(
         onTap: () {
-          print("Container $nContenedor was tapped");
-        },
+          int idUs2 = 0;
+          getUsuarioId().then((value) {
+            setState(() {
+              idUs2 = int.parse(value);
+            });
+          });
+          print("Container $nContenedor was tapped $idUs2");
+            var route = new MaterialPageRoute(
+            builder: (BuildContext context) =>
+            new DetalibroPage(idUser: idUs2, idLibro: nContenedor),
+          );
+          Navigator.of(context).push(route);        },
       ),
     );
   }
