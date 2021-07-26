@@ -2,7 +2,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vetitiliber/componentes/menulateral.dart';
+import 'package:vetitiliber/libro/detallelibro.dart';
+import 'package:vetitiliber/perfil/perfil.dart';
 
 class SearchPageL extends StatefulWidget {
   SearchPageL({Key key, this.title}) : super(key: key);
@@ -217,12 +220,26 @@ class _SearchPageLState extends State<SearchPageL> {
       //widget que genera el evento de onTap
       child: InkWell(
         onTap: () {
-          print("Container $nContenedor was tapped");
+          int idUs2 = 0;
+          getUsuarioId().then((value) {
+            setState(() {
+              idUs2 = int.parse(value);
+            });
+          });
+          print("Container $nContenedor was tapped $idUs2");
+            var route = new MaterialPageRoute(
+            builder: (BuildContext context) =>
+            new DetalibroPage(idUser: idUs2, idLibro: nContenedor),
+          );
+          Navigator.of(context).push(route);
         },
       ),
     );
   }
-
+ Future<String> getUsuarioId() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('idUsuario').toString();
+  }
   void busqueda() {
     //validamos el cuadro de texto
     if (_formKeySU.currentState.validate()) {
