@@ -19,52 +19,64 @@ class _ConfiperfilPageState extends State<ConfiperfilPage> {
         title: Text("MY REVIEW"),
         actions: [
           IconButton(
-            icon: const Icon(Icons.add_alert),
-            tooltip: 'Show Snackbar',
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('This is a snackbar')));
-            },
-          ),
-          IconButton(
             icon: const Icon(Icons.search),
             tooltip: 'Show Snackbar',
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('This is a snackbar')));
+                const SnackBar(
+                  content: Text(
+                    'This is a snackbar',
+                  ),
+                ),
+              );
             },
           )
         ],
       ),
       body: Container(
-          child: Column(
-        children: [
-          Text("Configuración", //Texto inicial de la sección configuración
+        child: Column(
+          children: [
+            Text(
+              "Configuración", //Texto inicial de la sección configuración
               style: new TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 5.0,
-                  color: Colors.blueAccent)),
-          ListView(children: <Widget>[
-            Text("\n",
-                style: new TextStyle(
-                    fontSize: 5,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 5.0,
-                    color: Colors.black)),
-            Text("Cuenta\n",
-                style: new TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 5.0,
-                    color: Colors.black)),
-            MyCustomForm(),
-            FormContra(),
-            FormCorreo(),
-            FormPrivacidad(),
-          ]),
-        ],
-      )),
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 5.0,
+                color: Colors.blueAccent,
+              ),
+            ),
+            SizedBox(
+              height: 200,
+              child: ListView(
+                children: <Widget>[
+                  Text(
+                    "\n",
+                    style: new TextStyle(
+                      fontSize: 5,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 5.0,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Text(
+                    "Cuenta\n",
+                    style: new TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 5.0,
+                      color: Colors.black,
+                    ),
+                  ),
+                  MyCustomForm(),
+                  FormContra(),
+                  FormCorreo(),
+                  FormPrivacidad(),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -119,18 +131,24 @@ class MyCustomFormState extends State<MyCustomForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text("Cambiar nombre\n",
-              style: new TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 5.0,
-                  color: Colors.black)),
-          Text("Nombre actual", //Inicia el campo a cambiar
-              style: new TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 5.0,
-                  color: Colors.black)),
+          Text(
+            "Cambiar nombre\n",
+            style: new TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 5.0,
+              color: Colors.black,
+            ),
+          ),
+          Text(
+            "Nombre actual", //Inicia el campo a cambiar
+            style: new TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 5.0,
+              color: Colors.black,
+            ),
+          ),
           TextFormField(
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -139,8 +157,9 @@ class MyCustomFormState extends State<MyCustomForm> {
               return null;
             },
           ),
-          Row(children: <Widget>[
-            Expanded(
+          Row(
+            children: <Widget>[
+              Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: ElevatedButton(
@@ -149,18 +168,25 @@ class MyCustomFormState extends State<MyCustomForm> {
                       // el formulario no es válido.
                       if (_formKey1.currentState.validate()) {
                         // Si el formulario es válido, queremos mostrar un Snackbar
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text("Procesing Data"),
-                          behavior: SnackBarBehavior.floating,
-                        ));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Procesing Data"),
+                            behavior: SnackBarBehavior.floating,
+                          ),
+                        );
                       }
                     },
                     child: Text('Cambiar'),
                   ),
                 ),
-                flex: 3),
-            Expanded(child: Text(''), flex: 7)
-          ]),
+                flex: 3,
+              ),
+              Expanded(
+                child: Text(''),
+                flex: 7,
+              )
+            ],
+          ),
           //Campos de verdadero o falso
           Divider(),
           /* Text("\nNotificaciones\n",
@@ -252,18 +278,24 @@ class FormContraState extends State<MyCustomForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               //Nuevo campo-------------------------------------------------------------------
-              Text("\nCambiar contraseña\n",
-                  style: new TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 5.0,
-                      color: Colors.black)),
-              Text("Contraseña actual", //Inicia el campo a cambiar
-                  style: new TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 5.0,
-                      color: Colors.black)),
+              Text(
+                "\nCambiar contraseña\n",
+                style: new TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 5.0,
+                  color: Colors.black,
+                ),
+              ),
+              Text(
+                "Contraseña actual", //Inicia el campo a cambiar
+                style: new TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 5.0,
+                  color: Colors.black,
+                ),
+              ),
               TextFormField(
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -272,28 +304,35 @@ class FormContraState extends State<MyCustomForm> {
                   return null;
                 },
               ),
-              Row(children: <Widget>[
-                Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // devolverá true si el formulario es válido, o falso si
-                          // el formulario no es válido.
-                          if (_formKey2.currentState.validate()) {
-                            // Si el formulario es válido, queremos mostrar un Snackbar
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text("Procesing Data"),
-                              behavior: SnackBarBehavior.floating,
-                            ));
-                          }
-                        },
-                        child: Text('Cambiar'),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // devolverá true si el formulario es válido, o falso si
+                            // el formulario no es válido.
+                            if (_formKey2.currentState.validate()) {
+                              // Si el formulario es válido, queremos mostrar un Snackbar
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text("Procesing Data"),
+                                  behavior: SnackBarBehavior.floating,
+                                ),
+                              );
+                            }
+                          },
+                          child: Text('Cambiar'),
+                        ),
                       ),
-                    ),
-                    flex: 3),
-                Expanded(child: Text(''), flex: 7)
-              ]),
+                      flex: 3),
+                  Expanded(
+                    child: Text(''),
+                    flex: 7,
+                  )
+                ],
+              ),
               Divider(),
             ]));
   }
@@ -313,55 +352,71 @@ class FormCorreoState extends State<MyCustomForm> {
   Widget build(BuildContext context) {
     // Crea un widget Form usando el _formKey que creamos anteriormente
     return Form(
-        key: _formKey3,
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      key: _formKey3,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          //Nuevo campo-------------------------------------------------------------------
+          Text(
+            "\nCambiar correo\n",
+            style: new TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 5.0,
+              color: Colors.black,
+            ),
+          ),
+          Text(
+            "Correo actual", //Inicia el campo a cambiar
+            style: new TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 5.0,
+              color: Colors.black,
+            ),
+          ),
+          TextFormField(
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+          ),
+          Row(
             children: <Widget>[
-              //Nuevo campo-------------------------------------------------------------------
-              Text("\nCambiar correo\n",
-                  style: new TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 5.0,
-                      color: Colors.black)),
-              Text("Correo actual", //Inicia el campo a cambiar
-                  style: new TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 5.0,
-                      color: Colors.black)),
-              TextFormField(
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // devolverá true si el formulario es válido, o falso si
+                      // el formulario no es válido.
+                      if (_formKey3.currentState.validate()) {
+                        // Si el formulario es válido, queremos mostrar un Snackbar
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Procesing Data"),
+                            behavior: SnackBarBehavior.floating,
+                          ),
+                        );
+                      }
+                    },
+                    child: Text('Cambiar'),
+                  ),
+                ),
+                flex: 3,
               ),
-              Row(children: <Widget>[
-                Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // devolverá true si el formulario es válido, o falso si
-                          // el formulario no es válido.
-                          if (_formKey3.currentState.validate()) {
-                            // Si el formulario es válido, queremos mostrar un Snackbar
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text("Procesing Data"),
-                              behavior: SnackBarBehavior.floating,
-                            ));
-                          }
-                        },
-                        child: Text('Cambiar'),
-                      ),
-                    ),
-                    flex: 3),
-                Expanded(child: Text(''), flex: 7)
-              ]),
-              Divider(),
-            ]));
+              Expanded(
+                child: Text(''),
+                flex: 7,
+              )
+            ],
+          ),
+          Divider(),
+        ],
+      ),
+    );
   }
 }
 
@@ -380,106 +435,130 @@ class FormPrivacidadState extends State<MyCustomForm> {
     // Crea un widget Form usando el _formKey que creamos anteriormente
     bool isSwitched = false;
     return Form(
-        key: _formKey4,
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      key: _formKey4,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          //Nuevo campo-------------------------------------------------------------------
+          Text(
+            "\nPrivacidad\n",
+            style: new TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 5.0,
+              color: Colors.black,
+            ),
+          ),
+          Row(
             children: <Widget>[
-              //Nuevo campo-------------------------------------------------------------------
-              Text("\nPrivacidad\n",
-                  style: new TextStyle(
-                      fontSize: 20,
+              Expanded(
+                  child: Text(
+                    'Otros usuarios pueden ver los libros que has leído o no',
+                    textAlign: TextAlign.left,
+                    style: new TextStyle(
+                      fontSize: 15,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 5.0,
-                      color: Colors.black)),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                      child: Text(
-                          'Otros usuarios pueden ver los libros que has leído o no',
-                          textAlign: TextAlign.left,
-                          style: new TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 5.0,
-                              color: Colors.grey)),
-                      flex: 8),
-                  Expanded(
-                      child: Switch(
-                        value: isSwitched,
-                        onChanged: (value) {
-                          setState(() {
-                            isSwitched = value;
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text("Procesing Data"),
-                              behavior: SnackBarBehavior.floating,
-                            ));
-                          });
-                        },
-                        activeTrackColor: Colors.cyan,
-                        activeColor: Colors.blueAccent,
-                      ),
-                      flex: 2),
-                ],
+                      color: Colors.grey,
+                    ),
+                  ),
+                  flex: 8),
+              Expanded(
+                child: Switch(
+                  value: isSwitched,
+                  onChanged: (value) {
+                    setState(() {
+                      isSwitched = value;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Procesing Data"),
+                          behavior: SnackBarBehavior.floating,
+                        ),
+                      );
+                    });
+                  },
+                  activeTrackColor: Colors.cyan,
+                  activeColor: Colors.blueAccent,
+                ),
+                flex: 2,
               ),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                      child: Text('Otros usuarios pueden ver tus reseñas',
-                          textAlign: TextAlign.left,
-                          style: new TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 5.0,
-                              color: Colors.grey)),
-                      flex: 8),
-                  Expanded(
-                      child: Switch(
-                        value: isSwitched,
-                        onChanged: (value) {
-                          setState(() {
-                            isSwitched = value;
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text("Procesing Data"),
-                              behavior: SnackBarBehavior.floating,
-                            ));
-                          });
-                        },
-                        activeTrackColor: Colors.cyan,
-                        activeColor: Colors.blueAccent,
-                      ),
-                      flex: 2),
-                ],
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  'Otros usuarios pueden ver tus reseñas',
+                  textAlign: TextAlign.left,
+                  style: new TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 5.0,
+                    color: Colors.grey,
+                  ),
+                ),
+                flex: 8,
               ),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                      child: Text('Establecer su perfil como privado',
-                          textAlign: TextAlign.left,
-                          style: new TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 5.0,
-                              color: Colors.grey)),
-                      flex: 8),
-                  Expanded(
-                      child: Switch(
-                        value: isSwitched,
-                        onChanged: (value) {
-                          setState(() {
-                            isSwitched = value;
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text("Procesing Data"),
-                              behavior: SnackBarBehavior.floating,
-                            ));
-                          });
-                        },
-                        activeTrackColor: Colors.cyan,
-                        activeColor: Colors.blueAccent,
-                      ),
-                      flex: 2),
-                ],
+              Expanded(
+                child: Switch(
+                  value: isSwitched,
+                  onChanged: (value) {
+                    setState(() {
+                      isSwitched = value;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Procesing Data"),
+                          behavior: SnackBarBehavior.floating,
+                        ),
+                      );
+                    });
+                  },
+                  activeTrackColor: Colors.cyan,
+                  activeColor: Colors.blueAccent,
+                ),
+                flex: 2,
               ),
-              Divider(),
-            ]));
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  'Establecer su perfil como privado',
+                  textAlign: TextAlign.left,
+                  style: new TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 5.0,
+                    color: Colors.grey,
+                  ),
+                ),
+                flex: 8,
+              ),
+              Expanded(
+                child: Switch(
+                  value: isSwitched,
+                  onChanged: (value) {
+                    setState(() {
+                      isSwitched = value;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Procesing Data"),
+                          behavior: SnackBarBehavior.floating,
+                        ),
+                      );
+                    });
+                  },
+                  activeTrackColor: Colors.cyan,
+                  activeColor: Colors.blueAccent,
+                ),
+                flex: 2,
+              ),
+            ],
+          ),
+          Divider(),
+        ],
+      ),
+    );
   }
 }
