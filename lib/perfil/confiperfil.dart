@@ -15,49 +15,15 @@ class _ConfiperfilPageState extends State<ConfiperfilPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: MenuLateral(),
-      appBar: AppBar(
-        title: Text("MY REVIEW"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            tooltip: 'Show Snackbar',
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text(
-                    'This is a snackbar',
-                  ),
-                ),
-              );
-            },
-          )
-        ],
-      ),
+      appBar: appBar1("Configuracón", context),
+      resizeToAvoidBottomInset: false,
       body: Container(
         child: Column(
           children: [
-            Text(
-              "Configuración", //Texto inicial de la sección configuración
-              style: new TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 5.0,
-                color: Colors.blueAccent,
-              ),
-            ),
             SizedBox(
               height: 200,
               child: ListView(
                 children: <Widget>[
-                  Text(
-                    "\n",
-                    style: new TextStyle(
-                      fontSize: 5,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 5.0,
-                      color: Colors.black,
-                    ),
-                  ),
                   Text(
                     "Cuenta\n",
                     style: new TextStyle(
