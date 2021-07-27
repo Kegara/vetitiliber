@@ -62,7 +62,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                           child: Padding(
                             padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Image.asset(
-                              'imagenes/usuarios/programing.png', //Imagen de portada
+                              'assets/imagenes/usuarios/programing.png', //Imagen de portada
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -79,7 +79,6 @@ class MyCustomFormState extends State<MyCustomForm> {
                           flex: 7)
                     ]),
                     Row(children: <Widget>[
-                   
                       Expanded(
                           child: Padding(
                             padding: const EdgeInsets.only(top: 5, bottom: 5),
@@ -98,7 +97,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                           child: Padding(
                             padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Image.asset(
-                              'imagenes/usuarios/programing.png', //Imagen de portada
+                              'assets/imagenes/usuarios/programing.png', //Imagen de portada
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -116,7 +115,6 @@ class MyCustomFormState extends State<MyCustomForm> {
                           flex: 7)
                     ]),
                     Row(children: <Widget>[
-                    
                       Expanded(
                           child: Padding(
                             padding: const EdgeInsets.only(top: 5, bottom: 5),
@@ -135,7 +133,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                           child: Padding(
                             padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Image.asset(
-                              'imagenes/usuarios/programing.png', //Imagen de portada
+                              'assets/imagenes/usuarios/programing.png', //Imagen de portada
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -143,8 +141,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                       Expanded(
                           child: Padding(
                             padding: const EdgeInsets.only(top: 5, bottom: 5),
-                            child: Text(
-                                "Alexis Rafael Aparicio Hernández\nDeveloper",
+                            child: Text("Israel Morales Garcia\nDeveloper",
                                 style: new TextStyle(
                                     fontSize: 15,
                                     letterSpacing: 2.0,
@@ -153,7 +150,6 @@ class MyCustomFormState extends State<MyCustomForm> {
                           flex: 7)
                     ]),
                     Row(children: <Widget>[
-                      
                       Expanded(
                           child: Padding(
                             padding: const EdgeInsets.only(top: 5, bottom: 5),
@@ -172,7 +168,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                           child: Padding(
                             padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Image.asset(
-                              'imagenes/usuarios/programing.png', //Imagen de portada
+                              'assets/imagenes/usuarios/programing.png', //Imagen de portada
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -180,8 +176,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                       Expanded(
                           child: Padding(
                             padding: const EdgeInsets.only(top: 5, bottom: 5),
-                            child: Text(
-                                "Alexis Rafael Aparicio Hernández\nDeveloper",
+                            child: Text("Romero Domínguez Paulo Lorenzo",
                                 style: new TextStyle(
                                     fontSize: 15,
                                     letterSpacing: 2.0,
@@ -190,7 +185,6 @@ class MyCustomFormState extends State<MyCustomForm> {
                           flex: 7)
                     ]),
                     Row(children: <Widget>[
-                      
                       Expanded(
                           child: Padding(
                             padding: const EdgeInsets.only(top: 5, bottom: 5),
