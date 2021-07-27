@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vetitiliber/componentes/menulateral.dart';
 
 class ConfiperfilPage extends StatefulWidget {
@@ -19,6 +23,70 @@ List<String> imgs = [
   "https://qph.fs.quoracdn.net/main-qimg-dfc610007178ffb94a0ef143aeb56cfd-c",
 ];
 
+class Usuario {
+  final String nombre;
+  final int fotoPerfilNum;
+  final String correoElectronico;
+  final bool vLibros;
+  final bool vResenas;
+  final bool vPerfil;
+
+  Usuario({
+    this.nombre,
+    this.fotoPerfilNum,
+    this.correoElectronico,
+    this.vLibros,
+    this.vResenas,
+    this.vPerfil,
+  });
+
+  factory Usuario.fromJson(Map<String, dynamic> json) {
+    return new Usuario(
+      nombre: json['nombre'],
+      fotoPerfilNum: int.parse(json['fotoPerfilNum']),
+      correoElectronico: json['correoElectronico'],
+      vLibros: json['vLibros'] == '1',
+      vResenas: json['vResenas'] == '1',
+      vPerfil: json['vPerfil'] == '1',
+    );
+  }
+}
+
+Usuario usuario = new Usuario(
+  nombre: 'Espere un momento',
+  fotoPerfilNum: 0,
+  correoElectronico: 'Espere un momento',
+  vLibros: false,
+  vResenas: false,
+  vPerfil: false,
+);
+
+String idUs = '0';
+
+Future<String> getUsuarioId() async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getInt('idUsuario').toString();
+}
+
+Future<Usuario> getInfoUs() async {
+  idUs = await getUsuarioId();
+  final _url = "https://myreviewvl.000webhostapp.com/BD/Usuario/infoConfUs.php";
+  Usuario _aux;
+  try {
+    final response = await post(
+      Uri.parse(_url),
+      body: {
+        'id': idUs,
+      },
+    );
+    final json = jsonDecode(response.body);
+    _aux = new Usuario.fromJson(json);
+  } catch (err) {
+    print("(getInfoUs) err: $err");
+  }
+  return _aux;
+}
+
 class _ConfiperfilPageState extends State<ConfiperfilPage> {
   int selectedOp = 0;
 
@@ -30,6 +98,15 @@ class _ConfiperfilPageState extends State<ConfiperfilPage> {
 
   @override
   Widget build(BuildContext context) {
+    getInfoUs().then((value) {
+      setState(() {
+        usuario = value;
+        selectedOp = value.fotoPerfilNum;
+        isSwitched1 = value.vLibros;
+        isSwitched2 = value.vResenas;
+        isSwitched3 = value.vPerfil;
+      });
+    });
     return Scaffold(
       drawer: MenuLateral(),
       appBar: appBar1("Configuracón", context),
@@ -87,7 +164,8 @@ class _ConfiperfilPageState extends State<ConfiperfilPage> {
                             onPressed: () {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text("Procesing Data"),
+                                  content:
+                                      Text("Su petición está siendo procesada"),
                                   behavior: SnackBarBehavior.floating,
                                 ),
                               );
@@ -237,7 +315,7 @@ class MyCustomFormState extends State<MyCustomForm> {
             ),
           ),
           Text(
-            "Nombre actual", //Inicia el campo a cambiar
+            "Nombre actual: ${usuario.nombre}", //Inicia el campo a cambiar
             style: new TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.bold,
@@ -248,7 +326,7 @@ class MyCustomFormState extends State<MyCustomForm> {
           TextFormField(
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter some text';
+                return 'Por favor ingrese texto';
               }
               return null;
             },
@@ -266,7 +344,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                         // Si el formulario es válido, queremos mostrar un Snackbar
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text("Procesing Data"),
+                            content: Text("Su petición está siendo procesada"),
                             behavior: SnackBarBehavior.floating,
                           ),
                         );
@@ -309,7 +387,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                       setState(() {
                         isSwitched = value;
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text("Procesing Data"),
+                          content: Text("Su petición está siendo procesada"),
                           behavior: SnackBarBehavior.floating,
                         ));
                       });
@@ -338,7 +416,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                       setState(() {
                         isSwitched = value;
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text("Procesing Data"),
+                          content: Text("Su petición está siendo procesada"),
                           behavior: SnackBarBehavior.floating,
                         ));
                       });
@@ -383,19 +461,19 @@ class FormContraState extends State<FormContra> {
               color: Colors.black,
             ),
           ),
-          Text(
-            "Contraseña actual", //Inicia el campo a cambiar
-            style: new TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 5.0,
-              color: Colors.black,
-            ),
-          ),
+          // Text(
+          //   "Contraseña nueva", //Inicia el campo a cambiar
+          //   style: new TextStyle(
+          //     fontSize: 15,
+          //     fontWeight: FontWeight.bold,
+          //     letterSpacing: 5.0,
+          //     color: Colors.black,
+          //   ),
+          // ),
           TextFormField(
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter some text';
+                return 'Por favor ingrese texto';
               }
               return null;
             },
@@ -413,7 +491,8 @@ class FormContraState extends State<FormContra> {
                           // Si el formulario es válido, queremos mostrar un Snackbar
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text("Procesing Data"),
+                              content:
+                                  Text("Su petición está siendo procesada"),
                               behavior: SnackBarBehavior.floating,
                             ),
                           );
@@ -465,7 +544,7 @@ class FormCorreoState extends State<FormCorreo> {
             ),
           ),
           Text(
-            "Correo actual", //Inicia el campo a cambiar
+            "Correo actual: ${usuario.correoElectronico}", //Inicia el campo a cambiar
             style: new TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.bold,
@@ -476,7 +555,7 @@ class FormCorreoState extends State<FormCorreo> {
           TextFormField(
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter some text';
+                return 'Por favor ingrese texto';
               }
               return null;
             },
@@ -494,7 +573,7 @@ class FormCorreoState extends State<FormCorreo> {
                         // Si el formulario es válido, queremos mostrar un Snackbar
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text("Procesing Data"),
+                            content: Text("Su petición está siendo procesada"),
                             behavior: SnackBarBehavior.floating,
                           ),
                         );
@@ -518,6 +597,10 @@ class FormCorreoState extends State<FormCorreo> {
   }
 }
 
+bool isSwitched1 = false;
+bool isSwitched2 = false;
+bool isSwitched3 = false;
+
 //-----------------------------------FORM DE PRIVACIDAD---------------------------------------
 // Crea una clase State correspondiente. Esta clase contendrá los datos relacionados con
 // el formulario.
@@ -527,10 +610,6 @@ class FormPrivacidadState extends State<FormPrivacidad> {
   //
   // Nota: Esto es un GlobalKey<FormState>, no un GlobalKey<MyCustomFormState>!
   final _formKey4 = GlobalKey<FormState>();
-
-  bool isSwitched1 = false;
-  bool isSwitched2 = false;
-  bool isSwitched3 = false;
 
   @override
   Widget build(BuildContext context) {
@@ -572,7 +651,7 @@ class FormPrivacidadState extends State<FormPrivacidad> {
                       isSwitched1 = value;
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text("Procesing Data"),
+                          content: Text("Su petición está siendo procesada"),
                           behavior: SnackBarBehavior.floating,
                         ),
                       );
@@ -608,7 +687,7 @@ class FormPrivacidadState extends State<FormPrivacidad> {
                       isSwitched2 = value;
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text("Procesing Data"),
+                          content: Text("Su petición está siendo procesada"),
                           behavior: SnackBarBehavior.floating,
                         ),
                       );
@@ -644,7 +723,7 @@ class FormPrivacidadState extends State<FormPrivacidad> {
                       isSwitched3 = value;
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text("Procesing Data"),
+                          content: Text("Su petición está siendo procesada"),
                           behavior: SnackBarBehavior.floating,
                         ),
                       );
