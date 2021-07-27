@@ -7,7 +7,6 @@ if (isset($_POST)){
     $sql = 
     "SELECT
         nombre,
-        contrasena,
         CASE
             WHEN fotoPerfil LIKE 'https://static.vecteezy.com/system/resources/previews/001/917/629/non_2x/person-reading-book-free-photo.jpg' THEN 0
             WHEN fotoPerfil LIKE 'https://image1.masterfile.com/getImage/NjczLTA2MDI1NTAzZW4uMDAwMDAwMDA=AJal11/673-06025503en_Masterfile.jpg' THEN 1
