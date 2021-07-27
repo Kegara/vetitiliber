@@ -20,8 +20,7 @@ class _ConfiperfilPageState extends State<ConfiperfilPage> {
       body: Container(
         child: Column(
           children: [
-            SizedBox(
-              height: 200,
+            Expanded(
               child: ListView(
                 children: <Widget>[
                   Text(
@@ -91,7 +90,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 
   @override
   Widget build(BuildContext context) {
-    // Crea un widget Form usando el _formKey que creamos anteriormente
+    // Crea un widget Form usando el _formKey que creamos anteriormentes
     return Form(
       key: _formKey1,
       child: Column(
@@ -228,7 +227,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 //-----------------------------------FORM DE CONTRASEÑA---------------------------------------
 // Crea una clase State correspondiente. Esta clase contendrá los datos relacionados con
 // el formulario.
-class FormContraState extends State<MyCustomForm> {
+class FormContraState extends State<FormContra> {
   // Crea una clave global que identificará de manera única el widget Form
   // y nos permita validar el formulario
   //
@@ -309,7 +308,7 @@ class FormContraState extends State<MyCustomForm> {
 //-----------------------------------FORM DE CORREO---------------------------------------
 // Crea una clase State correspondiente. Esta clase contendrá los datos relacionados con
 // el formulario.
-class FormCorreoState extends State<MyCustomForm> {
+class FormCorreoState extends State<FormCorreo> {
   // Crea una clave global que identificará de manera única el widget Form
   // y nos permita validar el formulario
   //
@@ -391,17 +390,20 @@ class FormCorreoState extends State<MyCustomForm> {
 //-----------------------------------FORM DE PRIVACIDAD---------------------------------------
 // Crea una clase State correspondiente. Esta clase contendrá los datos relacionados con
 // el formulario.
-class FormPrivacidadState extends State<MyCustomForm> {
+class FormPrivacidadState extends State<FormPrivacidad> {
   // Crea una clave global que identificará de manera única el widget Form
   // y nos permita validar el formulario
   //
   // Nota: Esto es un GlobalKey<FormState>, no un GlobalKey<MyCustomFormState>!
   final _formKey4 = GlobalKey<FormState>();
 
+  bool isSwitched1 = false;
+  bool isSwitched2 = false;
+  bool isSwitched3 = false;
+
   @override
   Widget build(BuildContext context) {
     // Crea un widget Form usando el _formKey que creamos anteriormente
-    bool isSwitched = false;
     return Form(
       key: _formKey4,
       child: Column(
@@ -433,10 +435,11 @@ class FormPrivacidadState extends State<MyCustomForm> {
                   flex: 8),
               Expanded(
                 child: Switch(
-                  value: isSwitched,
+                  value: isSwitched1,
                   onChanged: (value) {
                     setState(() {
-                      isSwitched = value;
+                      print("value: $value");
+                      isSwitched1 = value;
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text("Procesing Data"),
@@ -469,10 +472,10 @@ class FormPrivacidadState extends State<MyCustomForm> {
               ),
               Expanded(
                 child: Switch(
-                  value: isSwitched,
+                  value: isSwitched2,
                   onChanged: (value) {
                     setState(() {
-                      isSwitched = value;
+                      isSwitched2 = value;
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text("Procesing Data"),
@@ -505,10 +508,10 @@ class FormPrivacidadState extends State<MyCustomForm> {
               ),
               Expanded(
                 child: Switch(
-                  value: isSwitched,
+                  value: isSwitched3,
                   onChanged: (value) {
                     setState(() {
-                      isSwitched = value;
+                      isSwitched3 = value;
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text("Procesing Data"),
