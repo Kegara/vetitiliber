@@ -239,68 +239,70 @@ class FormContraState extends State<MyCustomForm> {
   Widget build(BuildContext context) {
     // Crea un widget Form usando el _formKey que creamos anteriormente
     return Form(
-        key: _formKey2,
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      key: _formKey2,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          //Nuevo campo-------------------------------------------------------------------
+          Text(
+            "\nCambiar contraseña\n",
+            style: new TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 5.0,
+              color: Colors.black,
+            ),
+          ),
+          Text(
+            "Contraseña actual", //Inicia el campo a cambiar
+            style: new TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 5.0,
+              color: Colors.black,
+            ),
+          ),
+          TextFormField(
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+          ),
+          Row(
             children: <Widget>[
-              //Nuevo campo-------------------------------------------------------------------
-              Text(
-                "\nCambiar contraseña\n",
-                style: new TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 5.0,
-                  color: Colors.black,
-                ),
-              ),
-              Text(
-                "Contraseña actual", //Inicia el campo a cambiar
-                style: new TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 5.0,
-                  color: Colors.black,
-                ),
-              ),
-              TextFormField(
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16.0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // devolverá true si el formulario es válido, o falso si
-                            // el formulario no es válido.
-                            if (_formKey2.currentState.validate()) {
-                              // Si el formulario es válido, queremos mostrar un Snackbar
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text("Procesing Data"),
-                                  behavior: SnackBarBehavior.floating,
-                                ),
-                              );
-                            }
-                          },
-                          child: Text('Cambiar'),
-                        ),
-                      ),
-                      flex: 3),
-                  Expanded(
-                    child: Text(''),
-                    flex: 7,
-                  )
-                ],
-              ),
-              Divider(),
-            ]));
+              Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // devolverá true si el formulario es válido, o falso si
+                        // el formulario no es válido.
+                        if (_formKey2.currentState.validate()) {
+                          // Si el formulario es válido, queremos mostrar un Snackbar
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Procesing Data"),
+                              behavior: SnackBarBehavior.floating,
+                            ),
+                          );
+                        }
+                      },
+                      child: Text('Cambiar'),
+                    ),
+                  ),
+                  flex: 3),
+              Expanded(
+                child: Text(''),
+                flex: 7,
+              )
+            ],
+          ),
+          Divider(),
+        ],
+      ),
+    );
   }
 }
 
