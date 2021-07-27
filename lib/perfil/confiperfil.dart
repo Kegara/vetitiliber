@@ -10,7 +10,24 @@ class ConfiperfilPage extends StatefulWidget {
   _ConfiperfilPageState createState() => _ConfiperfilPageState();
 }
 
+List<String> imgs = [
+  "https://static.vecteezy.com/system/resources/previews/001/917/629/non_2x/person-reading-book-free-photo.jpg",
+  "https://image1.masterfile.com/getImage/NjczLTA2MDI1NTAzZW4uMDAwMDAwMDA=AJal11/673-06025503en_Masterfile.jpg",
+  "https://image.freepik.com/vector-gratis/perfil-avatar-hombre-icono-redondo_24640-14044.jpg",
+  "https://previews.123rf.com/images/jojjik/jojjik1204/jojjik120400036/13014704-bald-man-in-suit-reads-a-bible-isolated-on-white.jpg",
+  "https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fHJlYWRpbmd8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80",
+  "https://qph.fs.quoracdn.net/main-qimg-dfc610007178ffb94a0ef143aeb56cfd-c",
+];
+
 class _ConfiperfilPageState extends State<ConfiperfilPage> {
+  int selectedOp = 0;
+
+  void chekSelectedOp(int index) {
+    setState(() {
+      selectedOp = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,11 +52,125 @@ class _ConfiperfilPageState extends State<ConfiperfilPage> {
                   MyCustomForm(),
                   FormContra(),
                   FormCorreo(),
+                  Text(
+                    "\nEliga su foto de perfil\n",
+                    style: new TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 5.0,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 300,
+                    child: GridView.count(
+                      crossAxisCount: 3,
+                      children: <Widget>[
+                        for (int i = 0; i < imgs.length; i++)
+                          Opcion(
+                            "Opcion ${i + 1}",
+                            img: imgs[i],
+                            onTap: () {
+                              chekSelectedOp(i);
+                            },
+                            selected: i == selectedOp,
+                          )
+                      ],
+                    ),
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 16.0),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text("Procesing Data"),
+                                  behavior: SnackBarBehavior.floating,
+                                ),
+                              );
+                            },
+                            child: Text('Cambiar'),
+                          ),
+                        ),
+                        flex: 3,
+                      ),
+                      Expanded(
+                        child: Text(''),
+                        flex: 7,
+                      )
+                    ],
+                  ),
+                  Divider(),
                   FormPrivacidad(),
                 ],
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class Opcion extends StatelessWidget {
+  const Opcion(
+    this.title, {
+    Key key,
+    this.img,
+    this.onTap,
+    this.selected,
+  }) : super(key: key);
+
+  final String title;
+  final String img;
+  final VoidCallback onTap;
+  final bool selected;
+
+  Widget build(BuildContext context) {
+    return Ink.image(
+      fit: BoxFit.cover,
+      image: NetworkImage(img),
+      child: InkWell(
+        onTap: onTap,
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: AnimatedContainer(
+            duration: const Duration(microseconds: 300),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: selected ?? false ? Colors.blue : Colors.transparent,
+                  width: selected ?? false ? 5 : 0,
+                ),
+              ),
+            ),
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: <Widget>[
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: selected ?? false
+                        ? Colors.blue.withOpacity(0.8)
+                        : Colors.black54,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(
+                    title ?? '',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
         ),
       ),
     );
