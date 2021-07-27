@@ -60,6 +60,8 @@ class _ConfiperfilPageState extends State<ConfiperfilPage> {
                     color: Colors.black)),
             MyCustomForm(),
             FormContra(),
+            FormCorreo(),
+            FormPrivacidad(),
           ]),
         ],
       )),
@@ -83,11 +85,19 @@ class FormContra extends StatefulWidget {
   }
 }
 
-// Crea un Widget Form de contraseña
+// Crea un Widget Form de correo
 class FormCorreo extends StatefulWidget {
   @override
   FormCorreoState createState() {
     return FormCorreoState();
+  }
+}
+
+// Crea un Widget Form de privacidad
+class FormPrivacidad extends StatefulWidget {
+  @override
+  FormPrivacidadState createState() {
+    return FormPrivacidadState();
   }
 }
 
@@ -104,7 +114,6 @@ class MyCustomFormState extends State<MyCustomForm> {
   @override
   Widget build(BuildContext context) {
     // Crea un widget Form usando el _formKey que creamos anteriormente
-    bool isSwitched = false;
     return Form(
       key: _formKey1,
       child: Column(
@@ -193,100 +202,6 @@ class MyCustomFormState extends State<MyCustomForm> {
             children: <Widget>[
               Expanded(
                   child: Text('Recibir Notificaciones',
-                      textAlign: TextAlign.left,
-                      style: new TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 5.0,
-                          color: Colors.grey)),
-                  flex: 8),
-              Expanded(
-                  child: Switch(
-                    value: isSwitched,
-                    onChanged: (value) {
-                      setState(() {
-                        isSwitched = value;
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text("Procesing Data"),
-                          behavior: SnackBarBehavior.floating,
-                        ));
-                      });
-                    },
-                    activeTrackColor: Colors.cyan,
-                    activeColor: Colors.blueAccent,
-                  ),
-                  flex: 2),
-            ],
-          ),
-          Text("\nPrivacidad\n",
-              style: new TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 5.0,
-                  color: Colors.black)),
-          Row(
-            children: <Widget>[
-              Expanded(
-                  child: Text(
-                      'Otros usuarios pueden ver los libros que has leído o no',
-                      textAlign: TextAlign.left,
-                      style: new TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 5.0,
-                          color: Colors.grey)),
-                  flex: 8),
-              Expanded(
-                  child: Switch(
-                    value: isSwitched,
-                    onChanged: (value) {
-                      setState(() {
-                        isSwitched = value;
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text("Procesing Data"),
-                          behavior: SnackBarBehavior.floating,
-                        ));
-                      });
-                    },
-                    activeTrackColor: Colors.cyan,
-                    activeColor: Colors.blueAccent,
-                  ),
-                  flex: 2),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Expanded(
-                  child: Text('Otros usuarios pueden ver tus reseñas',
-                      textAlign: TextAlign.left,
-                      style: new TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 5.0,
-                          color: Colors.grey)),
-                  flex: 8),
-              Expanded(
-                  child: Switch(
-                    value: isSwitched,
-                    onChanged: (value) {
-                      setState(() {
-                        isSwitched = value;
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text("Procesing Data"),
-                          behavior: SnackBarBehavior.floating,
-                        ));
-                      });
-                    },
-                    activeTrackColor: Colors.cyan,
-                    activeColor: Colors.blueAccent,
-                  ),
-                  flex: 2),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Expanded(
-                  child: Text('Establecer su perfil como privado',
                       textAlign: TextAlign.left,
                       style: new TextStyle(
                           fontSize: 15,
@@ -445,6 +360,125 @@ class FormCorreoState extends State<MyCustomForm> {
                     flex: 3),
                 Expanded(child: Text(''), flex: 7)
               ]),
+              Divider(),
+            ]));
+  }
+}
+
+//-----------------------------------FORM DE PRIVACIDAD---------------------------------------
+// Crea una clase State correspondiente. Esta clase contendrá los datos relacionados con
+// el formulario.
+class FormPrivacidadState extends State<MyCustomForm> {
+  // Crea una clave global que identificará de manera única el widget Form
+  // y nos permita validar el formulario
+  //
+  // Nota: Esto es un GlobalKey<FormState>, no un GlobalKey<MyCustomFormState>!
+  final _formKey4 = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    // Crea un widget Form usando el _formKey que creamos anteriormente
+    bool isSwitched = false;
+    return Form(
+        key: _formKey4,
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              //Nuevo campo-------------------------------------------------------------------
+              Text("\nPrivacidad\n",
+                  style: new TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 5.0,
+                      color: Colors.black)),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                      child: Text(
+                          'Otros usuarios pueden ver los libros que has leído o no',
+                          textAlign: TextAlign.left,
+                          style: new TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 5.0,
+                              color: Colors.grey)),
+                      flex: 8),
+                  Expanded(
+                      child: Switch(
+                        value: isSwitched,
+                        onChanged: (value) {
+                          setState(() {
+                            isSwitched = value;
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("Procesing Data"),
+                              behavior: SnackBarBehavior.floating,
+                            ));
+                          });
+                        },
+                        activeTrackColor: Colors.cyan,
+                        activeColor: Colors.blueAccent,
+                      ),
+                      flex: 2),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                      child: Text('Otros usuarios pueden ver tus reseñas',
+                          textAlign: TextAlign.left,
+                          style: new TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 5.0,
+                              color: Colors.grey)),
+                      flex: 8),
+                  Expanded(
+                      child: Switch(
+                        value: isSwitched,
+                        onChanged: (value) {
+                          setState(() {
+                            isSwitched = value;
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("Procesing Data"),
+                              behavior: SnackBarBehavior.floating,
+                            ));
+                          });
+                        },
+                        activeTrackColor: Colors.cyan,
+                        activeColor: Colors.blueAccent,
+                      ),
+                      flex: 2),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                      child: Text('Establecer su perfil como privado',
+                          textAlign: TextAlign.left,
+                          style: new TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 5.0,
+                              color: Colors.grey)),
+                      flex: 8),
+                  Expanded(
+                      child: Switch(
+                        value: isSwitched,
+                        onChanged: (value) {
+                          setState(() {
+                            isSwitched = value;
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("Procesing Data"),
+                              behavior: SnackBarBehavior.floating,
+                            ));
+                          });
+                        },
+                        activeTrackColor: Colors.cyan,
+                        activeColor: Colors.blueAccent,
+                      ),
+                      flex: 2),
+                ],
+              ),
               Divider(),
             ]));
   }
