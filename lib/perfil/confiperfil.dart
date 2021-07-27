@@ -81,22 +81,46 @@ Future<Usuario> getInfoUs() async {
     );
     final json = jsonDecode(response.body);
     _aux = new Usuario.fromJson(json);
+    print("(getInfoUs) Aviso");
   } catch (err) {
     print("(getInfoUs) err: $err");
   }
   return _aux;
 }
 
-class _ConfiperfilPageState extends State<ConfiperfilPage> {
-  int selectedOp = 0;
+Future<Usuario> updateConf(String contenido, String tabla, String campo) async {
+  final _url =
+      "https://myreviewvl.000webhostapp.com/BD/Usuario/updateConfUs.php";
+  Usuario _aux;
+  try {
+    await post(
+      Uri.parse(_url),
+      body: {
+        'id': idUs,
+        'contenido': contenido,
+        'tabla': tabla,
+        'campo': campo,
+      },
+    );
+    _aux = await getInfoUs();
+    // return true;
+  } catch (err) {
+    print("(updateConf) err: $err");
+  }
+  // return false;
+  return _aux;
+}
 
+bool _aux = true;
+
+int selectedOp = 0;
+
+class _ConfiperfilPageState extends State<ConfiperfilPage> {
   void chekSelectedOp(int index) {
     setState(() {
       selectedOp = index;
     });
   }
-
-  bool _aux = true;
 
   @override
   Widget build(BuildContext context) {
@@ -174,6 +198,22 @@ class _ConfiperfilPageState extends State<ConfiperfilPage> {
                                   behavior: SnackBarBehavior.floating,
                                 ),
                               );
+                              updateConf(selectedOp.toString(), '0', '2')
+                                  .then((value) {
+                                setState(() {
+                                  usuario = value;
+                                  selectedOp = value.fotoPerfilNum;
+                                });
+                                ScaffoldMessenger.of(context)
+                                    .hideCurrentSnackBar();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                        "Su petición se ejecuto exitosamente"),
+                                    behavior: SnackBarBehavior.floating,
+                                  ),
+                                );
+                              });
                             },
                             child: Text('Cambiar'),
                           ),
@@ -304,6 +344,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController nombreController = TextEditingController();
     // Crea un widget Form usando el _formKey que creamos anteriormentes
     return Form(
       key: _formKey1,
@@ -329,6 +370,7 @@ class MyCustomFormState extends State<MyCustomForm> {
             ),
           ),
           TextFormField(
+            controller: nombreController,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Por favor ingrese texto';
@@ -353,6 +395,22 @@ class MyCustomFormState extends State<MyCustomForm> {
                             behavior: SnackBarBehavior.floating,
                           ),
                         );
+                        _formKey1.currentState.save();
+                        updateConf(nombreController.text, '0', '0')
+                            .then((value) {
+                          setState(() {
+                            usuario = value;
+                            // print("funco? ${value ? 'yup' : 'nop'}");
+                          });
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content:
+                                  Text("Su petición se ejecuto exitosamente"),
+                              behavior: SnackBarBehavior.floating,
+                            ),
+                          );
+                        });
                       }
                     },
                     child: Text('Cambiar'),
@@ -450,6 +508,7 @@ class FormContraState extends State<FormContra> {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController passController = TextEditingController();
     // Crea un widget Form usando el _formKey que creamos anteriormente
     return Form(
       key: _formKey2,
@@ -476,6 +535,7 @@ class FormContraState extends State<FormContra> {
           //   ),
           // ),
           TextFormField(
+            controller: passController,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Por favor ingrese texto';
@@ -501,6 +561,21 @@ class FormContraState extends State<FormContra> {
                               behavior: SnackBarBehavior.floating,
                             ),
                           );
+                          _formKey2.currentState.save();
+                          updateConf(passController.text, '0', '1')
+                              .then((value) {
+                            setState(() {
+                              usuario = value;
+                            });
+                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content:
+                                    Text("Su petición se ejecuto exitosamente"),
+                                behavior: SnackBarBehavior.floating,
+                              ),
+                            );
+                          });
                         }
                       },
                       child: Text('Cambiar'),
@@ -532,6 +607,7 @@ class FormCorreoState extends State<FormCorreo> {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController mailController = TextEditingController();
     // Crea un widget Form usando el _formKey que creamos anteriormente
     return Form(
       key: _formKey3,
@@ -558,6 +634,7 @@ class FormCorreoState extends State<FormCorreo> {
             ),
           ),
           TextFormField(
+            controller: mailController,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Por favor ingrese texto';
@@ -582,6 +659,20 @@ class FormCorreoState extends State<FormCorreo> {
                             behavior: SnackBarBehavior.floating,
                           ),
                         );
+                        _formKey3.currentState.save();
+                        updateConf(mailController.text, '0', '3').then((value) {
+                          setState(() {
+                            usuario = value;
+                          });
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content:
+                                  Text("Su petición se ejecuto exitosamente"),
+                              behavior: SnackBarBehavior.floating,
+                            ),
+                          );
+                        });
                       }
                     },
                     child: Text('Cambiar'),
@@ -652,11 +743,21 @@ class FormPrivacidadState extends State<FormPrivacidad> {
                 child: Switch(
                   value: isSwitched1,
                   onChanged: (value) {
-                    setState(() {
-                      isSwitched1 = value;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Su petición está siendo procesada"),
+                        behavior: SnackBarBehavior.floating,
+                      ),
+                    );
+                    updateConf(value ? '1' : '0', '1', '0').then((value) {
+                      setState(() {
+                        usuario = value;
+                        isSwitched1 = value.vLibros;
+                      });
+                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text("Su petición está siendo procesada"),
+                          content: Text("Su petición se ejecuto exitosamente"),
                           behavior: SnackBarBehavior.floating,
                         ),
                       );
@@ -688,11 +789,21 @@ class FormPrivacidadState extends State<FormPrivacidad> {
                 child: Switch(
                   value: isSwitched2,
                   onChanged: (value) {
-                    setState(() {
-                      isSwitched2 = value;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Su petición está siendo procesada"),
+                        behavior: SnackBarBehavior.floating,
+                      ),
+                    );
+                    updateConf(value ? '1' : '0', '1', '1').then((value) {
+                      setState(() {
+                        usuario = value;
+                        isSwitched2 = value.vResenas;
+                      });
+                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text("Su petición está siendo procesada"),
+                          content: Text("Su petición se ejecuto exitosamente"),
                           behavior: SnackBarBehavior.floating,
                         ),
                       );
@@ -724,11 +835,21 @@ class FormPrivacidadState extends State<FormPrivacidad> {
                 child: Switch(
                   value: isSwitched3,
                   onChanged: (value) {
-                    setState(() {
-                      isSwitched3 = value;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Su petición está siendo procesada"),
+                        behavior: SnackBarBehavior.floating,
+                      ),
+                    );
+                    updateConf(value ? '1' : '0', '1', '2').then((value) {
+                      setState(() {
+                        usuario = value;
+                        isSwitched3 = value.vPerfil;
+                      });
+                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text("Su petición está siendo procesada"),
+                          content: Text("Su petición se ejecuto exitosamente"),
                           behavior: SnackBarBehavior.floating,
                         ),
                       );
