@@ -96,17 +96,22 @@ class _ConfiperfilPageState extends State<ConfiperfilPage> {
     });
   }
 
+  bool _aux = true;
+
   @override
   Widget build(BuildContext context) {
-    getInfoUs().then((value) {
-      setState(() {
-        usuario = value;
-        selectedOp = value.fotoPerfilNum;
-        isSwitched1 = value.vLibros;
-        isSwitched2 = value.vResenas;
-        isSwitched3 = value.vPerfil;
+    if (_aux) {
+      getInfoUs().then((value) {
+        setState(() {
+          usuario = value;
+          selectedOp = value.fotoPerfilNum;
+          isSwitched1 = value.vLibros;
+          isSwitched2 = value.vResenas;
+          isSwitched3 = value.vPerfil;
+          _aux = false;
+        });
       });
-    });
+    }
     return Scaffold(
       drawer: MenuLateral(),
       appBar: appBar1("Configuracón", context),
