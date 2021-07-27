@@ -110,31 +110,11 @@ class _PerfilPageState extends State<PerfilPage> {
     }
     return Scaffold(
       drawer: MenuLateral(),
-      appBar: AppBar(
-        title: Text("MY REVIEW"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            tooltip: 'Show Snackbar',
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('This is a snackbar')));
-            },
-          ),
-        ],
-      ),
+      appBar: appBar1("Mi perfil", context),
+      resizeToAvoidBottomInset: false,
       body: Container(
         child: Column(
           children: <Widget>[
-            Text(
-              "Mi Perfil", //Texto inicial de la sección para ver el perfil propio
-              style: new TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 5.0,
-                color: Colors.blueAccent,
-              ),
-            ),
             Image.network(
               fotoPerfil, //Imagen del usuario
               fit: BoxFit.cover,
