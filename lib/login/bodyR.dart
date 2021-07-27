@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:vetitiliber/login/bodyL.dart';
 import 'package:http/http.dart';
 
-
 class RegisterPage extends StatefulWidget {
   RegisterPage({Key key, this.title}) : super(key: key);
   final String title;
@@ -14,7 +13,6 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
- 
   //controllers para formulario,user,password y mail
   final userController = TextEditingController();
   final passController = TextEditingController();
@@ -27,8 +25,8 @@ class _RegisterPageState extends State<RegisterPage> {
   var _color = Colors.blueAccent;
 
   //Metodo para enviar el usuario y contraseña al servidor
-  void postEnviarRegistro(user, pass,email) async{
-    try{
+  void postEnviarRegistro(user, pass, email) async {
+    try {
       final response = await post(Uri.parse(url), body: {
         "nombre": user,
         "contrasena": pass,
@@ -37,19 +35,18 @@ class _RegisterPageState extends State<RegisterPage> {
       print(response.body);
       print("intento de registro");
       //redirige a la pagna de login.
-      final String text="Registro para el usuario "+user+" exitoso";
-        Fluttertoast.showToast(
-        msg: text,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 4,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0
-      );
+      final String text = "Registro para el usuario " + user + " exitoso";
+      Fluttertoast.showToast(
+          msg: text,
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 4,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0);
       print("registro completado");
       Navigator.of(context).pushNamed(LoginPage.id);
-    }catch(err){}
+    } catch (err) {}
   }
 
   @override
@@ -138,29 +135,27 @@ class _RegisterPageState extends State<RegisterPage> {
                       },
                       autofocus: true,
                       obscureText: _obscureText,
-                     decoration: InputDecoration(
-                            suffixIcon: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                IconButton(
-                                  icon: Icon(_obscureText == true
-                                      ? Icons.visibility
-                                      : Icons.visibility_off),
-                                  onPressed: _toggle,
-                                ),
-                                Padding
-                                (
-                                  padding: EdgeInsets.only(right: 10),
-                                  child: Icon(
-                                  (Icons.lock),
-                                 )
-                                ),
-                              ],
+                      decoration: InputDecoration(
+                        suffixIcon: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            IconButton(
+                              icon: Icon(_obscureText == true
+                                  ? Icons.visibility
+                                  : Icons.visibility_off),
+                              onPressed: _toggle,
                             ),
-                            border: OutlineInputBorder(),
-                            labelText: 'Contraseña',
-                          ),
+                            Padding(
+                                padding: EdgeInsets.only(right: 10),
+                                child: Icon(
+                                  (Icons.lock),
+                                )),
+                          ],
+                        ),
+                        border: OutlineInputBorder(),
+                        labelText: 'Contraseña',
+                      ),
                     ),
                   ),
                   Padding(
@@ -175,7 +170,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             color: Colors.blueAccent),
                       ),
                       onPressed: () {
-                        _registrarse(context, _formKey,userController,passController,emailController);
+                        _registrarse(context, _formKey, userController,
+                            passController, emailController);
                       },
                     ),
                   )
@@ -202,26 +198,30 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
+
   //funcion que cambia el estado del obscuretext para poder ver la contraseña
-   void _toggle() {
+  void _toggle() {
     setState(() {
       _obscureText = !_obscureText;
     });
   }
+
   //funcion que se ejecuta en el boton de registro pide como parametro formulario y campos de user,password,mail
-void _registrarse(BuildContext context, GlobalKey<FormState> formKey,TextEditingController userController,
-TextEditingController passController,TextEditingController emailController) {
-      //valida que los textforms tengan el formato correcto
+  void _registrarse(
+      BuildContext context,
+      GlobalKey<FormState> formKey,
+      TextEditingController userController,
+      TextEditingController passController,
+      TextEditingController emailController) {
+    //valida que los textforms tengan el formato correcto
     if (formKey.currentState.validate()) {
-      //valida el formkey y le pone el stado de valido 
+      //valida el formkey y le pone el stado de valido
       formKey.currentState.save();
       String user = userController.text;
       String pass = passController.text;
       String email = emailController.text;
 
       postEnviarRegistro(user, pass, email);
+    }
   }
-    
 }
-}
-
