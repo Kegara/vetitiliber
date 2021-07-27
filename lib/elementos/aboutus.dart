@@ -15,27 +15,7 @@ class _AboutusPage extends State<AboutusPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: MenuLateral(),
-      appBar: AppBar(
-        title: Text("MY REVIEW"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add_alert),
-            tooltip: 'Show Snackbar',
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('This is a snackbar')));
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.search),
-            tooltip: 'Show Snackbar',
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('This is a snackbar')));
-            },
-          )
-        ],
-      ),
+      appBar: appBar1("MY REVIEW", context),
       body: MyCustomForm(),
     );
   }
@@ -80,16 +60,16 @@ class MyCustomFormState extends State<MyCustomForm> {
                     Row(children: <Widget>[
                       Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.only(top: 5, bottom: 10),
+                            padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Image.asset(
-                              'assets/imagenes/login/LOGO2.png', //Imagen de portada
+                              'imagenes/usuarios/programing.png', //Imagen de portada
                               fit: BoxFit.cover,
                             ),
                           ),
                           flex: 3),
                       Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.only(top: 5, bottom: 10),
+                            padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Text("Kevin García Ramírez\nDeveloper",
                                 style: new TextStyle(
                                     fontSize: 15,
@@ -99,19 +79,10 @@ class MyCustomFormState extends State<MyCustomForm> {
                           flex: 7)
                     ]),
                     Row(children: <Widget>[
+                   
                       Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 10),
-                            child: Text("Va toda la reseña",
-                                style: new TextStyle(
-                                    fontSize: 15,
-                                    letterSpacing: 2.0,
-                                    color: Colors.black)),
-                          ),
-                          flex: 9),
-                      Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 10),
+                            padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Text("",
                                 style: new TextStyle(
                                     fontSize: 15,
@@ -125,16 +96,16 @@ class MyCustomFormState extends State<MyCustomForm> {
                     Row(children: <Widget>[
                       Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.only(top: 5, bottom: 10),
+                            padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Image.asset(
-                              'assets/imagenes/login/LOGO2.png', //Imagen de portada
+                              'imagenes/usuarios/programing.png', //Imagen de portada
                               fit: BoxFit.cover,
                             ),
                           ),
                           flex: 3),
                       Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.only(top: 5, bottom: 10),
+                            padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Text(
                                 "Alexis Rafael Aparicio Hernández\nDeveloper",
                                 style: new TextStyle(
@@ -145,19 +116,10 @@ class MyCustomFormState extends State<MyCustomForm> {
                           flex: 7)
                     ]),
                     Row(children: <Widget>[
+                    
                       Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 10),
-                            child: Text("Va toda la reseña",
-                                style: new TextStyle(
-                                    fontSize: 15,
-                                    letterSpacing: 2.0,
-                                    color: Colors.black)),
-                          ),
-                          flex: 9),
-                      Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 10),
+                            padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Text("",
                                 style: new TextStyle(
                                     fontSize: 15,
@@ -171,16 +133,16 @@ class MyCustomFormState extends State<MyCustomForm> {
                     Row(children: <Widget>[
                       Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.only(top: 5, bottom: 10),
+                            padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Image.asset(
-                              'assets/imagenes/login/LOGO2.png', //Imagen de portada
+                              'imagenes/usuarios/programing.png', //Imagen de portada
                               fit: BoxFit.cover,
                             ),
                           ),
                           flex: 3),
                       Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.only(top: 5, bottom: 10),
+                            padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Text(
                                 "Alexis Rafael Aparicio Hernández\nDeveloper",
                                 style: new TextStyle(
@@ -191,19 +153,10 @@ class MyCustomFormState extends State<MyCustomForm> {
                           flex: 7)
                     ]),
                     Row(children: <Widget>[
+                      
                       Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 10),
-                            child: Text("Va toda la reseña",
-                                style: new TextStyle(
-                                    fontSize: 15,
-                                    letterSpacing: 2.0,
-                                    color: Colors.black)),
-                          ),
-                          flex: 9),
-                      Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 10),
+                            padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Text("",
                                 style: new TextStyle(
                                     fontSize: 15,
@@ -217,16 +170,16 @@ class MyCustomFormState extends State<MyCustomForm> {
                     Row(children: <Widget>[
                       Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.only(top: 5, bottom: 10),
+                            padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Image.asset(
-                              'assets/imagenes/login/LOGO2.png', //Imagen de portada
+                              'imagenes/usuarios/programing.png', //Imagen de portada
                               fit: BoxFit.cover,
                             ),
                           ),
                           flex: 3),
                       Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.only(top: 5, bottom: 10),
+                            padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Text(
                                 "Alexis Rafael Aparicio Hernández\nDeveloper",
                                 style: new TextStyle(
@@ -237,19 +190,10 @@ class MyCustomFormState extends State<MyCustomForm> {
                           flex: 7)
                     ]),
                     Row(children: <Widget>[
+                      
                       Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 10),
-                            child: Text("Va toda la reseña",
-                                style: new TextStyle(
-                                    fontSize: 15,
-                                    letterSpacing: 2.0,
-                                    color: Colors.black)),
-                          ),
-                          flex: 9),
-                      Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 10),
+                            padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Text("",
                                 style: new TextStyle(
                                     fontSize: 15,
