@@ -438,7 +438,6 @@ class FormPrivacidadState extends State<FormPrivacidad> {
                   value: isSwitched1,
                   onChanged: (value) {
                     setState(() {
-                      print("value: $value");
                       isSwitched1 = value;
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
